@@ -24,18 +24,18 @@ Complete hands-on course for learning ROS 2 from scratch to robot simulation and
 
 ## Course Structure
 
-### [Fundamentals](workshops/fundamentals/) - Week 1 (2 sessions)
+### [Fundamentals](workshops/fundamentals/) 
 1. [Linux Basics](workshops/fundamentals/linux-basics/)
 2. [Python for Robotics](workshops/fundamentals/python-basics/)
 
-### [ROS 2 Core](workshops/ros2-core/) - Week 2 (2 sessions)
+### [ROS 2 Core](workshops/ros2-core/) 
 3. [Nodes and Topics](workshops/ros2-core/nodes-topics/)
 4. [Services and Actions](workshops/ros2-core/services-actions/)
 
-### [Visualization](workshops/visualization/) - Week 3 (1 session)
+### [Visualization](workshops/visualization/) 
 5. [URDF and RViz2](workshops/visualization/urdf-rviz/)
 
-### [Simulation](workshops/simulation/) - Week 4 (3 sessions)
+### [Simulation](workshops/simulation/) 
 6. [Gazebo Basics](workshops/simulation/gazebo-basics/)
 7. [Gazebo Sensors + RViz2](workshops/simulation/gazebo-sensors/)
 8. [MoveIt2 Basics](workshops/simulation/moveit2-basics/)
