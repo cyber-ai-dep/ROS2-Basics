@@ -15,7 +15,7 @@
 - [5. Python Functions -- Teaching the Robot to Reuse Intelligence](#20-python-functions----teaching-the-robot-to-reuse-intelligence)
 - [6. Classes and Objects in Python](#22-classes-and-objects-in-python)
 - [7. Python Modules & Imports](#23-python-modules--imports)
----
+
 
 ###Introduction
 This lesson is designed to refresh your knowledge of **Python programming**, with a specific focus on **robotics applications**. Since Python will be used extensively to program and control our robots throughout this course, it is important to revisit the fundamentals from a robotics perspective before moving forward.
@@ -2170,6 +2170,7 @@ This shows:
 
 
 ```
+
 
 
 
