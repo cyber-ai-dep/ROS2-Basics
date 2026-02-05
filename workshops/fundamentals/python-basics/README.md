@@ -17,7 +17,7 @@ markdown
 - [7. Python Modules & Imports](#23-python-modules--imports)
 
 
-###Introduction
+##Introduction
 This lesson is designed to refresh your knowledge of **Python programming**, with a specific focus on **robotics applications**. Since Python will be used extensively to program and control our robots throughout this course, it is important to revisit the fundamentals from a robotics perspective before moving forward.
 
 Python is one of the most widely used programming languages due to its simplicity and beginner-friendly syntax. At the same time, it is extremely powerful. Python's core functionality can be easily extended by installing and importing external packages, allowing developers to quickly add advanced features without writing everything from scratch. This flexibility makes Python especially suitable for robotics, where rapid development and experimentation are essential.
@@ -2170,6 +2170,7 @@ This shows:
 
 
 ```
+
 
 
 
