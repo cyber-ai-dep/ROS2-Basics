@@ -1,8 +1,68 @@
-I'll convert your Python session document into a well-formatted README.md file with proper code blocks. Let me create this for you.
+
 
 ```markdown
 # Introduction to Python Programming with Emphasis on Robotics Applications
 
+# Python for Robotics - Main Topics
+
+## Table of Contents
+
+1. [Environment & Running Code](#1-environment--running-code)
+2. [Python Variables](#2-python-variables)
+3. [Python Data Structures](#3-python-data-structures)
+4. [Python Conditions](#4-python-conditions)
+5. [Python Loops](#5-python-loops)
+6. [Python Functions](#6-python-functions)
+7. [Classes and Objects](#7-classes-and-objects)
+8. [Python Modules & Imports](#8-python-modules--imports)
+
+---
+
+## 1. Environment & Running Code
+
+---
+
+## 2. Python Variables
+- Numbers
+- Strings
+- Booleans
+
+---
+
+## 3. Python Data Structures
+- Lists
+- Tuples
+- Dictionaries
+
+---
+
+## 4. Python Conditions
+- if / elif / else
+
+---
+
+## 5. Python Loops
+- While Loops
+- For Loops
+- range() Function
+- for-else Loop
+- Nested Loops
+
+---
+
+## 6. Python Functions
+
+---
+
+## 7. Classes and Objects
+
+---
+
+## 8. Python Modules & Imports
+---
+
+
+###Introduction
 This lesson is designed to refresh your knowledge of **Python programming**, with a specific focus on **robotics applications**. Since Python will be used extensively to program and control our robots throughout this course, it is important to revisit the fundamentals from a robotics perspective before moving forward.
 
 Python is one of the most widely used programming languages due to its simplicity and beginner-friendly syntax. At the same time, it is extremely powerful. Python's core functionality can be easily extended by installing and importing external packages, allowing developers to quickly add advanced features without writing everything from scratch. This flexibility makes Python especially suitable for robotics, where rapid development and experimentation are essential.
@@ -2155,4 +2215,5 @@ This shows:
 
 
 ```
+
 
