@@ -5,62 +5,17 @@
 
 # Python for Robotics - Main Topics
 
-## Table of Contents
+# Table of Contents
 
-1. [Environment & Running Code](#1-environment--running-code)
-2. [Python Variables](#2-python-variables)
-3. [Python Data Structures](#3-python-data-structures)
-4. [Python Conditions](#4-python-conditions)
-5. [Python Loops](#5-python-loops)
-6. [Python Functions](#6-python-functions)
-7. [Classes and Objects](#7-classes-and-objects)
-8. [Python Modules & Imports](#8-python-modules--imports)
-
+- [Introduction](#introduction)
+- [1. Environment & Running Code (Ubuntu + VS Code)](#1-environment--running-code-ubuntu--vs-code)
+- [2. Python Variables -- Teaching the Robot to Remember](#2-python-variables----teaching-the-robot-to-remember)
+- [3. Python Data Structures -- Lists, Dictionaries, and Tuples](#5-python-data-structures----lists-dictionaries-and-tuples)
+- [4. Python Loops -- Teaching the Robot to Repeat Actions](#12-python-loops----teaching-the-robot-to-repeat-actions)
+- [5. Python Functions -- Teaching the Robot to Reuse Intelligence](#20-python-functions----teaching-the-robot-to-reuse-intelligence)
+- [6. Classes and Objects in Python](#22-classes-and-objects-in-python)
+- [7. Python Modules & Imports](#23-python-modules--imports)
 ---
-
-## 1. Environment & Running Code
-
----
-
-## 2. Python Variables
-- Numbers
-- Strings
-- Booleans
-
----
-
-## 3. Python Data Structures
-- Lists
-- Tuples
-- Dictionaries
-
----
-
-## 4. Python Conditions
-- if / elif / else
-
----
-
-## 5. Python Loops
-- While Loops
-- For Loops
-- range() Function
-- for-else Loop
-- Nested Loops
-
----
-
-## 6. Python Functions
-
----
-
-## 7. Classes and Objects
-
----
-
-## 8. Python Modules & Imports
----
-
 
 ###Introduction
 This lesson is designed to refresh your knowledge of **Python programming**, with a specific focus on **robotics applications**. Since Python will be used extensively to program and control our robots throughout this course, it is important to revisit the fundamentals from a robotics perspective before moving forward.
@@ -2215,5 +2170,6 @@ This shows:
 
 
 ```
+
 
 
