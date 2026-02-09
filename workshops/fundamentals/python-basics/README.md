@@ -66,7 +66,17 @@ A **variable** is like a container that stores data. It can be a number, a text,
 - Tuples
 - Dictionaries
 
-**Image 1 & Image2**
+### Variable Naming Rules
+
+- Must start with a letter or `_`
+- No spaces
+- Case-sensitive (Speed ≠ speed)
+- Use meaningful names (important in robotics!)
+
+<p align="center">
+  <img src="assets/images/fundamentals/variableNaming.jpg" width="200">
+</p>
+
 
 ### Numbers and Strings
 
@@ -80,24 +90,7 @@ distance = 30.0  # this number is a float
 - `=` → assignment operator
 - `30.0` → value stored in memory
 
-### Variable Naming Rules
 
-- Must start with a letter or `_`
-- No spaces
-- Case-sensitive (Speed ≠ speed)
-- Use meaningful names (important in robotics!)
-
-Suppose we want to create a variable named robot_count and assign the value 12 to it:
-
-```python
-robot_count = 12  # this is an integer
-```
-
-We can also assign a decimal (float) number to a variable:
-
-```python
-broken_ratio = 0.75  # this is a float
-```
 
 ### Basic Arithmetic
 
@@ -2168,6 +2161,7 @@ This shows:
 
 
 ```
+
 
 
 
