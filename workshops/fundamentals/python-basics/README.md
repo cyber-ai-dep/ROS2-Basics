@@ -74,7 +74,6 @@ A **variable** is like a container that stores data. It can be a number, a text,
 - Use meaningful names (important in robotics!)
 
 
-![Diagram description](assets/images/fundamentals/variableNaming.jpg)
 
 
 ### Numbers and Strings
@@ -2160,6 +2159,7 @@ This shows:
 
 
 ```
+
 
 
 
