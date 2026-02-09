@@ -49,6 +49,28 @@ If any check fails, fix it before proceeding.
 
 ---
 
+
+## Table of Contents
+- [Session Goal](#session-goal)
+- [1. Concepts: Nodes and Topics](#1-concepts-nodes-and-topics)
+- [2. Create ROS 2 Workspace](#2-create-ros-2-workspace)
+- [3. Python Package vs ROS 2 Package](#3-python-package-vs-ros-2-package)
+- [4. Create ROS 2 Python Package](#4-create-ros-2-python-package)
+- [5. Publisher Node (Talker)](#5-publisher-node-talker)
+- [6. Subscriber Node (Listener)](#6-subscriber-node-listener)
+- [7. Configure setup.py (CRITICAL)](#7-configure-setuppy-critical)
+- [8. ROS 2 CLI Tools](#8-ros-2-cli-tools)
+- [9. Hands-on Practice](#9-hands-on-practice)
+- [10. Task (Mandatory)](#10-task-mandatory)
+- [Common Errors and Solutions](#common-errors-and-solutions)
+- [Troubleshooting Checklist](#troubleshooting-checklist)
+- [Quick Reference](#quick-reference)
+- [Workshop Workflow Summary](#workshop-workflow-summary)
+- [Why This Matters for ROS 2](#why-this-matters-for-ros-2)
+- [Resources](#resources)
+
+  
+
 ## Session Goal
 Enable students to:
 - Understand ROS 2 nodes and topics
@@ -730,6 +752,7 @@ This is exactly how autonomous robots work!
 - Instructor contact
 
 ---
+
 
 
 
