@@ -73,7 +73,8 @@ A **variable** is like a container that stores data. It can be a number, a text,
 - Case-sensitive (Speed ≠ speed)
 - Use meaningful names (important in robotics!)
 
-![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/variableNaming.jpg)
+
+![Diagram description](assets/images/fundamentals/variableNaming.jpg)
 
 
 ### Numbers and Strings
@@ -485,8 +486,6 @@ Mixing types incorrectly:
 speed = "10"
 speed + 5  # Error
 ```
-![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/type_conversion_in_python_3.webp)
-
 
 ---
 
@@ -561,10 +560,6 @@ By the end of this section, learners will be able to:
 
 A **list** is a data structure that allows you to store **multiple values in one variable**. Lists are very flexible and can store numbers, strings, or even other lists.
 Lists are created using **square brackets** `[]`, and items are separated by commas.
-
-
-![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/python-list.jpg)
-
 
 ### Creating a List
 
@@ -812,11 +807,6 @@ Tuples are very similar to lists, but there is one **important difference**:
 
 Tuples are created using **parentheses** `()` instead of square brackets.
 
-
-![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/python-tuple.jpg)
-
-
-
 ### Creating a Tuple
 
 Here is an example of a tuple that stores the names of control engineers in a robotics factory:
@@ -952,10 +942,6 @@ Instead of accessing values by index (like lists and tuples), we access them usi
 - Keys must be **immutable** (strings, numbers, tuples)
 - Values can be **any data type**
 - Dictionaries are created using **curly braces** `{}`
-
-
-![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/dictionaries-in-python.jpg)
-
 
 ### Creating a Dictionary
 
@@ -1337,8 +1323,6 @@ This example shows how the loop continues **until a condition changes**.
 
 A **for loop** is used to iterate over a **sequence** (string, list, range, etc.).
 
-![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/for-loop-in-python%20(1).png)
-
 ### Basic Syntax
 
 ```python
@@ -1389,10 +1373,6 @@ Here:
 
 The `range()` function generates a sequence of numbers.
 
-
-![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/for-loop-range.png)
-
-
 ### Simple Range Loop
 
 ```python
@@ -1411,6 +1391,7 @@ Output:
 for number in range(3, 10):
     print(number)
 ```
+
 Numbers start from 3 and stop at 9.
 
 ### Range with Step
@@ -1603,8 +1584,6 @@ A function is a block of code that performs a specific task. It can be used to g
 
 The `return` statement is used to exit a function and return a value to the caller. The value that is returned can be any Python object, such as a number, string, list, or dictionary. After the `return`, no code will be executed because when Python sees the return keyword it will break out of the code.
 
-![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/Python-Function-Syntax.png)
-
 Functions can be passed data in two ways:
 
 - **Arguments**. Arguments are passed to a function when it is called. They can be any type of value, such as numbers, strings, lists, or dictionaries.
@@ -1612,8 +1591,6 @@ Functions can be passed data in two ways:
 
 In robotics software, **functions are the backbone of the system**.
 Every robot action—moving, sensing, checking safety, making decisions—is usually implemented as a function.
-
-![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/parameter%26arguments.png)
 
 ### Defining a Function
 
@@ -1833,10 +1810,6 @@ Assumptions:
 - The robot arm has **one joint** (1 degree of freedom)
 - The joint position is represented by an angle
 - The robot can move and display its information
-
-
-![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/class_method%20(1).png)
-
 
 ### Example: Robot Arm Class
 
@@ -2187,13 +2160,6 @@ This shows:
 
 
 ```
-
-
-
-
-
-
-
 
 
 
