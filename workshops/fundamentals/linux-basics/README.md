@@ -6,6 +6,7 @@
 
 ---
 
+
 ## Learning Objectives
 
 By the end of this session, you will be able to:
@@ -20,6 +21,11 @@ By the end of this session, you will be able to:
 
 ---
 
+## 🖥 Virtual Machine Setup
+
+Follow the full setup guide here:
+
+➡️ [Ubuntu 24.04 VirtualBox Installation Guide](VM.md)
 ## Prerequisites
 
 ✅ **Already Completed:**
