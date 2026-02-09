@@ -471,6 +471,9 @@ This is the moment everything comes together! 🎉
 
 ## 8. ROS 2 CLI Tools
 
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/ros2-core/cli.png)
+
+
 ### List All Topics
 ```bash
 ros2 topic list
@@ -753,6 +756,7 @@ This is exactly how autonomous robots work!
 - Instructor contact
 
 ---
+
 
 
 
