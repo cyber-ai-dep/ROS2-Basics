@@ -73,9 +73,8 @@ A **variable** is like a container that stores data. It can be a number, a text,
 - Case-sensitive (Speed ≠ speed)
 - Use meaningful names (important in robotics!)
 
-<p align="center">
-  <img src="assets/images/fundamentals/variableNaming.jpg" width="200">
-</p>
+
+![Diagram description](assets/images/fundamentals/variableNaming.jpg)
 
 
 ### Numbers and Strings
@@ -2161,6 +2160,7 @@ This shows:
 
 
 ```
+
 
 
 
