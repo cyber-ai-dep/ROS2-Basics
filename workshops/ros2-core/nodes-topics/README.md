@@ -698,6 +698,7 @@ Vision Node (Listener/Subscriber + Talker/Publisher)
     ↓ publishes to /detected_objects
 Navigation Node (Listener/Subscriber)
     ↓ plans path based on objects
+    
 ```
 
 This is exactly how autonomous robots work!
@@ -725,3 +726,4 @@ This is exactly how autonomous robots work!
 - Instructor contact
 
 ---
+
