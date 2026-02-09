@@ -117,6 +117,7 @@ ROS 2 systems are built by connecting **independent nodes** through **topics** t
 
 ![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/ros2-core/Topic-SinglePublisherandSingleSubscriber.gif)
 
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/ros2-core/Topic-MultiplePublisherandMultipleSubscriber.gif)
 ```
 
 ### Demo
@@ -752,6 +753,7 @@ This is exactly how autonomous robots work!
 - Instructor contact
 
 ---
+
 
 
 
