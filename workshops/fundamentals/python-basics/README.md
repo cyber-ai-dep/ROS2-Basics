@@ -1389,6 +1389,10 @@ Here:
 
 The `range()` function generates a sequence of numbers.
 
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/for-loop-range.png)
+
+
 ### Simple Range Loop
 
 ```python
@@ -1407,8 +1411,6 @@ Output:
 for number in range(3, 10):
     print(number)
 ```
-![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/for-loop-range.png)
-
 Numbers start from 3 and stop at 9.
 
 ### Range with Step
@@ -2185,6 +2187,7 @@ This shows:
 
 
 ```
+
 
 
 
