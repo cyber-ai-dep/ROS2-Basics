@@ -575,6 +575,7 @@ Camera Node (Publisher)
 /camera/image topic
     ↓ subscribed by
 Vision Node (Subscriber)
+```
 
 
 ---
@@ -726,4 +727,5 @@ This is exactly how autonomous robots work!
 - Instructor contact
 
 ---
+
 
