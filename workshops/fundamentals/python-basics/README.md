@@ -1832,6 +1832,10 @@ Assumptions:
 - The joint position is represented by an angle
 - The robot can move and display its information
 
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/class_method%20(1).png)
+
+
 ### Example: Robot Arm Class
 
 ```python
@@ -2181,6 +2185,7 @@ This shows:
 
 
 ```
+
 
 
 
