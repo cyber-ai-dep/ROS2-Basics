@@ -562,6 +562,10 @@ By the end of this section, learners will be able to:
 A **list** is a data structure that allows you to store **multiple values in one variable**. Lists are very flexible and can store numbers, strings, or even other lists.
 Lists are created using **square brackets** `[]`, and items are separated by commas.
 
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/python-list.jpg)
+
+
 ### Creating a List
 
 Here is an example of a list that stores robot models used in a factory:
@@ -808,6 +812,11 @@ Tuples are very similar to lists, but there is one **important difference**:
 
 Tuples are created using **parentheses** `()` instead of square brackets.
 
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/python-tuple.jpg)
+
+
+
 ### Creating a Tuple
 
 Here is an example of a tuple that stores the names of control engineers in a robotics factory:
@@ -943,6 +952,10 @@ Instead of accessing values by index (like lists and tuples), we access them usi
 - Keys must be **immutable** (strings, numbers, tuples)
 - Values can be **any data type**
 - Dictionaries are created using **curly braces** `{}`
+
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/dictionaries-in-python.jpg)
+
 
 ### Creating a Dictionary
 
@@ -2168,6 +2181,7 @@ This shows:
 
 
 ```
+
 
 
 
