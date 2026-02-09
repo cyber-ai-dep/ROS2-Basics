@@ -132,7 +132,7 @@ colcon build
 Expected output:
 ```
 
-Summary: 0 packages finished
+Summary: 0 packages finished [0.19s]
 ```
 
 ### Source the Workspace
@@ -159,6 +159,9 @@ source install/setup.bash
 ---
 
 ## 3. Python Package vs ROS 2 Package
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/ros2-core/pythonVSrosPackages.png)
+
 
 ### Regular Python Package
 - Used only by Python
@@ -727,5 +730,6 @@ This is exactly how autonomous robots work!
 - Instructor contact
 
 ---
+
 
 
