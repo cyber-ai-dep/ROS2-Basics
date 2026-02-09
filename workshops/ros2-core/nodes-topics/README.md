@@ -145,6 +145,8 @@ rqt_graph
 
 ## 2. Create ROS 2 Workspace
 
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/ros2-core/createWS.png)
+
 ### Commands
 ```bash
 mkdir -p ~/ros2_ws/src
@@ -211,6 +213,7 @@ This means:
 ---
 
 ## 4. Create ROS 2 Python Package
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/ros2-core/createpythonPKg.png)
 
 ### Command
 ```bash
@@ -244,6 +247,7 @@ my_py_pkg/
 ---
 
 ## 5. Publisher Node (Talker)
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/ros2-core/puplisher.png)
 
 ### Concept
 A Publisher (Talker):
@@ -308,6 +312,8 @@ The code is written, but it won't run yet. We need to configure `setup.py` first
 ---
 
 ## 6. Subscriber Node (Listener)
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/ros2-core/subscriber.png)
 
 ### Concept
 A Subscriber (Listener):
@@ -756,6 +762,7 @@ This is exactly how autonomous robots work!
 - Instructor contact
 
 ---
+
 
 
 
