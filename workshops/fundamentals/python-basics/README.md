@@ -73,10 +73,7 @@ A **variable** is like a container that stores data. It can be a number, a text,
 - Case-sensitive (Speed ≠ speed)
 - Use meaningful names (important in robotics!)
 
-![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/for-loop-range.png)
-
-
-
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/variableNaming.jpg)
 
 
 ### Numbers and Strings
@@ -488,6 +485,8 @@ Mixing types incorrectly:
 speed = "10"
 speed + 5  # Error
 ```
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/type_conversion_in_python_3.webp)
+
 
 ---
 
@@ -1325,6 +1324,8 @@ This example shows how the loop continues **until a condition changes**.
 
 A **for loop** is used to iterate over a **sequence** (string, list, range, etc.).
 
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/for-loop-in-python%20(1).png)
+
 ### Basic Syntax
 
 ```python
@@ -1393,6 +1394,7 @@ Output:
 for number in range(3, 10):
     print(number)
 ```
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/for-loop-range.png)
 
 Numbers start from 3 and stop at 9.
 
@@ -1586,6 +1588,8 @@ A function is a block of code that performs a specific task. It can be used to g
 
 The `return` statement is used to exit a function and return a value to the caller. The value that is returned can be any Python object, such as a number, string, list, or dictionary. After the `return`, no code will be executed because when Python sees the return keyword it will break out of the code.
 
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/Python-Function-Syntax.png)
+
 Functions can be passed data in two ways:
 
 - **Arguments**. Arguments are passed to a function when it is called. They can be any type of value, such as numbers, strings, lists, or dictionaries.
@@ -1593,6 +1597,8 @@ Functions can be passed data in two ways:
 
 In robotics software, **functions are the backbone of the system**.
 Every robot action—moving, sensing, checking safety, making decisions—is usually implemented as a function.
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/parameter%26arguments.png)
 
 ### Defining a Function
 
@@ -2162,6 +2168,7 @@ This shows:
 
 
 ```
+
 
 
 
