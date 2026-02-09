@@ -1,10 +1,29 @@
 # Ubuntu 24.04 VirtualBox Installation Guide for ROS 2 Jazzy
 
+This guide provides step-by-step instructions for setting up Ubuntu 24.04 LTS on Oracle VirtualBox, preparing a stable environment for ROS 2 Jazzy development. Each phase is designed to prevent common installation issues and ensure a reliable system from the start. For Linux terminal skills and ROS 2 environment usage, refer to the [Linux Basics and ROS 2 Environment Setup](README.md).
+
+---
+
+## Table of Contents
+
+- [Phase 0 — Pre-Installation Checks](#phase-0--pre-installation-checks-mandatory)
+- [Phase 1 — Installing Oracle VirtualBox](#phase-1--installing-oracle-virtualbox-host-setup)
+- [Phase 2 — Creating the Virtual Machine](#phase-2--creating-the-virtual-machine-correct--safe-way)
+- [Phase 3 — Display and Graphics Configuration](#phase-3--display--graphics-configuration-critical)
+- [Phase 4 — Installing Ubuntu 24.04](#phase-4--installing-ubuntu-2404-manual-installation-screen-by-screen)
+- [Phase 5 — First Login, System Update and Freeze Handling](#phase-5--first-login-system-update--freeze-handling-critical)
+- [Phase 6 — Installing VirtualBox Guest Additions](#phase-6--installing-virtualbox-guest-additions)
+- [Phase 7 — Installing Essential Developer Tools](#phase-7--installing-essential-developer-tools)
+- [Phase 8 — Final System Validation and Baseline Snapshot](#phase-8--final-system-validation--baseline-snapshot)
+- [Summary Checklist](#summary-checklist)
+- [Common Issues and Solutions](#common-issues-and-solutions)
+- [Resources](#resources)
+
 ---
 
 ## Phase 0 — Pre-Installation Checks (MANDATORY)
 
-**⚠️ CRITICAL:** This phase MUST be completed before installing VirtualBox or Ubuntu. Skipping any step here is the main reason students face crashes, freezes, or missing options later.
+**⚠️ CRITICAL:** This phase MUST be completed before installing VirtualBox or Ubuntu. Skipping any step here is the main reason for crashes, freezes, or missing options later.
 
 ---
 
@@ -22,7 +41,7 @@ This phase ensures that the host machine (Windows) is ready for virtualization.
 
 ### 0.2 Minimum Hardware Requirements (Host Machine)
 
-Each student must verify the following:
+Verify the following on your host machine:
 
 #### CPU
 - **64-bit processor**
@@ -164,9 +183,9 @@ They often block:
 
 ---
 
-### 0.7 Final Phase 0 Checklist (Student Must Confirm)
+### 0.7 Final Phase 0 Checklist
 
-Before moving to Phase 1, the student must confirm:
+Before moving to Phase 1, confirm the following:
 
 - ✔ Virtualization enabled (Task Manager shows "Enabled")
 - ✔ Hyper-V disabled
@@ -188,7 +207,7 @@ Before moving to Phase 1, the student must confirm:
 
 ### 1.1 Download Oracle VirtualBox (Correct Source Only)
 
-#### What the student must do
+#### Steps
 
 1. Open a web browser
 2. Go to the official VirtualBox downloads page:
@@ -212,7 +231,7 @@ VirtualBox-7.2.x-xxxx-Win.exe
 
 - **Do NOT** download from third-party websites
 - **Do NOT** use older versions
-- All students must use the same major version (7.x)
+- All participants must use the same major version (7.x)
 
 ---
 
@@ -350,7 +369,7 @@ VirtualBox Manager should open automatically.
 
 ### 1.10 Verify VirtualBox Installation
 
-Student must verify:
+Verify:
 - ✔ VirtualBox Manager opens without errors
 - ✔ No warning messages appear
 - ✔ Version number matches Extension Pack version
@@ -369,7 +388,7 @@ Student must verify:
 
 ### 2.1 Download Ubuntu ISO (Verification Step)
 
-Before creating the VM, the student must confirm:
+Before creating the VM, confirm the following:
 
 - File name similar to:
 ```
@@ -524,7 +543,7 @@ Use EFI (special OSes only)
 **Why:**
 - EFI caused boot loops and black screens
 - Ubuntu installs cleanly without EFI in VirtualBox
-- Legacy BIOS is more stable for students
+- Legacy BIOS is more stable in this configuration
 
 ---
 
@@ -745,10 +764,10 @@ OK
 
 ## Phase 4 — Installing Ubuntu 24.04 (Manual Installation, Screen by Screen)
 
-**Goal of this phase:** Install Ubuntu 24.04 manually and visibly, so the student:
-- Understands every installer choice
-- Avoids broken installs
-- Ends with a clean, stable system
+**Goal of this phase:** Install Ubuntu 24.04 manually and visibly, so that you:
+- Understand every installer choice
+- Avoid broken installs
+- End with a clean, stable system
 
 ---
 
@@ -851,7 +870,7 @@ Enable:
 
 ### 4.5 Installation Type — Disk Partitioning (CRITICAL)
 
-This screen is where many students panic.
+This screen may look alarming, but it is safe.
 
 You will see:
 ```
@@ -898,7 +917,7 @@ Click → Continue
 ### 4.7 User Account Creation
 
 Fill in the following:
-- **Your name:** Student's name
+- **Your name:** Your full name
 - **Computer name:** Leave default or simple name
 - **Username:** Lowercase, no spaces
 - **Password:** Must be remembered
@@ -968,7 +987,7 @@ The VM will reboot into Ubuntu.
 
 ## Phase 5 — First Login, System Update & Freeze Handling (CRITICAL)
 
-**Goal of this phase:** Make the system stable after first login, apply updates safely, and teach students exactly what to do if the system hangs—بدون هلع ولا إعادة تثبيت (without panic or reinstallation).
+**Goal of this phase:** Make the system stable after first login, apply updates safely, and know exactly what to do if the system hangs — without panic or reinstallation.
 
 ---
 
@@ -976,7 +995,7 @@ The VM will reboot into Ubuntu.
 
 After reboot, you will see the Ubuntu login screen.
 
-#### What the student should do
+#### What to do
 
 1. Select the created user
 2. Enter the password
@@ -1063,7 +1082,7 @@ sudo apt upgrade -y
 
 ### 5.5 What Is NORMAL During `apt upgrade`
 
-Students often panic here—so we define normal behavior clearly.
+It is important to define normal behavior clearly at this stage.
 
 #### Normal:
 - Terminal pauses for 10–30 seconds
@@ -1089,7 +1108,7 @@ This happened in our earlier tests and resolved itself.
 
 #### Case 3 — VM completely unresponsive for >5 minutes
 
-This is when students must act correctly.
+This is when you must act correctly.
 
 **Correct action:**
 
@@ -1136,13 +1155,13 @@ This second run usually completes cleanly.
 
 ---
 
-### 5.8 Why We Had Crashes Before (Important Explanation for Students)
+### 5.8 Why Crashes Occurred Previously
 
 Previously, crashes occurred because:
 - Disk size was too small
 - Video memory was low
 - Wrong graphics controller was used
-- Students force-closed the VM during upgrades
+- The VM was force-closed during upgrades
 
 #### Now that we have:
 - ✔ ≥100 GB disk
@@ -1171,7 +1190,7 @@ sudo reboot
 
 ---
 
-### 6.1 What Are Guest Additions? (Explain to Students)
+### 6.1 What Are Guest Additions?
 
 VirtualBox Guest Additions are drivers installed inside Ubuntu that allow:
 - Dynamic screen resizing
@@ -1239,7 +1258,7 @@ Then:
 2. Enter your password
 3. Wait for the installation to finish
 
-#### Option B — Manual Installation (Preferred for Teaching)
+#### Option B — Manual Installation
 
 If no popup appears, do it manually:
 ```bash
@@ -1381,7 +1400,7 @@ sudo reboot
 
 ---
 
-### 6.10 Common Problems & Fixes (Based on What We Saw)
+### 6.10 Common Problems and Fixes
 
 #### Screen Still Small
 - Guest Additions not installed correctly
@@ -1424,7 +1443,7 @@ Installing developer tools before ROS avoids:
 - Excellent Linux support
 - Required later for debugging and extensions
 
-#### Method A — Ubuntu Software (Recommended for Students)
+#### Method A — Ubuntu Software (Recommended)
 
 1. Open **Ubuntu Software**
 2. Search for:
@@ -1442,7 +1461,7 @@ Installing developer tools before ROS avoids:
 sudo snap install code --classic
 ```
 
-Either method is acceptable, but Method A is preferred for beginners.
+Either method is acceptable. Method A is the simpler option.
 
 #### Verify Installation
 
@@ -1520,7 +1539,7 @@ sudo apt install -y curl wget unzip htop
 
 ### 7.6 Terminal Basics Check (Quick Sanity Test)
 
-Make sure the student can run:
+Verify that the following commands work:
 ```bash
 pwd
 ls
@@ -1529,7 +1548,7 @@ mkdir test_folder
 cd test_folder
 ```
 
-**If these work → environment is healthy.**
+If these commands work, the environment is healthy.
 
 ---
 
@@ -1544,7 +1563,7 @@ Inside VS Code:
    - **C/C++**
    - **GitHub Pull Requests** (optional)
 
-⚠️ **Do NOT overload students with extensions yet.**
+Additional extensions will be introduced in later sessions as needed.
 
 ---
 
@@ -1564,9 +1583,9 @@ sudo reboot
 
 ---
 
-### 8.1 Final System Validation (Must Pass All)
+### 8.1 Final System Validation
 
-Open Terminal and verify each item.
+Open Terminal and verify each of the following items.
 
 #### OS & Kernel
 ```bash
@@ -1666,3 +1685,33 @@ Before proceeding to ROS 2 installation, confirm:
 - ✔ Phase 8: Baseline snapshot created
 
 **You are now ready for Phase 9 - ROS 2 Jazzy Installation!**
+
+---
+
+## Common Issues and Solutions
+
+The following table summarizes common problems encountered during setup and their solutions:
+
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| Ubuntu (64-bit) does not appear in VirtualBox | Virtualization not enabled in BIOS | Enable Intel VT-x or AMD-V in BIOS settings (see Phase 0) |
+| `VERR_DISK_FULL` or `BLKCACHE_IOERR` error | Insufficient disk space on the host machine | Ensure at least 120 GB of free disk space before creating the VM |
+| Black screen after Ubuntu installation | Wrong graphics controller or low video memory | Set Graphics Controller to VMSVGA and Video Memory to 128 MB (see Phase 3) |
+| VM freezes during `apt upgrade` | Low video memory, small disk, or 3D acceleration enabled | Disable 3D Acceleration, set 128 MB video memory, use 100+ GB disk |
+| `dpkg was interrupted` after restart | Package installation was interrupted by a VM freeze | Run `sudo dpkg --configure -a` then retry `sudo apt update && sudo apt upgrade -y` |
+| Screen stays small after installation | Guest Additions not installed or not working | Install Guest Additions (see Phase 6), then reboot |
+| Copy/paste does not work between host and VM | Clipboard sharing not configured | Set Shared Clipboard to Bidirectional in VM Settings > General > Advanced |
+| VM feels laggy after Guest Additions | Normal first-boot behavior | Wait 1–2 minutes; performance improves after initial caching |
+| Permission denied accessing shared folder | User not in `vboxsf` group | Run `sudo usermod -aG vboxsf $USER` and reboot |
+
+---
+
+## Resources
+
+- **ROS 2 Official Documentation:** [docs.ros.org/en/jazzy](https://docs.ros.org/en/jazzy/index.html)
+- **ROS 2 Installation (Ubuntu):** [Ubuntu Install Debs](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html)
+- **VS Code Linux Setup:** [code.visualstudio.com/docs/setup/linux](https://code.visualstudio.com/docs/setup/linux)
+- **Linux Cheat Sheet:** [Download PDF](https://drive.google.com/file/d/1vddIJlermV-xZ7TZ8eSUCvzHKv_Poj2A/view)
+- **ROS 2 Cheat Sheet:** [Download PDF](https://drive.google.com/file/d/1vlimFy3CSk26AfZjB73rtG6GKqPZVUT9/view)
+- **VirtualBox Official Downloads:** [virtualbox.org/wiki/Downloads](https://www.virtualbox.org/wiki/Downloads)
+- **Ubuntu Desktop Download:** [ubuntu.com/download/desktop](https://ubuntu.com/download/desktop)

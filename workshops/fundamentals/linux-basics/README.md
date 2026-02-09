@@ -1,11 +1,36 @@
 # Linux Basics and ROS 2 Environment Setup
 
+This guide covers the essential Linux skills and environment setup required for ROS 2 development. It walks through terminal navigation, file operations, permissions, package management, VS Code configuration, and ROS 2 verification — everything needed to build a solid foundation for robotics development on Ubuntu.
+
 **Workshop Duration:** 120 minutes (2 hours)
 
-**Session Type:** Hands-on workshop with instructor guidance
+**Session Type:** Hands-on workshop
 
 ---
 
+## Table of Contents
+
+- [Learning Objectives](#learning-objectives)
+- [Virtual Machine Setup](#-virtual-machine-setup)
+- [Prerequisites](#prerequisites)
+- [Why This Workshop Matters for ROS 2](#why-this-workshop-matters-for-ros-2)
+- [Session Timeline](#session-timeline)
+- [Introduction and Verification](#section-0-introduction-and-verification-10-minutes)
+- [Linux Overview](#section-1-linux-overview-5-minutes)
+- [Terminal Basics](#section-2-terminal-basics-20-minutes)
+- [File Operations](#section-3-file-operations-25-minutes)
+- [Permissions and sudo](#section-4-permissions-and-sudo-15-minutes)
+- [Package Management](#section-5-package-management-15-minutes)
+- [VS Code Setup](#section-6-vs-code-setup-15-minutes)
+- [ROS 2 Verification](#section-7-ros-2-verification-10-minutes)
+- [Final Task Explanation](#section-8-final-task-explanation-5-minutes)
+- [Quick Reference](#quick-reference)
+- [Additional Resources](#additional-resources)
+- [Common Issues and Solutions](#common-issues-and-solutions)
+- [Final Task](#final-task)
+- [What's Next](#whats-next)
+
+---
 
 ## Learning Objectives
 
@@ -26,6 +51,9 @@ By the end of this session, you will be able to:
 Follow the full setup guide here:
 
 ➡️ [Ubuntu 24.04 VirtualBox Installation Guide](VM.md)
+
+---
+
 ## Prerequisites
 
 ✅ **Already Completed:**
@@ -74,19 +102,19 @@ ROS 2 is built on Linux. **Every single robotics professional needs Linux skills
 ## Section 0: Introduction and Verification (10 minutes)
 
 ### Goals
-- Ensure all students have working VMs
+- Ensure all VMs are working correctly
 - Set expectations for the workshop
 - Establish the hands-on, experimental learning approach
 
-### Instructor Script
+### Welcome
 
-**Welcome!** Today we're building the foundation you'll use in **every single ROS 2 session** going forward. No Linux knowledge? Perfect. That's exactly who this workshop is for.
+This workshop builds the foundation you will use in **every single ROS 2 session** going forward. No Linux knowledge? Perfect. That is exactly who this workshop is for.
 
 **Workshop approach:**
-- I'll demonstrate, you'll follow along immediately
-- Make mistakes—that's how you learn terminal skills
+- Follow along with each demonstration immediately
+- Make mistakes — that is how you learn terminal skills
 - Ask questions anytime
-- By the end, you'll be comfortable in the Linux environment
+- By the end, you will be comfortable in the Linux environment
 
 **Let's verify your setup:**
 
@@ -104,7 +132,7 @@ You should see something like:
 username@ubuntu:~$
 ```
 
-**🎯 Instructor Checkpoint:** Walk around (or check screens if virtual). Ensure everyone sees a terminal prompt before continuing.
+**🎯 Checkpoint:** Ensure you see a terminal prompt before continuing.
 
 ### What We'll Do Today
 
@@ -123,9 +151,7 @@ Linux Terminal Skills → File Management → System Administration → ROS 2 In
 - Learn about Ubuntu and its role in robotics
 - Grasp the open-source philosophy
 
-### Instructor Talking Points
-
-**Why Linux for Robotics?**
+### Why Linux for Robotics?
 
 1. **Open Source**: Free, customizable, transparent code
 2. **Stability**: Servers, robots, and critical systems run Linux
@@ -221,7 +247,7 @@ drwxr-xr-x 2 user user 4096 Jan 15 10:30 Downloads
 ls -la
 ```
 
-**Instructor note:** Point out `.bashrc` - "This file is crucial for ROS 2 environment setup. We'll edit it later."
+**Note:** The `.bashrc` file is crucial for ROS 2 environment setup. It will be edited in a later section.
 
 ---
 
@@ -277,15 +303,24 @@ ls
 bin  include  lib  setup.bash  share  ...
 ```
 
-**Instructor note:** "This is where ROS 2 lives. That `setup.bash` file? Critical. We'll use it constantly."
+**Note:** This is where ROS 2 lives. The `setup.bash` file is critical and will be used constantly.
 
 ---
 
 ### Keyboard Shortcuts (Terminal Productivity)
 
+**Essential shortcuts:**
+
 | Shortcut | Action |
 |----------|--------|
 | `Ctrl + C` | Stop running command |
+| `Ctrl + Shift + C` | Copy selected text in terminal |
+| `Ctrl + Shift + V` | Paste text in terminal |
+
+**Additional useful shortcuts:**
+
+| Shortcut | Action |
+|----------|--------|
 | `Ctrl + D` | Exit terminal / logout |
 | `Ctrl + L` | Clear screen (same as `clear`) |
 | `Tab` | Auto-complete commands/paths |
@@ -322,7 +357,7 @@ cd ~
 # Press up arrow to see previous commands
 ```
 
-**🎯 Instructor Checkpoint:** Ask 2-3 students to share their screens or describe what they see.
+**🎯 Checkpoint:** Verify your results match the expected output above.
 
 ---
 
@@ -336,7 +371,7 @@ cd ~
 
 ### Creating a ROS 2 Workspace Structure
 
-**Instructor context:** "In ROS 2, we organize code in workspaces. Let's practice creating that structure."
+In ROS 2, code is organized in workspaces. The following exercises practice creating that structure.
 
 ---
 
@@ -382,7 +417,7 @@ touch __init__.py
 ls -l
 ```
 
-**Instructor note:** "Every ROS 2 Python package needs these files. We'll fill them with content in future sessions."
+**Note:** Every ROS 2 Python package needs these files. Their content will be covered in future sessions.
 
 ---
 
@@ -505,7 +540,7 @@ rm temp*.txt          # Delete remaining temp files
 ls
 ```
 
-**Instructor note:** "Always double-check before using `rm -rf`. One wrong command can delete your entire workspace."
+**Note:** Always double-check before using `rm -rf`. One wrong command can delete your entire workspace.
 
 ---
 
@@ -1062,6 +1097,8 @@ dpkg -l | grep htop
 
 ### Installing VS Code
 
+For detailed installation instructions, refer to the official guide: [VS Code Linux Setup](https://code.visualstudio.com/docs/setup/linux)
+
 **Method 1: From Ubuntu Software Center**
 
 1. Open "Ubuntu Software" application
@@ -1091,7 +1128,7 @@ sudo apt install code
 code
 ```
 
-**🎯 Instructor Checkpoint:** Ensure all students have VS Code open.
+**🎯 Checkpoint:** Ensure VS Code is open and running.
 
 ---
 
@@ -1264,7 +1301,7 @@ if __name__ == '__main__':
 chmod +x my_first_node.py
 ```
 
-**Instructor note:** "This is a minimal ROS 2 node. We'll explain every line in the next workshop. For now, focus on the workflow."
+**Note:** This is a minimal ROS 2 node. Every line will be explained in the next workshop. For now, focus on the workflow.
 
 ---
 
@@ -1510,7 +1547,7 @@ ros2 run turtlesim turtle_teleop_key
 # Use arrow keys
 ```
 
-**🎯 Instructor Checkpoint:** Confirm everyone sees the turtle moving and topic data streaming.
+**🎯 Checkpoint:** Confirm that the turtle moves and topic data is streaming.
 
 ---
 
@@ -1520,9 +1557,9 @@ ros2 run turtlesim turtle_teleop_key
 
 You will submit a **single Markdown file** demonstrating your Linux and ROS 2 setup.
 
-**Deadline:** [Instructor: specify date/time]
+**Deadline:** As specified in the course schedule
 
-**Submission method:** [Instructor: specify - email, LMS, GitHub, etc.]
+**Submission method:** As specified by the course platform
 
 ---
 
@@ -1721,61 +1758,75 @@ ros2 pkg list                        # List packages
 
 ### Official Documentation
 
-- **ROS 2 Documentation:** https://docs.ros.org/en/jazzy/
-- **ROS 2 Tutorials:** https://docs.ros.org/en/jazzy/Tutorials.html
-- **Ubuntu Documentation:** https://help.ubuntu.com/
+- **ROS 2 Documentation:** [docs.ros.org/en/jazzy](https://docs.ros.org/en/jazzy/)
+- **ROS 2 Tutorials:** [docs.ros.org/en/jazzy/Tutorials](https://docs.ros.org/en/jazzy/Tutorials.html)
+- **ROS 2 Installation (Ubuntu):** [docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html)
+- **Ubuntu Documentation:** [help.ubuntu.com](https://help.ubuntu.com/)
+- **VS Code Linux Setup:** [code.visualstudio.com/docs/setup/linux](https://code.visualstudio.com/docs/setup/linux)
 
 ### Learning Resources
 
-- **Linux Journey:** https://linuxjourney.com/
-- **The Linux Command Line (free book):** http://linuxcommand.org/tlcl.php
-- **ROS 2 Humble Tutorials:** https://docs.ros.org/en/humble/Tutorials.html
+- **Linux Journey:** [linuxjourney.com](https://linuxjourney.com/)
+- **The Linux Command Line (free book):** [linuxcommand.org/tlcl.php](http://linuxcommand.org/tlcl.php)
+- **ROS 2 Humble Tutorials:** [docs.ros.org/en/humble/Tutorials](https://docs.ros.org/en/humble/Tutorials.html)
+
+### Cheat Sheets
+
+- **Linux Cheat Sheet:** [Download PDF](https://drive.google.com/file/d/1vddIJlermV-xZ7TZ8eSUCvzHKv_Poj2A/view)
+- **ROS 2 Cheat Sheet:** [Download PDF](https://drive.google.com/file/d/1vlimFy3CSk26AfZjB73rtG6GKqPZVUT9/view)
 
 ### Community
 
-- **ROS Discourse:** https://discourse.ros.org/
-- **ROS Answers:** https://answers.ros.org/
-- **r/ROS (Reddit):** https://reddit.com/r/ROS
+- **ROS Discourse:** [discourse.ros.org](https://discourse.ros.org/)
+- **ROS Answers:** [answers.ros.org](https://answers.ros.org/)
+- **r/ROS (Reddit):** [reddit.com/r/ROS](https://reddit.com/r/ROS)
 
 ---
 
-## Instructor Notes
+## Common Issues and Solutions
 
-### Common Issues and Solutions
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| `ros2` command not found | ROS 2 environment not sourced | Run `source /opt/ros/jazzy/setup.bash` and add it to `~/.bashrc` |
+| Permission denied when running a script | Script lacks execute permission | Run `chmod +x script.sh` |
+| VS Code does not open | VS Code not installed or installation incomplete | Run `sudo snap install code --classic` |
+| Turtlesim window does not appear | Package not installed | Run `sudo apt install ros-jazzy-turtlesim` |
+| `apt update` fails with errors | No internet connection or repository issue | Check network connectivity and retry |
+| Terminal shows `dpkg was interrupted` | A previous package operation was interrupted | Run `sudo dpkg --configure -a` then retry |
 
-**Issue 1: "ros2 command not found"**
-- **Solution:** Source setup file: `source /opt/ros/jazzy/setup.bash`
-- **Prevention:** Add to `~/.bashrc`
+### Workshop Tips
 
-**Issue 2: Permission denied when running script**
-- **Solution:** `chmod +x script.sh`
+- If running short on time, Challenge 2 or Challenge 4 can be attempted later
+- The Turtlesim demo can be completed in as little as 5 minutes
+- VS Code extension installation can be completed as pre-work
 
-**Issue 3: VS Code won't open**
-- **Solution:** Try `sudo snap install code --classic`
+### Key Skills to Master
 
-**Issue 4: Turtlesim window doesn't appear**
-- **Solution:** Check if package is installed: `sudo apt install ros-jazzy-turtlesim`
+Focus on being able to:
+- Navigate using the terminal
+- Create files and directories confidently
+- Understand file permissions
+- Source ROS 2 and run basic commands
 
-### Time Management Tips
-
-- If running behind, skip Challenge 2 or Challenge 4
-- Turtlesim demo can be shortened to 5 minutes
-- VS Code extension installation can be assigned as pre-work
-
-### Assessment Points
-
-Focus on:
-- Can students navigate using terminal?
-- Can students create files and directories confidently?
-- Do students understand permissions?
-- Can students source ROS 2 and run basic commands?
-
-### Extension Activities (if time allows)
+### Optional Activities
 
 - Create a bash alias for sourcing ROS 2
 - Explore `ros2 doctor` command
 - Set up GitHub and clone a repository
 - Install `tmux` for terminal multiplexing
+
+---
+
+## Final Task
+
+To complete this session, carry out the following steps and submit proof of completion:
+
+1. **Install Ubuntu** — Set up Ubuntu 24.04 LTS (see the [VM Setup Guide](VM.md) if using VirtualBox)
+2. **Set up the Linux environment** — Complete the system update, configure the terminal, and verify basic commands work
+3. **Install required tools** — Install VS Code, Git, build essentials, and verify ROS 2 Jazzy is operational
+4. **Submit proof to Classroom** — Upload screenshots showing your working environment (terminal, VS Code with extensions, Turtlesim running, and the output of `ros2 topic list`)
+
+Refer to the [detailed task requirements in Section 8](#section-8-final-task-explanation-5-minutes) for the full submission checklist and grading criteria.
 
 ---
 
@@ -1809,7 +1860,7 @@ Focus on:
 
 **Remember:** The terminal is your superpower in robotics. Practice these commands daily!
 
-**Questions?** Ask now or contact: [Instructor contact info]
+**Questions?** Reach out through the course communication channels.
 
 ---
 
