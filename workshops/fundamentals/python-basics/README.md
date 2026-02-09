@@ -72,8 +72,10 @@ A **variable** is like a container that stores data. It can be a number, a text,
 - No spaces
 - Case-sensitive (Speed ≠ speed)
 - Use meaningful names (important in robotics!)
-  
-![Image description]([https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/for-loop-range.png])
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/for-loop-range.png)
+
+
 
 
 
@@ -2160,6 +2162,7 @@ This shows:
 
 
 ```
+
 
 
 
