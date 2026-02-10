@@ -615,43 +615,6 @@ Vision Node (Subscriber)
 
 ---
 
-## 10. Task (Mandatory)
-
-### Task Description
-Create a ROS 2 Python package that:
-- Contains a Publisher node that publishes the status of a virtual robot
-- Contains a Subscriber node that listens to the published status
-- Uses a custom topic name (not `/chatter`)
-- Sends and receives messages using standard ROS 2 message types
-- Runs using `ros2 run`
-
-### Success Criteria
--  Publisher runs without errors
-- Subscriber receives and displays messages
-- Topic is visible using `ros2 topic list`
-- Messages are verified using `ros2 topic echo`
-
-### Expected Behavior
-**Terminal 1:**
-```
-[INFO] [publisher]: Publishing: [robot status message]
-```
-
-**Terminal 2:**
-```
-[INFO] [subscriber]: I heard: [robot status message]
-```
-
-### Submission
-Submit screenshots showing:
-- Terminal 1: `ros2 run` command for the Publisher and its output
-- Terminal 2: `ros2 run` command for the Subscriber and its output
-- Terminal 3: `ros2 topic list` showing the custom topic
-
-Submit to: **Google Classroom**
-
----
-
 ## Common Errors and Solutions
 
 | Error | Cause | Solution |
@@ -762,6 +725,7 @@ This is exactly how autonomous robots work!
 - Instructor contact
 
 ---
+
 
 
 
