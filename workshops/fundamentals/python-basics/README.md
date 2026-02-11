@@ -22,6 +22,8 @@ Python is one of the most widely used programming languages due to its simplicit
 
 The **Python Package Index (PyPI)** is the main repository for third-party Python packages. It hosts hundreds of thousands of libraries that provide ready-to-use solutions for tasks such as robotics, computer vision, data processing, and machine learning. These packages can be easily installed using the pip command, enabling developers to quickly build complex systems with minimal effort.
 
+⚠️ Note: Try the examples on your device to see the actual results.
+
 ## 1) Environment & Running Code (Ubuntu + VS Code)
 
 ### Run a Python file
@@ -67,6 +69,9 @@ A **variable** is like a container that stores data. It can be a number, a text,
 - Dictionaries
 
 ### Variable Naming Rules
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/dev/assets/images/fundamentals/variableNaming2.jpg)
+
 
 - Must start with a letter or `_`
 - No spaces
@@ -360,6 +365,9 @@ print(robot_name == "ATLAS")  # True
 print(robot_name == "atlas")  # False (case-sensitive)
 ```
 
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/dev/assets/images/fundamentals/type_conversion_in_python_3.webp)
+
+
 ### Logical Operators
 
 Logical operators allow us to **combine conditions**.
@@ -559,6 +567,8 @@ By the end of this section, learners will be able to:
 
 A **list** is a data structure that allows you to store **multiple values in one variable**. Lists are very flexible and can store numbers, strings, or even other lists.
 Lists are created using **square brackets** `[]`, and items are separated by commas.
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/dev/assets/images/fundamentals/python-list.jpg)
 
 ### Creating a List
 
@@ -806,6 +816,11 @@ Tuples are very similar to lists, but there is one **important difference**:
 
 Tuples are created using **parentheses** `()` instead of square brackets.
 
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/dev/assets/images/fundamentals/python-tuple.jpg)
+
+
+
 ### Creating a Tuple
 
 Here is an example of a tuple that stores the names of control engineers in a robotics factory:
@@ -933,6 +948,8 @@ Another important data type in Python is the **dictionary**.
 
 A **dictionary** stores data in **key–value pairs**.
 Instead of accessing values by index (like lists and tuples), we access them using a **key**.
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/dev/assets/images/fundamentals/dictionaries-in-python.jpg)
 
 ### Key Concepts
 
@@ -1133,6 +1150,10 @@ They let the code **choose different actions** depending on whether a condition 
 
 The most common conditional statement is the **if statement**.
 
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/dev/assets/images/fundamentals/python_Indentation.jpg)
+
+
 ### Basic Syntax
 
 ```python
@@ -1268,7 +1289,6 @@ By the end of this section, learners will be able to:
 
 ### What Is a Loop?
 
-
 A **loop** is a structure that repeats a block of code multiple times.
 
 ---
@@ -1276,6 +1296,10 @@ A **loop** is a structure that repeats a block of code multiple times.
 ## While Loops in Python
 
 A **while loop** is used to repeatedly execute a block of code **as long as a condition remains true**.
+
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/dev/assets/images/fundamentals/while-loop-in-python.png)
+
 
 ### Basic Syntax
 
@@ -1321,6 +1345,10 @@ This example shows how the loop continues **until a condition changes**.
 ## For Loops in Python
 
 A **for loop** is used to iterate over a **sequence** (string, list, range, etc.).
+
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/dev/assets/images/fundamentals/for-loopp.png)
+
 
 ### Basic Syntax
 
@@ -1371,6 +1399,8 @@ Here:
 ## The range() Function
 
 The `range()` function generates a sequence of numbers.
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/dev/assets/images/fundamentals/for-loop-range.png)
 
 ### Simple Range Loop
 
@@ -1583,6 +1613,12 @@ A function is a block of code that performs a specific task. It can be used to g
 
 The `return` statement is used to exit a function and return a value to the caller. The value that is returned can be any Python object, such as a number, string, list, or dictionary. After the `return`, no code will be executed because when Python sees the return keyword it will break out of the code.
 
+
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/dev/assets/images/fundamentals/Python-Function-Syntax.png)
+
+
+
 Functions can be passed data in two ways:
 
 - **Arguments**. Arguments are passed to a function when it is called. They can be any type of value, such as numbers, strings, lists, or dictionaries.
@@ -1590,6 +1626,11 @@ Functions can be passed data in two ways:
 
 In robotics software, **functions are the backbone of the system**.
 Every robot action—moving, sensing, checking safety, making decisions—is usually implemented as a function.
+
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/dev/assets/images/fundamentals/parameter%26arguments.png)
+
+
 
 ### Defining a Function
 
@@ -1797,6 +1838,9 @@ Multiple objects can be created from the same class, and:
 
 - they share the same methods
 - each object has its **own attribute values**
+
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/dev/assets/images/fundamentals/class_method%20(1).png)
 
 ### Defining a Class
 
@@ -2159,6 +2203,8 @@ This shows:
 
 
 ```
+
+
 
 
 
