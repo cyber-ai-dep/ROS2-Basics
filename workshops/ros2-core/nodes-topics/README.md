@@ -711,20 +711,7 @@ This is exactly how autonomous robots work!
 - [ROS 2 Tutorials](https://docs.ros.org/en/jazzy/Tutorials.html)
 - [rclpy API Documentation](https://docs.ros2.org/latest/api/rclpy/)
 
-### Course Materials
-- Linux Basics Workshop (Week 1)
-- Python for Robotics Workshop (Week 1)
-- ROS 2 Cheat Sheet (PDF)
-- Example Code Repository
 
-### Practice Platforms
-- [ROS 2 Documentation](https://docs.ros.org)
-
-### Getting Help
-- Class discussion channel
-- Instructor contact
-
----
 
 
 
