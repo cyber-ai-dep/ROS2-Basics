@@ -92,6 +92,84 @@ Follow the sections in order. Each one builds on what came before. Do the exerci
 
 ---
 
+## Choosing Your Command Line Environment
+
+Before we start working with Linux and ROS 2, we need to understand the tool we will use the most: the terminal.
+
+In robotics and ROS 2 development, almost everything happens through the Command Line Interface (CLI).  
+You will run nodes, build packages, inspect topics, debug errors, and manage the system — all from a terminal window.
+
+There are different terminal applications available on Ubuntu.  
+In this course, we will look at two popular options:
+
+- **Terminal** (default and simple)
+- **Terminator** (advanced and productivity-focused)
+
+Let’s understand the difference.
+
+---
+
+## Terminal
+
+<img src="../../../assets/images/fundamentals/terminal.png" width="200"/>
+
+### What is Terminal?
+
+- The default command-line application in Ubuntu
+- Comes preinstalled in almost all Linux distributions
+- Simple, lightweight, and fast
+- Suitable for running daily commands, managing files, and executing ROS 2 programs
+- Supports multiple tabs within a single window
+
+### Terminal Interface Example
+
+<img src="../../../assets/images/fundamentals/terminal2.png" width="700"/>
+
+The default Terminal is perfect for beginners.  
+It is stable, minimal, and fully capable of running all ROS 2 commands.
+
+---
+
+## Terminator
+
+<img src="../../../assets/images/fundamentals/terminator.png" width="200"/>
+
+### What is Terminator?
+
+- An advanced terminal emulator designed to increase productivity
+- Allows you to split the screen into multiple terminals within the same window
+- Enables running multiple commands and processes simultaneously
+- Ideal for developers working on complex projects like ROS 2
+- Provides better control and organization during development
+
+### Terminator Interface Example
+
+<img src="../../../assets/images/fundamentals/terminator2.png" width="700"/>
+
+Terminator becomes especially powerful when:
+
+- Running ROS 2 nodes in one pane
+- Monitoring topics in another pane
+- Building packages in a third pane
+- Debugging logs in real time
+
+---
+
+### Which One Should You Use?
+
+For beginners, the default Terminal is more than enough.
+
+As you start working on multi-node ROS 2 systems, Terminator can significantly improve your workflow.
+
+Both tools run the same Linux and ROS 2 commands — the difference is only in productivity and window management.
+
+
+---
+
+**Summary:**
+
+* **Terminal:** simplicity and foundation
+* **Terminator:** professionalism and higher productivity
 ## Why Linux Is Fundamental for ROS 2
 
 Let me explain why we're learning Linux to work with ROS 2.
@@ -264,43 +342,7 @@ Press `Ctrl + Alt + T` on your keyboard.
 - Package names are version-specific
 - Third-party guides cause weird errors
 
-#### Let's Install ROS 2 Step by Step
-
-Open the link above and click **"Ubuntu (Debian packages)"**. Follow these steps:
-
-##### Step 1: Set Up Your Locale
-
-**What this does:** Makes sure your system uses UTF-8 encoding (needed for ROS 2).
-
-```bash
-locale  # Check current settings
-
-sudo apt update && sudo apt install locales
-sudo locale-gen en_US en_US.UTF-8
-sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
-export LANG=en_US.UTF-8
-
-locale  # Verify it worked
-```
-
-##### Step 2: Add ROS 2 Software Sources
-
-**What this does:** Tells Ubuntu where to download ROS 2 from.
-
-```bash
-# Enable Ubuntu Universe repository
-sudo apt install software-properties-common
-sudo add-apt-repository universe
-
-# Add ROS 2 security key
-sudo apt update && sudo apt install curl -y
-sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
-
-# Add ROS 2 to your sources list
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
-```
-
-##### Step 3: Install ROS 2 Packages
+##### Step 1: Install ROS 2 Packages
 
 **Update your package list first:**
 
@@ -324,6 +366,104 @@ This gives you: ROS 2 + RViz (visualization) + demos + tutorials.
 ```bash
 sudo apt install ros-jazzy-ros-base
 ```
+## Essential ROS 2 Packages Installation
+
+**Now that ROS 2 is installed, let's add the advanced tools you'll need later.**
+
+These packages extend ROS 2 for real robot control and motion planning. Install them now so they're ready when you need them.
+
+### Controllers + ros2_control
+
+#### What is ros2_control?
+
+**Simple explanation:** It's the framework for controlling robot hardware in ROS 2.
+
+**What it does:**
+- Manages robot joints (motors, servos, actuators)
+- Handles sensor data from encoders
+- Provides standard interfaces for robot control
+- Works with simulation AND real hardware
+
+**When you'll use it:** When controlling robot arms, mobile bases, grippers — any robot with moving parts.
+
+#### Why do we need controllers?
+
+**Think of it this way:**
+- **Hardware:** Motors that need voltage commands
+- **Controllers:** Convert high-level commands (like "move 10cm") into motor voltages
+- **ros2_control:** Manages all controllers in one system
+
+**Popular controllers:**
+- Joint trajectory controllers (for arms)
+- Differential drive controllers (for wheeled robots)
+- Gripper controllers (for end effectors)
+
+#### Install ros2_control Now
+
+**Main control framework:**
+
+```bash
+sudo apt install \
+  ros-jazzy-ros2-control \
+  ros-jazzy-ros2-controllers \
+  ros-jazzy-controller-manager -y
+```
+
+**Build tools (needed when creating custom controllers):**
+
+```bash
+sudo apt install ros-jazzy-ros2-control-cmake -y
+```
+
+**RQT tools (visualization and debugging):**
+
+```bash
+sudo apt install ros-jazzy-rqt ros-jazzy-rqt-gui ros-jazzy-rqt-common-plugins -y
+```
+
+**Controller manager GUI:**
+
+```bash
+sudo apt install ros-jazzy-rqt-controller-manager -y
+```
+
+**What did we just install?**
+- The control framework itself
+- Pre-built controllers for common tasks
+- Tools to manage and switch controllers
+- GUI for debugging control systems
+
+### Install MoveIt2
+
+#### What is MoveIt2?
+
+**Simple explanation:** It's a motion planning framework for robot arms.
+
+**What it does:**
+- Plans collision-free paths for robot arms
+- Handles inverse kinematics (figuring out joint angles)
+- Avoids obstacles automatically
+- Works with pick-and-place tasks
+
+**When you'll use it:** Manipulator robots, robotic arms, pick-and-place systems.
+
+**Think of it like GPS for robot arms** — you tell it where to go, it figures out the safe path.
+
+#### Install MoveIt2 Now
+
+```bash
+sudo apt install ros-jazzy-moveit -y
+```
+
+**This installs:**
+- Motion planning libraries
+- Collision detection
+- Inverse kinematics solvers
+- Integration with RViz for visualization
+
+**Note:** MoveIt2 is complex. We're just installing it now. You'll learn to use it in later robotics courses.
+
+---
 
 This gives you: Just ROS 2 communication libraries. No GUI tools.
 
@@ -457,6 +597,7 @@ Search for "Visual Studio Code" and click it.
 
 ---
 
+
 ### Essential VS Code Extensions for ROS 2
 
 **These extensions supercharge VS Code for robotics.**
@@ -466,75 +607,57 @@ Search for "Visual Studio Code" and click it.
 #### 1. Python (Microsoft)
 Makes Python coding smooth — debugging, error checking, autocomplete.
 
-<img src="../../../assets/images/fundamentals/python.png" width="600"/>
+<img src="assets/images/fundamentals/python.png" width="600"/>
 
 ---
 
 #### 2. Pylance (Microsoft)
 Advanced Python features — faster completions, type checking.
 
-<img src="../../../assets/images/fundamentals/pylance.png" width="600"/>
+<img src="assets/images/fundamentals/pylance.png" width="600"/>
 
 ---
 
 #### 3. ROS (Microsoft)
 ROS 2 integration — launch file support, URDF previews.
 
-<img src="../../../assets/images/fundamentals/ros.png" width="600"/>
+<img src="assets/images/fundamentals/ros.png" width="600"/>
 
 ---
 
 #### 4. C/C++ (Microsoft)
 C++ support — needed when you write ROS 2 nodes in C++.
 
-<img src="../../../assets/images/fundamentals/c-cpp.png" width="600"/>
+<img src="assets/images/fundamentals/c-cpp.png" width="600"/>
 
 ---
 
 #### 5. CMake (twxs)
 Helps with CMakeLists.txt files used in ROS 2 C++ packages.
 
-<img src="../../../assets/images/fundamentals/cmake-tools.png" width="600"/>
+<img src="assets/images/fundamentals/cmake-tools.png" width="600"/>
 
 ---
 
 #### 6. XML (Red Hat)
 Highlights and validates package.xml and launch files.
 
-<img src="../../../assets/images/fundamentals/xml.png" width="600"/>
+<img src="assets/images/fundamentals/xml.png" width="600"/>
 
 ---
 
 #### 7. YAML (Red Hat)
 Highlights YAML config files used in ROS 2.
 
-<img src="../../../assets/images/fundamentals/yaml.png" width="600"/>
+<img src="assets/images/fundamentals/yaml.png" width="600"/>
 
 ---
 
 #### 8. LaunchMap (launchmap)
 Visualize and manage complex launch file systems.
 
-<img src="../../../assets/images/fundamentals/launchmap.png" width="600"/>
+<img src="assets/images/fundamentals/launchmap.png" width="600"/>
 
-
-### Install All Extensions (Quick Method)
-
-**Copy and paste these commands into terminal:**
-
-```bash
-code --install-extension ms-python.python
-code --install-extension ms-python.vscode-pylance
-code --install-extension ms-iot.vscode-ros
-code --install-extension ms-vscode.cpptools
-code --install-extension twxs.cmake
-code --install-extension redhat.vscode-xml
-code --install-extension redhat.vscode-yaml
-code --install-extension eamodio.gitlens
-code --install-extension launchmap.launchmap
-```
-
-**Watch the terminal** — each extension will install one by one.
 
 ### Install Extensions Manually (Alternative)
 
@@ -683,160 +806,564 @@ tree                                  # Show the structure
 6. **Set parameters:** `ros2 param list`, `ros2 param set`
 
 **No GUI alternatives exist for most of these.** Terminal skills = robotics skills.
+## Introduction to Command Lines Cheat Sheet & Folders
+
+## Folder Structure on Linux System
+
+**Linux Cheat Sheet:** [Download PDF](https://drive.google.com/file/d/1vddIJlermV-xZ7TZ8eSUCvzHKv_Poj2A/view)
 
 ---
 
-## Essential ROS 2 Packages Installation
+## cd, ls, pwd 
 
-**Now that ROS 2 is installed, let's add the advanced tools you'll need later.**
+### Navigation: `cd`
 
-These packages extend ROS 2 for real robot control and motion planning. Install them now so they're ready when you need them.
+`cd` (Change Directory) moves the terminal's working location between directories.
 
-### Controllers + ros2_control
-
-#### What is ros2_control?
-
-**Simple explanation:** It's the framework for controlling robot hardware in ROS 2.
-
-**What it does:**
-- Manages robot joints (motors, servos, actuators)
-- Handles sensor data from encoders
-- Provides standard interfaces for robot control
-- Works with simulation AND real hardware
-
-**When you'll use it:** When controlling robot arms, mobile bases, grippers — any robot with moving parts.
-
-#### Why do we need controllers?
-
-**Think of it this way:**
-- **Hardware:** Motors that need voltage commands
-- **Controllers:** Convert high-level commands (like "move 10cm") into motor voltages
-- **ros2_control:** Manages all controllers in one system
-
-**Popular controllers:**
-- Joint trajectory controllers (for arms)
-- Differential drive controllers (for wheeled robots)
-- Gripper controllers (for end effectors)
-
-#### Install ros2_control Now
-
-**Main control framework:**
+**Basic usage:**
 
 ```bash
-sudo apt install \
-  ros-jazzy-ros2-control \
-  ros-jazzy-ros2-controllers \
-  ros-jazzy-controller-manager -y
+cd Documents
 ```
 
-**Build tools (needed when creating custom controllers):**
+**Go to the parent directory:**
 
 ```bash
-sudo apt install ros-jazzy-ros2-control-cmake -y
+cd ..
 ```
 
-**RQT tools (visualization and debugging):**
+**Go to the home directory:**
 
 ```bash
-sudo apt install ros-jazzy-rqt ros-jazzy-rqt-gui ros-jazzy-rqt-common-plugins -y
+cd ~
 ```
 
-**Controller manager GUI:**
+**Practice sequence:**
 
 ```bash
-sudo apt install ros-jazzy-rqt-controller-manager -y
+cd Documents
+cd ..
+cd ~
 ```
 
-**What did we just install?**
-- The control framework itself
-- Pre-built controllers for common tasks
-- Tools to manage and switch controllers
-- GUI for debugging control systems
+### TAB Completion
 
-### Install MoveIt2
+Pressing the Tab key twice displays all available completions for the current input. This prevents typing errors and speeds up navigation.
 
-#### What is MoveIt2?
-
-**Simple explanation:** It's a motion planning framework for robot arms.
-
-**What it does:**
-- Plans collision-free paths for robot arms
-- Handles inverse kinematics (figuring out joint angles)
-- Avoids obstacles automatically
-- Works with pick-and-place tasks
-
-**When you'll use it:** Manipulator robots, robotic arms, pick-and-place systems.
-
-**Think of it like GPS for robot arms** — you tell it where to go, it figures out the safe path.
-
-#### Install MoveIt2 Now
+**Example:**
 
 ```bash
-sudo apt install ros-jazzy-moveit -y
+cd Doc<TAB><TAB>
 ```
 
-**This installs:**
-- Motion planning libraries
-- Collision detection
-- Inverse kinematics solvers
-- Integration with RViz for visualization
+**Expected behavior:**
 
-**Note:** MoveIt2 is complex. We're just installing it now. You'll learn to use it in later robotics courses.
+If a directory starting with "Doc" exists (e.g., Documents), the shell will display it. Pressing Tab once more completes the name.
+
+**Why this matters:**
+
+File and directory names in Linux are case-sensitive. TAB completion ensures correct capitalization and reduces command errors.
+
+### Listing Contents: `ls`
+
+`ls` (List) displays files and directories in the current location.
+
+**Basic usage:**
+
+```bash
+ls
+```
+
+**Show detailed information:**
+
+```bash
+ls -l
+```
+
+**Show all files (including hidden):**
+
+```bash
+ls -la
+```
+
+**Practice:**
+
+```bash
+ls
+ls -l
+ls -la
+```
+
+Hidden files in Linux start with a dot (`.`). The `-a` flag reveals them.
+
+### Print Working Directory: `pwd`
+
+`pwd` (Print Working Directory) displays the absolute path of the current location.
+
+**Usage:**
+
+```bash
+pwd
+```
+
+**Expected output:**
+
+```
+/home/username
+```
+
+This confirms the current location in the file system.
 
 ---
 
-## Next Steps
+## Practical Practise 
 
-**Congratulations! You've built your foundation.**
-
-**Here's what you can do now:**
-- ✅ Navigate Linux with the terminal
-- ✅ Install software packages with APT
-- ✅ Edit files with nano
-- ✅ Use VS Code with ROS 2 extensions
-- ✅ Activate ROS 2 automatically in every terminal
-- ✅ Understand Linux file system structure
-- ✅ Run basic ROS 2 commands
-
-**Where to go from here:**
-- Create your first ROS 2 package
-- Learn `colcon build` workflow
-- Write Python nodes (publishers and subscribers)
-- Author launch files for multi-node systems
-- Build C++ nodes for performance
-- Use Git to manage your robot code
-
-**Remember:** You just learned the essentials. Everything else builds on this foundation.
-
-**Keep practicing. You're ready for real ROS 2 development!**
+> On Ubuntu system files
 
 ---
 
-## Resources
+## mkdir, touch, echo, cat, nano 
 
-### Official Documentation
+### File Operations
 
-- [ROS 2 Official Documentation](https://docs.ros.org/en/jazzy/)
-- [ROS 2 Installation Guide (Ubuntu)](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html)
-- [VS Code Linux Setup](https://code.visualstudio.com/docs/setup/linux)
+#### Creating Directories: `mkdir`
 
-### Learning Resources
+`mkdir` (Make Directory) creates new directories.
 
-- [Linux Journey](https://linuxjourney.com/)
-- [The Linux Command Line (free book)](http://linuxcommand.org/tlcl.php)
-- [ROS 2 Tutorials](https://docs.ros.org/en/jazzy/Tutorials.html)
+**Basic usage:**
 
-### Cheat Sheets
+```bash
+mkdir my_folder
+```
 
-- [Linux Cheat Sheet (PDF)](https://drive.google.com/file/d/1vddIJlermV-xZ7TZ8eSUCvzHKv_Poj2A/view)
-- [ROS 2 Cheat Sheet (PDF)](https://drive.google.com/file/d/1vlimFy3CSk26AfZjB73rtG6GKqPZVUT9/view)
+**Create nested directories:**
 
-### Community
+```bash
+mkdir -p parent/child/grandchild
+```
 
-- [ROS Discourse](https://discourse.ros.org/)
-- [ROS Answers](https://answers.ros.org/)
+The `-p` flag creates parent directories as needed.
+
+**Practice:**
+
+```bash
+cd ~
+mkdir linux_practice
+cd linux_practice
+pwd
+```
+
+#### Creating Files: `touch`
+
+`touch` creates an empty file.
+
+**Usage:**
+
+```bash
+touch file.txt
+```
+
+**Create multiple files:**
+
+```bash
+touch file1.txt file2.txt file3.txt
+```
+
+**Practice:**
+
+```bash
+cd ~/linux_practice
+touch notes.txt
+ls
+```
+
+#### Writing to Files: `echo`
+
+`echo` prints text to the terminal or writes it to a file.
+
+**Print to terminal:**
+
+```bash
+echo "Hello"
+```
+
+**Write to a file (overwrite):**
+
+```bash
+echo "This is a note" > notes.txt
+```
+
+**Practice:**
+
+```bash
+cd ~/linux_practice
+echo "Linux is used for ROS 2 development" > notes.txt
+```
+
+
+#### Displaying File Contents: `cat`
+
+`cat` (Concatenate) displays the contents of one or more files.
+
+**Usage:**
+
+```bash
+cat notes.txt
+```
+
+**Display multiple files:**
+
+```bash
+cat file1.txt file2.txt
+```
+
+**Practice:**
+
+```bash
+cd ~/linux_practice
+cat notes.txt
+```
+
+#### Editing Files: `nano`
+
+`nano` is a simple terminal-based text editor.
+
+**Open a file:**
+
+```bash
+nano notes.txt
+```
+
+**Basic controls:**
+
+- Type normally to edit
+- `Ctrl + O` → Save
+- `Enter` → Confirm save
+- `Ctrl + X` → Exit
+
+**Practice:**
+
+```bash
+cd ~/linux_practice
+nano notes.txt
+```
+
+Add a line, save, and exit.
 
 ---
+
+### Example
+
+```
+/test_workspace
+├── docs
+├── readme.md
+└── src
+    ├── c++
+    │   └── example.cpp
+    └── python
+        └── example.py
+
+4 directories, 3 files
+```
+
+**mkdir:**
+
+```bash
+mkdir -p test_workspace/src/{c++,python} test_workspace/docs
+touch test_workspace/readme.md
+touch test_workspace/src/c++/example.cpp
+touch test_workspace/src/python/example.py
+cd test_workspace
+```
+
+**echo:**
+
+```bash
+echo 'print("Hello from Python")' > src/python/example.py
+echo "This is a simple test workspace project" > readme.md
+echo 'int main() { return 0; }' > src/c++/example.cpp
+```
+
+**cat:**
+
+```bash
+cat src/python/example.py
+cat src/c++/example.cpp
+cat readme.md
+```
+
+**nano:**
+
+```bash
+nano src/c++/example.cpp
+```
+
+Delete text then `Ctrl + O` → `Enter`
+
+---
+
+## Practical Practise 1 
+
+```
+/project_workspace
+├── notes
+├── main.txt
+└── code
+    ├── java
+    │   └── Hello.java
+    └── bash
+        └── script.sh
+
+4 directories, 3 files
+```
+
+**Then:**
+
+- Adding `"This is the main project file"` to `main.txt`
+- Adding `'public class Hello {}'` to `Hello.java`
+[Practical Practise 1 Solution](solutions/Practical_Practise_1_Solution.md)
+
+---
+
+## cp, mv, rm (5m)
+
+### Copying Files: `cp`
+
+`cp` (Copy) duplicates files or directories.
+
+**Copy a file:**
+
+```bash
+cp source.txt destination.txt
+```
+
+**Copy to a directory:**
+
+```bash
+cp file.txt /path/to/directory/
+```
+
+**Copy a directory (recursive):**
+
+```bash
+cp -r folder/ new_folder/
+```
+
+**Practice:**
+
+```bash
+cd ~/linux_practice
+cp notes.txt notes_backup.txt
+ls
+```
+
+### Moving and Renaming: `mv`
+
+`mv` (Move) moves or renames files and directories.
+
+**Rename a file:**
+
+```bash
+mv old_name.txt new_name.txt
+```
+
+**Move a file:**
+
+```bash
+mv file.txt /path/to/directory/
+```
+
+**Practice:**
+
+```bash
+cd ~/linux_practice
+mv notes_backup.txt backup_notes.txt
+ls
+```
+
+### Deleting Files: `rm`
+
+`rm` (Remove) deletes files and directories permanently. There is no recycle bin or undo.
+
+**Delete a file:**
+
+```bash
+rm file.txt
+```
+
+**Practice:**
+
+```bash
+cd ~/linux_practice
+touch temp.txt
+ls
+rm temp.txt
+ls
+```
+
+### Absolute vs. Relative Paths
+
+**Absolute path:** Starts from the root directory (`/`).
+
+```bash
+cd /home/username/linux_practice
+```
+
+**Relative path:** Relative to the current directory.
+
+```bash
+cd linux_practice
+cd ../
+```
+
+`.` represents the current directory. `..` represents the parent directory.
+
+---
+
+### Example
+
+```bash
+cp src/python/example.py docs/
+cp readme.md docs/readme_copy.md
+
+mv src/c++/example.cpp docs/
+mv docs/example.cpp docs/example_old.cpp
+
+rm docs/example_old.cpp
+
+rm -r folder_name  # with warnings for it
+```
+
+---
+
+## Practical Practise 2 
+
+### 1 Copy files (`cp`)
+
+- Based on Practical Practise 1
+- Copy `main.txt` into the `notes` directory.
+- Copy `Hello.java` into the `notes` directory.
+- Do not delete the original files.
+
+### 2 Move & rename files (`mv`)
+
+- Move `script.sh` from `code/bash` to the `notes` directory.
+- Rename `script.sh` to `backup.sh`.
+
+### 3 Remove files (`rm`)
+
+- Delete the copied `Hello.java` from the `notes` directory.
+- Delete `backup.sh` from the `notes` directory.
+
+> ⚠️ **Be careful:** Do not delete the original `Hello.java` inside `code/java`.
+
+### Verification
+
+Use `ls` to verify:
+
+- `notes` contains only `main.txt`
+- `code/java/Hello.java` still exists
+- `main.txt` still exists in the main directory
+[Practical Practise 2 Solution](solutions/Practical_Practise_2_Solution.md)
+---
+
+## Tree
+
+### Installing tree command
+
+**Install tree:**
+
+```bash
+sudo apt install tree
+```
+
+**Use tree:**
+
+```bash
+tree
+tree project_workspace
+```
+
+---
+
+## Extra Details
+
+### Permissions (Concept Only)
+
+#### What Are Permissions?
+
+Every file and directory in Linux has three types of permissions:
+
+- **Read (r)** — View contents
+- **Write (w)** — Modify contents
+- **Execute (x)** — Run as a program
+
+Permissions are assigned to three categories:
+
+- **Owner** — The user who created the file
+- **Group** — Users in the same group
+- **Others** — All other users
+
+#### Viewing Permissions
+
+```bash
+ls -l
+```
+
+**Example output:**
+
+```
+-rw-r--r-- 1 username username 1234 Jan 15 10:30 file.txt
+```
+
+**Breaking it down:**
+
+- `-rw-r--r--` — Permissions (owner: read/write, group: read, others: read)
+- `username username` — Owner and group
+- `file.txt` — File name
+
+#### Why Permissions Matter in Robotics
+
+- **Hardware access** — Some devices require specific permissions
+- **Script execution** — Executable scripts need the execute (`x`) permission
+- **Security** — Prevents unauthorized access to robot control systems
+
+> Numeric notation and `chmod` usage are NOT covered in this session.
+
+---
+
+## Package Management with APT
+
+### What is APT?
+
+APT (Advanced Package Tool) is the package manager for Ubuntu. It installs, updates, and removes software.
+
+### Essential APT Commands
+
+**Update package lists:**
+
+```bash
+sudo apt update
+```
+
+This downloads the latest package information from repositories. It does not install or upgrade anything.
+
+**Upgrade installed packages:**
+
+```bash
+sudo apt upgrade
+```
+
+This installs newer versions of currently installed packages.
+
+**Install a package:**
+
+```bash
+sudo apt install <package-name>
+```
+
+
 
 ## Quick Reference
 
@@ -871,27 +1398,12 @@ sudo apt update            # Update package lists
 sudo apt upgrade           # Upgrade installed packages
 sudo apt install [pkg]     # Install package
 sudo apt remove [pkg]      # Uninstall package
-sudo apt autoremove        # Remove unused dependencies
+
 apt search [keyword]       # Search for packages
 apt show [pkg]             # Show package information
 apt list --installed       # List installed packages
 ```
 
-### Essential ROS 2 Commands
-
-```bash
-source /opt/ros/jazzy/setup.bash    # Source ROS 2 environment
-ros2 --version                      # Check ROS 2 version
-ros2 run [pkg] [node]               # Run a node
-ros2 launch [pkg] [launch]          # Launch nodes from file
-ros2 node list                      # List active nodes
-ros2 node info [node]               # Show node information
-ros2 topic list                     # List active topics
-ros2 topic echo [topic]             # Display topic messages
-ros2 topic pub [topic] [msg] [data] # Publish to topic
-ros2 pkg list                       # List installed packages
-ros2 pkg create [name]              # Create new package
-```
 
 ---
 
@@ -975,6 +1487,33 @@ The next session will cover:
 > Ensure all tasks in this session are completed before proceeding.
 
 ---
+## Next Steps
+
+**Congratulations! You've built your foundation.**
+
+**Here's what you can do now:**
+- ✅ Navigate Linux with the terminal
+- ✅ Install software packages with APT
+- ✅ Edit files with nano
+- ✅ Use VS Code with ROS 2 extensions
+- ✅ Activate ROS 2 automatically in every terminal
+- ✅ Understand Linux file system structure
+- ✅ Run basic ROS 2 commands
+
+**Where to go from here:**
+- Create your first ROS 2 package
+- Learn `colcon build` workflow
+- Write Python nodes (publishers and subscribers)
+- Author launch files for multi-node systems
+- Build C++ nodes for performance
+- Use Git to manage your robot code
+
+**Remember:** You just learned the essentials. Everything else builds on this foundation.
+
+**Keep practicing. You're ready for real ROS 2 development!**
+
+
+
 
 ## Tasks Index
 
@@ -984,16 +1523,33 @@ All hands-on tasks are located in the [tasks/](tasks/) directory:
 
 ---
 
-## Contributing
+## Resources
 
-**Want to improve this course?** Contributions are welcome!
+### Official Documentation
 
-Keep the hands-on, beginner-friendly style. No jargon. Clear steps. Real examples.
+- [ROS 2 Official Documentation](https://docs.ros.org/en/jazzy/)
+- [ROS 2 Installation Guide (Ubuntu)](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html)
+- [VS Code Linux Setup](https://code.visualstudio.com/docs/setup/linux)
 
+### Learning Resources
+
+- [Linux Journey](https://linuxjourney.com/)
+- [The Linux Command Line (free book)](http://linuxcommand.org/tlcl.php)
+- [ROS 2 Tutorials](https://docs.ros.org/en/jazzy/Tutorials.html)
+
+### Cheat Sheets
+
+- [Linux Cheat Sheet (PDF)](https://drive.google.com/file/d/1vddIJlermV-xZ7TZ8eSUCvzHKv_Poj2A/view)
+- [ROS 2 Cheat Sheet (PDF)](https://drive.google.com/file/d/1vlimFy3CSk26AfZjB73rtG6GKqPZVUT9/view)
+
+### Community
+
+- [ROS Discourse](https://discourse.ros.org/)
+- [ROS Answers](https://answers.ros.org/)
 ## License
 
-This course is for educational use.
+This course is for educational use. 
+## CYBER ROBOT TEAM 
 
----
 
 **Now go build robots! 🤖** 
