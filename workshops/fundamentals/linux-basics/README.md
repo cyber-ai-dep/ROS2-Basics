@@ -2,6 +2,66 @@
 
 ---
 
+## Table of Contents
+
+- [Opening of This Repository](#opening-of-this-repository)
+- [Why Linux Is Fundamental for ROS 2](#why-linux-is-fundamental-for-ros-2)
+  - [Linux as the Execution Layer of ROS 2](#linux-as-the-execution-layer-of-ros-2)
+  - [Why Ubuntu Is the Reference Platform](#why-ubuntu-is-the-reference-platform)
+  - [Why Terminal-Based Workflows Are Mandatory](#why-terminal-based-workflows-are-mandatory)
+  - [Critical Terminal Workflows in ROS 2](#critical-terminal-workflows-in-ros-2)
+- [Linux Overview & Scope of This Course](#linux-overview--scope-of-this-course)
+  - [What Linux Means in This Course](#what-linux-means-in-this-course)
+  - [Ubuntu 24.04 LTS](#ubuntu-2404-lts)
+  - [The Terminal as the Control Interface](#the-terminal-as-the-control-interface)
+  - [Course Scope](#course-scope)
+- [Downloads & System Preparation](#downloads--system-preparation)
+  - [Prerequisites](#prerequisites)
+  - [🖥 Virtual Machine Setup](#-virtual-machine-setup)
+  - [💽 Dual Boot Setup](#-dual-boot-setup)
+  - [ROS 2 Jazzy Jalisco Installation](#ros-2-jazzy-jalisco-installation)
+- [The .bashrc File](#the-bashrc-file)
+  - [What Is .bashrc?](#what-is-bashrc)
+  - [When .bashrc Runs](#when-bashrc-runs)
+  - [Why ROS 2 Depends on .bashrc](#why-ros-2-depends-on-bashrc)
+- [VS Code Installation](#vs-code-installation)
+  - [What is VS Code?](#what-is-vs-code)
+  - [Why Install It Now?](#why-install-it-now)
+  - [Let's Download VS Code](#lets-download-vs-code)
+  - [Install VS Code From Terminal](#install-vs-code-from-terminal)
+  - [Launch VS Code](#launch-vs-code)
+  - [Essential VS Code Extensions for ROS 2](#essential-vs-code-extensions-for-ros-2)
+  - [Install All Extensions (Quick Method)](#install-all-extensions-quick-method)
+  - [Install Extensions Manually (Alternative)](#install-extensions-manually-alternative)
+- [Core Linux Environment Concepts](#core-linux-environment-concepts)
+  - [Files vs Folders: Understanding the Linux File System](#files-vs-folders-understanding-the-linux-file-system)
+- [Command Line Foundations](#command-line-foundations)
+  - [Understanding the Terminal Prompt](#understanding-the-terminal-prompt)
+  - [Why the Command Line Exists](#why-the-command-line-exists)
+  - [ROS 2 Terminal Workflows](#ros-2-terminal-workflows)
+- [Essential ROS 2 Packages Installation](#essential-ros-2-packages-installation)
+  - [Controllers + ros2_control](#controllers--ros2_control)
+  - [Install MoveIt2](#install-moveit2)
+- [Next Steps](#next-steps)
+- [Resources](#resources)
+  - [Official Documentation](#official-documentation)
+  - [Learning Resources](#learning-resources)
+  - [Cheat Sheets](#cheat-sheets)
+  - [Community](#community)
+- [Quick Reference](#quick-reference)
+  - [Essential Linux Commands](#essential-linux-commands)
+  - [Essential APT Commands](#essential-apt-commands)
+  - [Essential ROS 2 Commands](#essential-ros-2-commands)
+- [Common Issues and Solutions](#common-issues-and-solutions)
+- [Workshop Tips](#workshop-tips)
+- [Key Skills Summary](#key-skills-summary)
+- [What's Next](#whats-next)
+- [Tasks Index](#tasks-index)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
 ## Opening of This Repository
 
 Welcome! This course teaches you Linux skills needed for ROS 2 robotics. No prior experience required.
@@ -406,56 +466,57 @@ Search for "Visual Studio Code" and click it.
 #### 1. Python (Microsoft)
 Makes Python coding smooth — debugging, error checking, autocomplete.
 
-<img src="assets/images/fundamentals/python.png" width="600"/>
+<img src="../../../assets/images/fundamentals/python.png" width="600"/>
 
 ---
 
 #### 2. Pylance (Microsoft)
 Advanced Python features — faster completions, type checking.
 
-<img src="assets/images/fundamentals/pylance.png" width="600"/>
+<img src="../../../assets/images/fundamentals/pylance.png" width="600"/>
 
 ---
 
 #### 3. ROS (Microsoft)
 ROS 2 integration — launch file support, URDF previews.
 
-<img src="assets/images/fundamentals/ros.png" width="600"/>
+<img src="../../../assets/images/fundamentals/ros.png" width="600"/>
 
 ---
 
 #### 4. C/C++ (Microsoft)
 C++ support — needed when you write ROS 2 nodes in C++.
 
-<img src="assets/images/fundamentals/c-cpp.png" width="600"/>
+<img src="../../../assets/images/fundamentals/c-cpp.png" width="600"/>
 
 ---
 
 #### 5. CMake (twxs)
 Helps with CMakeLists.txt files used in ROS 2 C++ packages.
 
-<img src="assets/images/fundamentals/cmake-tools.png" width="600"/>
+<img src="../../../assets/images/fundamentals/cmake-tools.png" width="600"/>
 
 ---
 
 #### 6. XML (Red Hat)
 Highlights and validates package.xml and launch files.
 
-<img src="assets/images/fundamentals/xml.png" width="600"/>
+<img src="../../../assets/images/fundamentals/xml.png" width="600"/>
 
 ---
 
 #### 7. YAML (Red Hat)
 Highlights YAML config files used in ROS 2.
 
-<img src="assets/images/fundamentals/yaml.png" width="600"/>
+<img src="../../../assets/images/fundamentals/yaml.png" width="600"/>
 
 ---
 
 #### 8. LaunchMap (launchmap)
 Visualize and manage complex launch file systems.
 
-<img src="assets/images/fundamentals/launchmap.png" width="600"/>
+<img src="../../../assets/images/fundamentals/launchmap.png" width="600"/>
+
 
 ### Install All Extensions (Quick Method)
 
@@ -935,4 +996,4 @@ This course is for educational use.
 
 ---
 
-**Now go build robots! 🤖**
+**Now go build robots! 🤖** 
