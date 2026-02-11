@@ -1347,7 +1347,7 @@ This example shows how the loop continues **until a condition changes**.
 A **for loop** is used to iterate over a **sequence** (string, list, range, etc.).
 
 
-![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/dev/assets/images/fundamentals/for-loop-in-python%20(1).png)
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/dev/assets/images/fundamentals/for-loopp.png)
 
 
 ### Basic Syntax
@@ -1615,7 +1615,7 @@ The `return` statement is used to exit a function and return a value to the call
 
 
 
-![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/dev/assets/images/fundamentals/python-functions.jpg)
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/dev/assets/images/fundamentals/Python-Function-Syntax.png)
 
 
 
@@ -2203,6 +2203,7 @@ This shows:
 
 
 ```
+
 
 
 
