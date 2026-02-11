@@ -22,6 +22,8 @@ Python is one of the most widely used programming languages due to its simplicit
 
 The **Python Package Index (PyPI)** is the main repository for third-party Python packages. It hosts hundreds of thousands of libraries that provide ready-to-use solutions for tasks such as robotics, computer vision, data processing, and machine learning. These packages can be easily installed using the pip command, enabling developers to quickly build complex systems with minimal effort.
 
+⚠️ Note: Try the examples on your device to see the actual results.
+
 ## 1) Environment & Running Code (Ubuntu + VS Code)
 
 ### Run a Python file
@@ -67,6 +69,9 @@ A **variable** is like a container that stores data. It can be a number, a text,
 - Dictionaries
 
 ### Variable Naming Rules
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/dev/assets/images/fundamentals/variableNaming2.jpg)
+
 
 - Must start with a letter or `_`
 - No spaces
@@ -359,6 +364,9 @@ robot_name = "ATLAS"
 print(robot_name == "ATLAS")  # True
 print(robot_name == "atlas")  # False (case-sensitive)
 ```
+
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/dev/assets/images/fundamentals/type_conversion_in_python_3.webp)
+
 
 ### Logical Operators
 
@@ -2159,6 +2167,7 @@ This shows:
 
 
 ```
+
 
 
 
