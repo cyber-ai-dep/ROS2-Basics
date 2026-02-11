@@ -351,21 +351,6 @@ sudo apt update
 sudo apt upgrade
 ```
 
-**Now choose your installation:**
-
-**Option 1: Desktop Install (Recommended for beginners)**
-
-```bash
-sudo apt install ros-jazzy-desktop
-```
-
-This gives you: ROS 2 + RViz (visualization) + demos + tutorials.
-
-**Option 2: ROS-Base Install (Minimal)**
-
-```bash
-sudo apt install ros-jazzy-ros-base
-```
 ## Essential ROS 2 Packages Installation
 
 **Now that ROS 2 is installed, let's add the advanced tools you'll need later.**
@@ -517,7 +502,14 @@ ROS 2 requires environment variables before commands are available:
 - `PATH`: ROS 2 executable directories
 - `LD_LIBRARY_PATH`: ROS 2 shared libraries
 - Without these variables, commands like `ros2`, `colcon`, and `rviz2` will not be found.
+## Setup ROS 2 Environment
 
+Run the following commands to automatically source ROS 2 Jazzy in every new terminal:
+
+```bash
+echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+```
 ---
 
 ## VS Code Installation
@@ -598,6 +590,7 @@ Search for "Visual Studio Code" and click it.
 ---
 
 
+
 ### Essential VS Code Extensions for ROS 2
 
 **These extensions supercharge VS Code for robotics.**
@@ -607,56 +600,56 @@ Search for "Visual Studio Code" and click it.
 #### 1. Python (Microsoft)
 Makes Python coding smooth — debugging, error checking, autocomplete.
 
-<img src="assets/images/fundamentals/python.png" width="600"/>
+<img src="../../../assets/images/fundamentals/python.png" width="600"/>
 
 ---
 
 #### 2. Pylance (Microsoft)
 Advanced Python features — faster completions, type checking.
 
-<img src="assets/images/fundamentals/pylance.png" width="600"/>
+<img src="../../../assets/images/fundamentals/pylance.png" width="600"/>
 
 ---
 
 #### 3. ROS (Microsoft)
 ROS 2 integration — launch file support, URDF previews.
 
-<img src="assets/images/fundamentals/ros.png" width="600"/>
+<img src="../../../assets/images/fundamentals/ros.png" width="600"/>
 
 ---
 
 #### 4. C/C++ (Microsoft)
 C++ support — needed when you write ROS 2 nodes in C++.
 
-<img src="assets/images/fundamentals/c-cpp.png" width="600"/>
+<img src="../../../assets/images/fundamentals/c-cpp.png" width="600"/>
 
 ---
 
 #### 5. CMake (twxs)
 Helps with CMakeLists.txt files used in ROS 2 C++ packages.
 
-<img src="assets/images/fundamentals/cmake-tools.png" width="600"/>
+<img src="../../../assets/images/fundamentals/cmake-tools.png" width="600"/>
 
 ---
 
 #### 6. XML (Red Hat)
 Highlights and validates package.xml and launch files.
 
-<img src="assets/images/fundamentals/xml.png" width="600"/>
+<img src="../../../assets/images/fundamentals/xml.png" width="600"/>
 
 ---
 
 #### 7. YAML (Red Hat)
 Highlights YAML config files used in ROS 2.
 
-<img src="assets/images/fundamentals/yaml.png" width="600"/>
+<img src="../../../assets/images/fundamentals/yaml.png" width="600"/>
 
 ---
 
 #### 8. LaunchMap (launchmap)
 Visualize and manage complex launch file systems.
 
-<img src="assets/images/fundamentals/launchmap.png" width="600"/>
+<img src="../../../assets/images/fundamentals/launchmap.png" width="600"/>
 
 
 ### Install Extensions Manually (Alternative)
@@ -711,58 +704,7 @@ Visualize and manage complex launch file systems.
 - `/opt/ros/jazzy/` = Where ROS 2 lives
 - `/usr/bin/` = Where commands like `python3` are
 
-#### Let's Build a Real ROS 2 Workspace
 
-**Follow along and type these commands:**
-
-```bash
-cd ~
-mkdir ros2_workshop
-cd ros2_workshop
-mkdir -p practice/src/my_robot_pkg    # -p creates parent folders too
-cd practice/src/my_robot_pkg
-touch package.xml setup.py setup.cfg  # Create empty files
-mkdir my_robot_pkg
-touch my_robot_pkg/__init__.py        # Makes it a Python package
-ls -la                                # List everything
-```
-
-**What did we just do?** Created a proper ROS 2 Python package structure.
-
-**Let's visualize the tree:**
-
-```bash
-cd ../../..                           # Go up 3 levels
-pwd                                   # Check where you are
-sudo apt install -y tree              # Install tree viewer
-tree                                  # Show the structure
-```
-
-**You should see:**
-
-```
-.
-└── practice
-    └── src
-        └── my_robot_pkg
-            ├── my_robot_pkg
-            │   └── __init__.py
-            ├── package.xml
-            ├── setup.cfg
-            └── setup.py
-
-3 directories, 4 files
-```
-
-**What each file does:**
-- `package.xml` = Package info (name, dependencies, version)
-- `setup.py` = Python installation instructions
-- `setup.cfg` = Python configuration
-- `__init__.py` = Marks the folder as a Python module
-
-**This is standard ROS 2 structure.** You'll create this again when building real packages.
-
----
 
 ## Command Line Foundations
 
@@ -1515,11 +1457,24 @@ The next session will cover:
 
 
 
-## Tasks Index
 
-All hands-on tasks are located in the [tasks/](tasks/) directory:
+---
 
-- **[tasks/task.md](tasks/task.md)** - Final comprehensive task with submission requirements
+## 📝 Tasks Index
+
+All hands-on tasks for this workshop are organized inside the `tasks/` directory.
+
+### 🎯 Final Comprehensive Task
+
+- **[Final Comprehensive Task](tasks/Final_Comprehensive_Task.md)**  
+  The main practical assignment that evaluates your understanding of Linux, ROS 2 environment setup, terminal usage, and system configuration.
+
+- **[Final Comprehensive Task Solution](solutions/Final_Comprehensive_Task_Solution.md)**  
+  The complete reference solution. Review it only after attempting the task yourself.
+
+
+
+Make sure you complete the task before moving to the next workshop.
 
 ---
 
@@ -1546,10 +1501,25 @@ All hands-on tasks are located in the [tasks/](tasks/) directory:
 
 - [ROS Discourse](https://discourse.ros.org/)
 - [ROS Answers](https://answers.ros.org/)
-## License
 
-This course is for educational use. 
-## CYBER ROBOT TEAM 
+---
 
+## 📜 License
 
-**Now go build robots! 🤖** 
+This course material is provided for **educational purposes only**.  
+You are welcome to use it for learning, teaching, and academic activities.
+
+For commercial use or redistribution, please contact the authors.
+
+---
+
+## 🤖 CYBER ROBOT TEAM
+
+Developed and maintained by **Cyber Robot Team**  
+Focused on robotics education, ROS 2 development, and building real engineering skills.
+
+---
+
+### 🚀 Keep Learning. Keep Building. Keep Innovating.
+
+**Now go build robots. 🤖**
