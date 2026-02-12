@@ -210,6 +210,21 @@ This means:
 - `ros2 run` can execute them
 - ROS 2 can manage their dependencies
 
+## Build System Overview
+
+### `ament_cmake`
+`ament_cmake` is used mainly for **C++ packages** in ROS 2. Because C++ is a compiled language, it needs a build system to convert the code into an executable program. `CMakeLists.txt` tells ROS how to compile the code, link libraries, and prepare everything correctly. It gives more control, but it is a bit more complex.
+
+### `ament_python`
+`ament_python` is used for **Python packages**. Python does not need compilation, so the process is simpler. Instead of compiling, ROS just installs and registers the Python files using `setup.py`. This makes development faster and easier compared to C++.
+
+### Why ROS 2 Uses Both
+ROS 2 supports both **C++ and Python** because each language has distinct advantages:
+- **C++** — Faster and better for performance-critical robot systems
+- **Python** — Easier and quicker for development and testing
+
+By providing `ament_cmake` for C++ and `ament_python` for Python, ROS 2 accommodates both high-performance and rapid-development needs.
+
 ---
 
 ## 4. Create ROS 2 Python Package
@@ -710,6 +725,7 @@ This is exactly how autonomous robots work!
 - [ROS 2 Beginner Tutorials](https://docs.ros.org/en/jazzy/Tutorials/Beginner-CLI-Tools.html)
 - [ROS 2 Tutorials](https://docs.ros.org/en/jazzy/Tutorials.html)
 - [rclpy API Documentation](https://docs.ros2.org/latest/api/rclpy/)
+
 
 
 
