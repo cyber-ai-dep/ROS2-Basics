@@ -75,7 +75,10 @@ Replace robot "R5" with "R5_NEW".
 
 ### Step 7 — Print the Following
 Print:
+
     • The selected robot
+    
     • The updated factory grid
+
 
 
