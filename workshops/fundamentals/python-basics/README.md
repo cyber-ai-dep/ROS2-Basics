@@ -20,7 +20,63 @@ This lesson is designed to refresh your knowledge of **Python programming**, wit
 
 Python is one of the most widely used programming languages due to its simplicity and beginner-friendly syntax. At the same time, it is extremely powerful. Python's core functionality can be easily extended by installing and importing external packages, allowing developers to quickly add advanced features without writing everything from scratch. This flexibility makes Python especially suitable for robotics, where rapid development and experimentation are essential.
 
-The **Python Package Index (PyPI)** is the main repository for third-party Python packages. It hosts hundreds of thousands of libraries that provide ready-to-use solutions for tasks such as robotics, computer vision, data processing, and machine learning. These packages can be easily installed using the pip command, enabling developers to quickly build complex systems with minimal effort.
+
+---
+## install the jupyter extention 
+![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/fundamentals/jup.png)
+
+##  Step 1 — Make sure Python is installed
+
+Ubuntu already comes with Python. Check:
+
+\`\`\`bash
+python3 --version
+\`\`\`
+
+---
+
+##  Step 2 — (Recommended) Create a Virtual Environment
+
+This keeps your system clean:
+
+\`\`\`bash
+python3 -m venv myenv
+source myenv/bin/activate
+\`\`\`
+
+>  **Tip:** Now your terminal should show \`(myenv)\` indicating the environment is active.
+
+---
+
+##  Step 3 — Install Jupyter + ipykernel
+
+Inside the activated environment:
+
+\`\`\`bash
+pip install notebook ipykernel
+\`\`\`
+
+---
+
+##  Step 4 — Register the Kernel
+
+This makes it appear in Jupyter / VS Code:
+
+\`\`\`bash
+python -m ipykernel install --user --name=myenv --display-name "Python (myenv)"
+\`\`\`
+
+>  Now the kernel is installed!
+
+---
+
+### Or use in VS Code:
+
+1. Open a \`.ipynb\` file
+2. Click **Select Kernel**
+3. Choose **Python (myenv)**
+
+---
 
 ⚠️ Note: Try the examples on your device to see the actual results.
 
@@ -140,37 +196,6 @@ print(pow(robot_count, 2))
 print(round(broken_ratio))
 ```
 
-### Combining Numbers and Strings
-
-To combine numbers with text, we must convert numbers to strings using `str()`.
-
-```python
-print(
-    "There are " + str(robot_count) +
-    " robots in the warehouse, " +
-    str(broken_ratio) +
-    " of them are malfunctioning."
-)
-```
-
-Output:
-```
-There are 12 robots in the warehouse, 0.75 of them are malfunctioning.
-```
-
-You can also write this in a simpler way using commas:
-
-```python
-print(
-    "There are", robot_count,
-    "robots in the warehouse,",
-    broken_ratio,
-    "of them are malfunctioning."
-)
-```
-
-**Note:** `\n` creates a new line inside a string.
-
 ### String Variables
 
 You can store text inside variables:
@@ -179,8 +204,6 @@ You can store text inside variables:
 warehouse_name = "ROBO_HUB"
 print("The warehouse name is " + warehouse_name)
 ```
-
-Since warehouse_name is already a string, we do **not** need `str()` here.
 
 ### Accessing Characters in a String
 
@@ -223,16 +246,6 @@ To find the length of a string:
 print(len(warehouse_name))
 ```
 
-### Slicing Strings
-
-To extract part of a string:
-
-```python
-print(warehouse_name[0:len(warehouse_name)-1])
-```
-
-This prints all characters except the last one.
-
 ### Finding Characters
 
 To find the position of a character:
@@ -248,67 +261,6 @@ To replace part of a string:
 ```python
 print(warehouse_name.replace("ROBO", "AUTO"))
 ```
-
-### Full Code
-
-```python
-robot_count = 12
-broken_ratio = 0.75
-
-# arithmetic operations
-print(robot_count * (robot_count + broken_ratio))
-
-# modulus operator
-print(robot_count % 5)
-
-# built-in numeric functions
-print(max(robot_count, 8))
-print(min(robot_count, 8))
-print(abs(-robot_count))
-print(pow(robot_count, 2))
-print(round(broken_ratio))
-
-# combining numbers with strings
-print(
-    "There are " + str(robot_count) +
-    " robots in the warehouse, " +
-    str(broken_ratio) +
-    " of them are malfunctioning."
-)
-
-print(
-    "There are", robot_count,
-    "robots in the warehouse,",
-    broken_ratio,
-    "of them are malfunctioning."
-)
-
-# string variables
-warehouse_name = "ROBO_HUB"
-print("The warehouse name is " + warehouse_name)
-
-# accessing characters
-print("First character:", warehouse_name[0])
-print("Fourth character:", warehouse_name[3])
-
-# string functions
-print(warehouse_name.lower())
-print(warehouse_name.islower())
-print(warehouse_name.upper().isupper())
-
-# string length
-print(len(warehouse_name))
-
-# slicing
-print(warehouse_name[0:len(warehouse_name)-1])
-
-# finding characters
-print(warehouse_name.index("R"))
-
-# replacing text
-print(warehouse_name.replace("ROBO", "AUTO"))
-```
-
 ---
 
 ## Booleans (True and False)
@@ -454,30 +406,6 @@ print(True * 5)
 print(False + 10)
 ```
 
-### Full Boolean Example (Complete Code)
-
-```python
-robot_active = True
-emergency_stop = False
-battery_level = 65
-obstacle_detected = False
-robot_name = "ATLAS"
-
-print(robot_active)
-print(emergency_stop)
-print(battery_level > 50)
-print(battery_level < 20)
-print(robot_name == "ATLAS")
-print(robot_name.isupper())
-
-robot_can_move = robot_active and battery_level > 30 and not obstacle_detected
-
-print(robot_can_move)
-print(type(robot_can_move))
-
-print(True + True)
-print(False * 10)
-```
 
 ### Common Beginner Mistakes
 
@@ -613,51 +541,6 @@ factory_robots.remove("UR")
 print(factory_robots)
 ```
 
-### Inserting Items at a Specific Position
-
-You can insert an item at a specific index using `insert()`:
-
-```python
-factory_robots.insert(1, "UR")
-print(factory_robots)
-```
-
-### Sorting a List
-
-To sort the list alphabetically:
-
-```python
-factory_robots.sort()
-print(factory_robots)
-```
-
-### Reversing a List
-
-To reverse the order of items:
-
-```python
-factory_robots.reverse()
-print(factory_robots)
-```
-
-### Length of a List
-
-To find how many items are in a list:
-
-```python
-print(len(factory_robots))
-```
-
-### Extending a List
-
-You can add another list to an existing list using `extend()`:
-
-```python
-extra_robots = ["Yaskawa", "Staubli"]
-factory_robots.extend(extra_robots)
-print(factory_robots)
-```
-
 ### Removing the Last Item
 
 To remove the last item in the list:
@@ -680,26 +563,6 @@ To count how many times an item appears:
 ```python
 print(factory_robots.count("ABB"))
 ```
-
-### Copying a List
-
-To make a copy of a list:
-
-```python
-backup_robots = factory_robots.copy()
-print(factory_robots)
-print(backup_robots)
-```
-
-### Clearing a List
-
-To remove all items from a list:
-
-```python
-factory_robots.clear()
-print(factory_robots)
-```
-
 ---
 
 ## 2D Lists (Nested Lists)
@@ -736,74 +599,6 @@ You can change a value by assigning a new one:
 robot_grid[1][2] = 10
 print(robot_grid)
 ```
-
-### Full Code (Lists + 2D Lists)
-
-```python
-# list of robot manufacturers
-factory_robots = ["ABB", "KUKA", "FANUC", "Omron"]
-print(factory_robots)
-
-print(factory_robots[1])
-print(factory_robots[:3])
-
-factory_robots.append("UR")
-print(factory_robots)
-
-factory_robots.remove("UR")
-print(factory_robots)
-
-factory_robots.insert(1, "UR")
-print(factory_robots)
-
-factory_robots.sort()
-print(factory_robots)
-
-factory_robots.reverse()
-print(factory_robots)
-
-print(len(factory_robots))
-
-extra_robots = ["Yaskawa", "Staubli"]
-factory_robots.extend(extra_robots)
-print(factory_robots)
-
-factory_robots.pop()
-print(factory_robots)
-
-print(factory_robots.index("ABB"))
-print(factory_robots.count("ABB"))
-
-backup_robots = factory_robots.copy()
-print(factory_robots)
-print(backup_robots)
-
-for robot in factory_robots:
-    print(robot)
-
-factory_robots.clear()
-print(factory_robots)
-
-# 2D list example
-robot_grid = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9]
-]
-
-print(robot_grid)
-print(robot_grid[0][0])
-print(robot_grid[1][2])
-
-robot_grid[1][2] = 10
-print(robot_grid)
-```
-
----
-
-## Hands-On (Factory Robot Layout Update)
-
-A factory control system keeps track of the robot manufacturers used on the production floor and stores robot positions in a grid that represents different production lines. During a system update, a new robot manufacturer is added, one manufacturer is removed, and the list needs to be reorganized to reflect the current setup. At the same time, the factory layout grid must be checked to identify specific robot positions, and one robot in the grid needs to be replaced due to maintenance. After the update, the system should display the current list of manufacturers, the total number of manufacturers, selected manufacturers by position, and the updated factory layout grid.
 
 ---
 
@@ -850,21 +645,6 @@ You can also slice a tuple to get multiple values:
 print(control_engineers[:2])  # prints the first two engineers
 ```
 
-### Unpacking a Tuple
-
-Tuples can be unpacked into multiple variables.
-Each variable gets one value from the tuple.
-
-```python
-eng1, eng2, eng3, eng4 = control_engineers
-print(eng1, eng2, eng3, eng4)
-```
-
-You can access any unpacked value directly:
-
-```python
-print(eng3)
-```
 
 ### Immutability of Tuples
 
@@ -877,68 +657,6 @@ Trying to change a value will cause an error.
 ```
 
 This is why tuples are often used for **fixed data** that should not change.
-
-### Tuples with Different Data Types
-
-A tuple can store different data types together:
-
-```python
-robot_info = ("XR-21", 85, True)
-```
-
-### List of Tuples
-
-You can create a **list of tuples**, which is very common in robotics and data processing.
-
-Example: pairing engineers for robot calibration:
-
-```python
-engineer_pairs = [
-    (control_engineers[0], control_engineers[3]),
-    (control_engineers[1], control_engineers[2])
-]
-```
-
-### Accessing Tuples Inside a List
-
-```python
-print(engineer_pairs)
-print(engineer_pairs[0])
-print(engineer_pairs[0][1])
-```
-
-### Full Code (Tuples)
-
-```python
-# this section is about tuples
-control_engineers = ("Hannah", "Jim", "Bella", "John")
-print(control_engineers)
-
-# print the second value in the tuple
-print(control_engineers[1])
-
-# slicing the tuple
-print(control_engineers[:2])
-
-# unpacking the tuple
-eng1, eng2, eng3, eng4 = control_engineers
-print(eng1, eng2, eng3, eng4)
-print(eng3)
-
-# tuples are immutable
-# control_engineers[1] = "Bob"
-
-# list of tuples (engineer pairs)
-engineer_pairs = [
-    (control_engineers[0], control_engineers[3]),
-    (control_engineers[1], control_engineers[2])
-]
-
-print(engineer_pairs)
-print(engineer_pairs[0])
-print(engineer_pairs[0][1])
-```
-
 
 ---
 
@@ -1033,85 +751,6 @@ Accessing values:
 print(joint_defaults["joint2"])
 ```
 
-### Nested Dictionaries (Dictionary Inside Dictionary)
-
-Dictionaries can store **other dictionaries** as values.
-
-Example: robot arm joint configuration.
-
-```python
-arm_config = {
-    "joint1": {
-        "min": -90,
-        "max": 90,
-        "default": 0
-    },
-    "joint2": {
-        "min": -180,
-        "max": 180,
-        "default": 0
-    },
-    "joint3": {
-        "min": -90,
-        "max": 90,
-        "default": 0
-    }
-}
-```
-
-### Accessing Nested Dictionary Values
-
-```python
-print(arm_config["joint1"])
-print(arm_config["joint2"]["max"])
-print(arm_config["joint3"]["min"])
-```
-
-You first access the **outer key**, then the **inner key**.
-
-### Full Code (Dictionaries)
-
-```python
-# dictionary mapping objects to colors
-object_colors = {
-    "ball": "red",
-    "cube": "green",
-    "flower": "pink",
-    "pyramid": "blue"
-}
-
-print("The ball is", object_colors["ball"])
-print("The cube is", object_colors["cube"])
-print(object_colors.get("box", "no such object"))
-
-# adding and updating values
-object_colors["cylinder"] = "yellow"
-object_colors["ball"] = "orange"
-print(object_colors)
-
-# dictionary for robot arm configuration
-arm_config = {
-    "joint1": {
-        "min": -90,
-        "max": 90,
-        "default": 0
-    },
-    "joint2": {
-        "min": -180,
-        "max": 180,
-        "default": 0
-    },
-    "joint3": {
-        "min": -90,
-        "max": 90,
-        "default": 0
-    }
-}
-
-print(arm_config["joint1"])
-print(arm_config["joint2"]["max"])
-print(arm_config["joint3"]["min"])
-```
 
 ### Choosing the Right Structure
 
@@ -1246,33 +885,6 @@ Conditional statements allow robots to:
 
 Without `if` statements, robots would not be able to **adapt** to their environment.
 
-### Full Code (Conditional Statements)
-
-```python
-# joystick control example
-joystick_input = "up"
-
-if joystick_input == "right":
-    print("Moving the first joint in positive direction")
-elif joystick_input == "left":
-    print("Moving the first joint in negative direction")
-elif joystick_input == "up":
-    print("Moving the second joint in positive direction")
-elif joystick_input == "down":
-    print("Moving the second joint in negative direction")
-else:
-    print("Joystick is in neutral position, no movement")
-
-# obstacle detection example
-sensor1_distance = 1.5
-sensor2_distance = 1.2
-safe_distance = 1.0
-
-if sensor1_distance < safe_distance or sensor2_distance < safe_distance:
-    print("Warning: Obstacle detected! Stopping robot.")
-else:
-    print("Path is clear. Moving forward.")
-```
 
 ---
 
@@ -1483,58 +1095,7 @@ for row in robot_grid:
 
 ---
 
-## Full Code (While, For, Range, For-Else, Nested)
 
-```python
-# while loop example
-position = 0
-obstacle_detected = False
-
-while not obstacle_detected:
-    print("Robot moving forward...")
-    position += 1
-    if position == 5:
-        obstacle_detected = True
-
-print("Obstacle detected! Robot stopped.")
-print("Final position:", position)
-
-# for loop with string
-for letter in "Robotics":
-    print(letter)
-
-# for loop with list
-robotics_engineers = ["Tim", "Hannah", "John", "Bella"]
-
-for engineer in robotics_engineers:
-    print(engineer)
-
-# for loop with indexes
-for index in range(len(robotics_engineers)):
-    print(index, robotics_engineers[index])
-
-# range loop
-for number in range(3, 10):
-    print(number)
-
-# for-else loop
-robot_ids = [101, 102, 103]
-search_id = 105
-
-for robot in robot_ids:
-    if robot == search_id:
-        print("Robot found!")
-        break
-else:
-    print("Robot not found.")
-
-# nested loops with 2D list
-matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-
-for row in matrix:
-    for element in row:
-        print(element)
-```
 
 ### Infinite Loop Warning
 
@@ -1543,15 +1104,6 @@ Dangerous code:
 ```python
 while True:
     print("Robot moving forever")
-```
-
-Safe version:
-
-```python
-while True:
-    command = input("Enter command: ")
-    if command == "stop":
-        break
 ```
 
 Always ensure the condition **can change** or you use `break`
@@ -1670,49 +1222,6 @@ def battery_is_safe(level):
 
 battery_level = 45
 print(battery_is_safe(battery_level))
-```
-
-The function returns a **Boolean**, which can be reused in decision logic.
-
-### Functions + Conditions (Decision Functions)
-
-Robots often need functions that **make decisions**.
-
-```python
-def can_robot_move(battery, obstacle_detected):
-    if battery > 30 and not obstacle_detected:
-        return True
-    return False
-
-print(can_robot_move(50, False))
-print(can_robot_move(20, True))
-```
-
-### Functions Returning Calculated Values
-
-Example: computing traveled distance.
-
-```python
-def calculate_distance(speed, time):
-    return speed * time
-
-distance = calculate_distance(2, 5)
-print("Distance traveled:", distance)
-```
-
-### Functions Returning Strings (Status Messages)
-
-Functions can also return **formatted text**.
-
-```python
-def robot_status(name, active):
-    if active:
-        return "Robot " + name + " is ACTIVE"
-    else:
-        return "Robot " + name + " is INACTIVE"
-
-print(robot_status("XR-21", True))
-```
 
 ### Using Default Parameter Values
 
@@ -1725,20 +1234,6 @@ def move_robot(direction="forward", speed=1):
 
 move_robot()
 move_robot("left", 3)
-```
-
-### Functions Calling Other Functions
-
-Real robot systems are **layers of functions**.
-
-```python
-def read_sensor():
-    return 0.8
-
-def obstacle_detected():
-    return read_sensor() < 1.0
-
-print(obstacle_detected())
 ```
 
 ### Example: Complete Robot Control Logic Using Functions
@@ -1767,49 +1262,6 @@ Functions allow you to:
 - scale programs safely
 - transition naturally to **classes and ROS nodes**
 
-### Full Code (Powerful Functions Example)
-
-```python
-def battery_is_safe(level):
-    return level > 30
-
-def obstacle_detected(distance):
-    return distance < 1.0
-
-def calculate_distance(speed, time):
-    return speed * time
-
-def move_robot(direction, distance):
-    print("Moving", direction, "for", distance, "units")
-
-def can_robot_operate(battery, sensor_distance):
-    return battery_is_safe(battery) and not obstacle_detected(sensor_distance)
-
-move_robot("forward", 3)
-
-distance = calculate_distance(2, 4)
-print("Distance traveled:", distance)
-
-print("Battery safe:", battery_is_safe(40))
-print("Can operate:", can_robot_operate(50, 1.5))
-print("Can operate:", can_robot_operate(20, 0.5))
-```
-
----
-
-## Hands On (Factory Robot Controller)
-
-A factory robot has a fixed identity and operates inside a square workspace.
-The robot moves forward in equal steps while it is safe to operate.
-
-Safety is determined by a function that checks the robot's current battery level and obstacle status and returns whether operation is allowed.
-Movement is handled by a function that receives the current position and movement speed and returns the updated position.
-
-The robot's internal state (battery, speed, obstacle status) is stored as structured data and is updated on every step.
-Each movement step must be recorded in the workspace grid.
-
-The robot continues operating until the safety check fails.
-When the robot stops, the program prints the robot's identity, final position, final battery level, and the final workspace grid.
 
 ---
 
@@ -2203,6 +1655,7 @@ This shows:
 
 
 ```
+
 
 
 
