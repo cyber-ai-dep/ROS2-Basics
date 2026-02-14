@@ -39,10 +39,10 @@ python3 --version
 
 This keeps your system clean:
 
-\`\`\`bash
+```bash
 python3 -m venv myenv
 source myenv/bin/activate
-\`\`\`
+```
 
 >  **Tip:** Now your terminal should show \`(myenv)\` indicating the environment is active.
 
@@ -52,9 +52,9 @@ source myenv/bin/activate
 
 Inside the activated environment:
 
-\`\`\`bash
+```bash
 pip install notebook ipykernel
-\`\`\`
+```
 
 ---
 
@@ -62,9 +62,9 @@ pip install notebook ipykernel
 
 This makes it appear in Jupyter / VS Code:
 
-\`\`\`bash
+```bash
 python -m ipykernel install --user --name=myenv --display-name "Python (myenv)"
-\`\`\`
+```
 
 >  Now the kernel is installed!
 
@@ -1655,6 +1655,7 @@ This shows:
 
 
 ```
+
 
 
 
