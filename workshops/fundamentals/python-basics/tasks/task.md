@@ -62,8 +62,11 @@ Each inner list represents one production line.
 
 ### Step 5 — Access a Specific Robot
 Access the robot located at:
+
     • Row 1
+    
     • Column 2
+    
 Store it in a variable called:
 selected_robot
 
@@ -74,4 +77,5 @@ Replace robot "R5" with "R5_NEW".
 Print:
     • The selected robot
     • The updated factory grid
+
 
