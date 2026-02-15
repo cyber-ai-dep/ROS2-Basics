@@ -23,7 +23,6 @@ Expected output:
 jazzy
 ```
 
-If `ros2` command is not found, fix this before proceeding.
 
 ### First Time Setup Checklist
 Before starting the workshop, verify:
@@ -725,6 +724,7 @@ This is exactly how autonomous robots work!
 - [ROS 2 Beginner Tutorials](https://docs.ros.org/en/jazzy/Tutorials/Beginner-CLI-Tools.html)
 - [ROS 2 Tutorials](https://docs.ros.org/en/jazzy/Tutorials.html)
 - [rclpy API Documentation](https://docs.ros2.org/latest/api/rclpy/)
+
 
 
 
