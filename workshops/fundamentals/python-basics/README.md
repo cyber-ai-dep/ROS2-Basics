@@ -1166,11 +1166,6 @@ A function is a block of code that performs a specific task. It can be used to g
 The `return` statement is used to exit a function and return a value to the caller. The value that is returned can be any Python object, such as a number, string, list, or dictionary. After the `return`, no code will be executed because when Python sees the return keyword it will break out of the code.
 
 
-
-![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/dev/assets/images/fundamentals/Python-Function-Syntax.png)
-
-
-
 Functions can be passed data in two ways:
 
 - **Arguments**. Arguments are passed to a function when it is called. They can be any type of value, such as numbers, strings, lists, or dictionaries.
@@ -1655,6 +1650,7 @@ This shows:
 
 
 ```
+
 
 
 
