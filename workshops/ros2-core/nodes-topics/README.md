@@ -15,12 +15,12 @@ You should have already completed:
 
 ### Verify ROS 2 Installation
 ```bash
-ros2 --version
+echo $ROS_DISTRO
 ```
 
 Expected output:
 ```
-ros2 cli version X.X.X
+jazzy
 ```
 
 If `ros2` command is not found, fix this before proceeding.
@@ -725,6 +725,7 @@ This is exactly how autonomous robots work!
 - [ROS 2 Beginner Tutorials](https://docs.ros.org/en/jazzy/Tutorials/Beginner-CLI-Tools.html)
 - [ROS 2 Tutorials](https://docs.ros.org/en/jazzy/Tutorials.html)
 - [rclpy API Documentation](https://docs.ros2.org/latest/api/rclpy/)
+
 
 
 
