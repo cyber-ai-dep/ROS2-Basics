@@ -1257,6 +1257,179 @@ Functions allow you to:
 - scale programs safely
 - transition naturally to **classes and ROS nodes**
 
+---
+
+## Python Modules & Imports -- Teaching the Robot to Use External Skills
+
+### Section Objective
+
+By the end of this section, learners will be able to:
+
+- Understand what a **module** is
+- Import built-in Python modules
+- Import specific functions or classes
+- Create and import their **own modules**
+- Organize robotics code in a clean way
+
+# Python Modules in Robotics
+
+##  Overview
+
+This lesson explains how **Python Modules** are used in robotics
+applications.
+
+In robotics systems, modules help us:
+
+-   Organize robot subsystems\
+-   Separate movement, sensors, and logic\
+-   Reuse code efficiently\
+-   Build scalable robot software
+
+------------------------------------------------------------------------
+
+#  What Is a Module?
+
+A **module** is simply:
+
+> A Python file that contains functions, variables, or classes.
+
+In robotics, a module can represent:
+
+-   Movement controller\
+-   Sensor manager\
+-   Battery monitor\
+-   Communication system\
+-   Vision processing unit
+
+------------------------------------------------------------------------
+
+# 🔹 Part 1 --- Using Built-in Modules (Robotics Example)
+
+## Importing a Module
+
+``` python
+import random
+
+print(random)
+print(f"Random sensor noise: {random.random()}")
+```
+
+###  Robotics Meaning
+
+We use `random` in robotics to:
+
+-   Simulate sensor noise\
+-   Generate random exploration behavior\
+-   Test movement randomness
+
+------------------------------------------------------------------------
+
+## Show All Functions Inside a Module
+
+``` python
+print(dir(random))
+```
+
+This displays all available functions inside the module.
+
+------------------------------------------------------------------------
+
+## Import Specific Functions
+
+``` python
+from random import randint, random
+
+print(f"Random float noise: {random()}")
+print(f"Random motor speed: {randint(100, 900)}")
+```
+
+### ⚠ Important Note
+
+When you write:
+
+``` python
+from random import random
+```
+
+Now `random` refers to the function, NOT the module anymore.
+
+------------------------------------------------------------------------
+
+# 🔹 Part 2 --- Creating Your Own Robotics Module
+
+## Step 1: Create File `robot_controller.py`
+
+``` python
+# robot_controller.py
+
+def move_forward(distance):
+    print(f"Robot moving forward {distance} meters")
+
+def turn(direction):
+    print(f"Robot turning {direction}")
+
+def read_sensor():
+    print("Reading distance sensor...")
+    return 25
+```
+
+------------------------------------------------------------------------
+
+# 🔹 Part 3 --- Using Your Robotics Module
+
+## Import Entire Module
+
+``` python
+# main.py
+import robot_controller
+
+print(dir(robot_controller))
+
+robot_controller.move_forward(2)
+robot_controller.turn("LEFT")
+
+distance = robot_controller.read_sensor()
+print(f"Obstacle detected at {distance} cm")
+```
+
+------------------------------------------------------------------------
+
+## Using Alias
+
+``` python
+import robot_controller as rc
+
+rc.move_forward(5)
+rc.turn("RIGHT")
+```
+
+------------------------------------------------------------------------
+
+## Import Specific Function
+
+``` python
+from robot_controller import move_forward
+
+move_forward(10)
+```
+
+------------------------------------------------------------------------
+
+## Import With Alias
+
+``` python
+from robot_controller import move_forward as mf
+
+mf(3)
+```
+
+------------------------------------------------------------------------
+
+### How This Connects to ROS 2 (Conceptual)
+
+- Each **node** = module
+- Each **behavior** = function or class
+- Imports = node communication logic
 
 ---
 
@@ -1289,150 +1462,197 @@ Multiple objects can be created from the same class, and:
 
 ![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/dev/assets/images/fundamentals/class_method%20(1).png)
 
-### Defining a Class
+------------------------------------------------------------------------
 
-In Python, a class is defined using the `class` keyword.
+## 1️⃣ Basic Class (Robot Creation)
 
-Let's define a simple **robot arm class**.
+``` python
+# ------------------------------------------
+# -- Object Oriented Programming => Intro --
+# ------------------------------------------
 
-Assumptions:
+class Robot:
 
-- The robot arm has **one joint** (1 degree of freedom)
-- The joint position is represented by an angle
-- The robot can move and display its information
+  def __init__(self):
+    print("A New Robot Has Been Activated 🤖")
 
-### Example: Robot Arm Class
 
-```python
-class RobotArm:
-    def __init__(self, name, length, weight, color):
-        self.name = name
-        self.length = length
-        self.weight = weight
-        self.color = color
-        self.position = 0
-```
+robot_one = Robot()
+robot_two = Robot()
+robot_three = Robot()
 
-#### Explanation
-
-- `__init__` is called the **constructor**
-- It runs automatically when an object is created
-- `self` refers to the current object
-- Attributes like `name`, `length`, and `position` belong to each object
-
-### Adding Methods to a Class
-
-Methods are functions defined inside a class that describe the object's behavior.
-
-```python
-class RobotArm:
-    def __init__(self, name, length, weight, color):
-        self.name = name
-        self.length = length
-        self.weight = weight
-        self.color = color
-        self.position = 0
-    
-    def move(self, angle):
-        self.position += angle
-    
-    def display_info(self):
-        print(f"Name: {self.name}")
-        print(f"Length: {self.length} cm")
-        print(f"Weight: {self.weight} kg")
-        print(f"Color: {self.color}")
-        print(f"Position: {self.position} degrees")
-```
-
-### Creating an Object
-
-Once the class is defined, we can create objects from it.
-
-```python
-arm1 = RobotArm("Armrob", 50, 10, "Black")
+print(robot_one.__class__)
 ```
 
 Here:
 
-- `arm1` is an object
-- `RobotArm(...)` calls the constructor
-- The object now has its own attributes and methods
+-   Class = Blueprint of a robot
+-   Object = Actual robot instance
 
-### Using Object Methods
+------------------------------------------------------------------------
 
-We access attributes and methods using **dot notation**.
+## 2️⃣ Instance Attributes (Robot Identity)
 
-```python
-arm1.move(45)
-arm1.display_info()
+Now we give each robot specific data.
+
+``` python
+class Robot:
+
+  def __init__(self, name, robot_type, battery_level):
+    self.name = name
+    self.robot_type = robot_type
+    self.battery_level = battery_level
+
+
+robot_one = Robot("Atlas", "Humanoid", 90)
+robot_two = Robot("Rover", "Wheeled", 75)
+robot_three = Robot("Nano", "Drone", 60)
+
+print(robot_one.name, robot_one.robot_type, robot_one.battery_level)
+print(robot_two.name)
+print(robot_three.name)
 ```
 
-The method updates the internal state (position) of the object.
+Now each robot has:
 
-### Updating Object State
+-   Name
+-   Type
+-   Battery Level
 
-Objects keep track of their own state.
+------------------------------------------------------------------------
 
-```python
-arm1.move(-15)
-arm1.display_info()
+## 3️⃣ Instance Methods (Robot Behaviors)
+
+Now we add robot behaviors (methods).
+
+``` python
+class Robot:
+
+  def __init__(self, name, robot_type, battery_level):
+    self.name = name
+    self.robot_type = robot_type
+    self.battery_level = battery_level
+
+  def introduce(self):
+    return f"I am {self.name}, a {self.robot_type} robot."
+
+  def check_battery(self):
+    return f"{self.name} Battery Level: {self.battery_level}%"
+
+  def perform_task(self, task):
+    return f"{self.name} is performing task: {task}"
+
+
+robot_one = Robot("Atlas", "Humanoid", 90)
+robot_two = Robot("Rover", "Wheeled", 75)
+
+print(robot_one.introduce())
+print(robot_two.perform_task("Inspect Area"))
 ```
 
-Each call to `move()` changes the robot arm's position.
+Now:
 
-### Accessing Attributes Directly
+-   Methods use `self`
+-   They access robot attributes
 
-You can also access object attributes directly.
+------------------------------------------------------------------------
 
-```python
-print(arm1.name)
-print(arm1.position)
+## 4️⃣ Class Attributes (Shared Among All Robots)
+
+Now we track total robots in the system.
+
+``` python
+class Robot:
+
+  restricted_names = ["Error", "Null", "Crash"]
+  total_robots = 0
+
+  def __init__(self, name, robot_type, battery_level):
+    self.name = name
+    self.robot_type = robot_type
+    self.battery_level = battery_level
+
+    Robot.total_robots += 1
+
+  def introduce(self):
+    if self.name in Robot.restricted_names:
+      raise ValueError("Robot Name Not Allowed ")
+    return f"I am {self.name}, a {self.robot_type} robot."
+
+  def shutdown(self):
+    Robot.total_robots -= 1
+    return f"{self.name} has been powered off."
+
+
+print(Robot.total_robots)
+
+robot_one = Robot("Atlas", "Humanoid", 90)
+robot_two = Robot("Rover", "Wheeled", 75)
+robot_three = Robot("Nano", "Drone", 60)
+
+print(Robot.total_robots)
+
+print(robot_three.shutdown())
+print(Robot.total_robots)
 ```
 
-### Multiple Objects from the Same Class
+Here:
 
-```python
-arm2 = RobotArm("ArmX", 60, 12, "Red")
-arm2.move(30)
-arm2.display_info()
+-   `total_robots` → Shared by all robots
+-   `restricted_names` → System rule
+-   Shutdown decreases total count
+
+------------------------------------------------------------------------
+
+## 5️⃣ Class Methods & Static Methods
+
+Now we manage the robot fleet.
+
+``` python
+class Robot:
+
+  restricted_names = ["Error", "Null", "Crash"]
+  total_robots = 0
+
+  @classmethod
+  def show_robot_count(cls):
+    print(f"There Are {cls.total_robots} Robots In The System 🤖")
+
+  @staticmethod
+  def system_message():
+    print("Robotics Control System Online ")
+
+  def __init__(self, name, robot_type, battery_level):
+    self.name = name
+    self.robot_type = robot_type
+    self.battery_level = battery_level
+    Robot.total_robots += 1
+
+  def introduce(self):
+    if self.name in Robot.restricted_names:
+      raise ValueError("Robot Name Not Allowed ")
+    return f"I am {self.name}, a {self.robot_type} robot."
+
+  def shutdown(self):
+    Robot.total_robots -= 1
+    return f"{self.name} has been powered off."
+
+
+print(Robot.total_robots)
+
+robot_one = Robot("Atlas", "Humanoid", 90)
+robot_two = Robot("Rover", "Wheeled", 75)
+
+Robot.show_robot_count()
+
+Robot.system_message()
+
+print(robot_one.introduce())
+print(Robot.introduce(robot_one))
 ```
 
-- `arm1` and `arm2` are different objects
-- They share the same class
-- Each has its own data
+------------------------------------------------------------------------
 
-### Full Code (Classes and Objects)
-
-```python
-class RobotArm:
-    def __init__(self, name, length, weight, color):
-        self.name = name
-        self.length = length
-        self.weight = weight
-        self.color = color
-        self.position = 0
-    
-    def move(self, angle):
-        self.position += angle
-    
-    def display_info(self):
-        print(f"Name: {self.name}")
-        print(f"Length: {self.length} cm")
-        print(f"Weight: {self.weight} kg")
-        print(f"Color: {self.color}")
-        print(f"Position: {self.position} degrees")
-
-arm1 = RobotArm("Armrob", 50, 10, "Black")
-arm1.move(45)
-arm1.display_info()
-
-arm1.move(-15)
-arm1.display_info()
-
-arm2 = RobotArm("ArmX", 60, 12, "Red")
-arm2.move(30)
-arm2.display_info()
-```
 
 ### Why Classes Are Important in Robotics
 
@@ -1450,206 +1670,6 @@ Classes allow you to:
 - Calling methods without parentheses
 - Confusing class vs object
 - Writing logic outside the class
-
----
-
-## Python Modules & Imports -- Teaching the Robot to Use External Skills
-
-### Section Objective
-
-By the end of this section, learners will be able to:
-
-- Understand what a **module** is
-- Import built-in Python modules
-- Import specific functions or classes
-- Create and import their **own modules**
-- Organize robotics code in a clean way
-
-### What Is a Module?
-
-#### Simple Definition
-
-A **module** is a Python file (.py) that contains:
-
-- Variables
-- Functions
-- Classes
-
-Example:
-```
-robot_utils.py
-```
-
-### Importing Built-in Modules
-
-Python comes with many ready-made modules.
-
-#### Example: time Module
-
-```python
-import time
-
-print("Robot starting...")
-time.sleep(2)
-print("Robot moving")
-```
-
-Robot logic:
-Pause execution to simulate real movement timing.
-
-#### Example: math Module
-
-```python
-import math
-
-distance = 5
-area = math.pi * distance ** 2
-print(area)
-```
-
-### Different Ways to Import
-
-#### 1. Import Entire Module
-
-```python
-import math
-print(math.sqrt(16))
-```
-
-#### 2. Import Specific Functions
-
-```python
-from math import sqrt
-print(sqrt(16))
-```
-
-#### 3. Import with Alias
-
-```python
-import time as t
-t.sleep(1)
-```
-
-Aliases make code:
-
-- Shorter
-- Cleaner
-- Easier to read
-
-### Importing Your Own Module
-
-#### Project Structure
-
-```
-robot_project/
-│
-├── main.py
-├── robot.py
-```
-
-#### robot.py
-
-```python
-class Robot:
-    def __init__(self, name):
-        self.name = name
-    
-    def move(self):
-        print(self.name, "is moving")
-```
-
-#### main.py
-
-```python
-from robot import Robot
-
-robot1 = Robot("MechDog")
-robot1.move()
-```
-
-What happens:
-
-- `robot.py` defines the robot
-- `main.py` **uses** the robot
-
-### Importing Functions from a Module
-
-#### sensors.py
-
-```python
-def read_distance():
-    return 35
-```
-
-#### main.py
-
-```python
-from sensors import read_distance
-
-distance = read_distance()
-print("Distance:", distance)
-```
-
-### Why Imports Matter in Robotics
-
-Without imports:
-
-- One huge file
-- Hard to debug
-- Hard to scale
-
-With imports:
-
-- Clean separation
-- Reusable logic
-- Team-friendly code
-
----
-
-## Mini Scenario -- Modular Robot System
-
-#### movement.py
-
-```python
-def move_forward():
-    print("Moving forward")
-```
-
-#### safety.py
-
-```python
-def check_battery(level):
-    return level > 20
-```
-
-#### main.py
-
-```python
-from movement import move_forward
-from safety import check_battery
-
-battery = 50
-
-if check_battery(battery):
-    move_forward()
-else:
-    print("Low battery")
-```
-
-This shows:
-
-- Clear responsibilities
-- Easy upgrades
-- **Real robotics structure**
-
-### How This Connects to ROS 2 (Conceptual)
-
-- Each **node** = module
-- Each **behavior** = function or class
-- Imports = node communication logic
-
-
-```
 
 
 
