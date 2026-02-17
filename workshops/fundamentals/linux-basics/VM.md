@@ -138,7 +138,7 @@ Visit: [https://ubuntu.com/download/desktop](https://ubuntu.com/download/desktop
 
 The downloaded file will be named something like `ubuntu-24.04-desktop-amd64.iso`. Save it somewhere you can easily find it — your Desktop or Downloads folder works well.
 
-![Download Ubuntu 24.04](assets/images/fundamentals/VM1.jpeg)
+![Download Ubuntu 24.04](../../../assets/images/fundamentals/VM1.jpeg)
 
 ---
 
@@ -150,7 +150,7 @@ Visit: [https://www.virtualbox.org/wiki/Downloads](https://www.virtualbox.org/wi
 
 Select the download link that matches your operating system: Windows, macOS, or Linux.
 
-![VirtualBox Downloads Page](assets/images/fundamentals/VM2.jpeg)
+![VirtualBox Downloads Page](../../../assets/images/fundamentals/VM2.jpeg)
 
 ---
 
@@ -158,7 +158,7 @@ Select the download link that matches your operating system: Windows, macOS, or 
 
 Click the download link for your operating system. The file will begin downloading automatically. Wait for it to finish completely before moving on.
 
-![Downloading VirtualBox](assets/images/fundamentals/VM3.jpeg)
+![Downloading VirtualBox](../../../assets/images/fundamentals/VM3.jpeg)
 
 ---
 
