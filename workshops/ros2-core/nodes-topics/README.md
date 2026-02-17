@@ -117,7 +117,7 @@ ROS 2 systems are built by connecting **independent nodes** through **topics** t
 ![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/ros2-core/Topic-SinglePublisherandSingleSubscriber.gif)
 
 ![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/ros2-core/Topic-MultiplePublisherandMultipleSubscriber.gif)
-```
+
 
 -One publisher can send to many subscribers
 
@@ -765,6 +765,7 @@ This is exactly how autonomous robots work!
 - [ROS 2 Beginner Tutorials](https://docs.ros.org/en/jazzy/Tutorials/Beginner-CLI-Tools.html)
 - [ROS 2 Tutorials](https://docs.ros.org/en/jazzy/Tutorials.html)
 - [rclpy API Documentation](https://docs.ros2.org/latest/api/rclpy/)
+
 
 
 
