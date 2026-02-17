@@ -168,7 +168,7 @@ Open the downloaded installer file. Follow the on-screen steps and keep all the 
 
 💡 You do not need to change any of the default installer settings. The defaults are correct.
 
-![VirtualBox Installer](assets/images/fundamentals/VM4.jpeg)
+![VirtualBox Installer](../../../assets/images/fundamentals/VM4.jpeg)
 
 ---
 
@@ -178,7 +178,7 @@ During installation, a warning may appear saying your network connection will be
 
 Click **Yes** to continue.
 
-![Network Warning](assets/images/fundamentals/VM5.jpeg)
+![Network Warning](../../../assets/images/fundamentals/VM5.jpeg)
 
 > ✅ This temporary interruption is expected. Your internet connection will be restored automatically once installation finishes.
 
@@ -188,7 +188,7 @@ Click **Yes** to continue.
 
 Click **Install** to begin copying files to your computer. A progress bar will appear. This may take a few minutes — please wait for it to complete without closing the window.
 
-![Installation Progress](assets/images/fundamentals/VM6.jpeg)
+![Installation Progress](../../../assets/images/fundamentals/VM6.jpeg)
 
 ---
 
@@ -196,7 +196,7 @@ Click **Install** to begin copying files to your computer. A progress bar will a
 
 When the progress bar finishes, click **Finish**. VirtualBox will open automatically.
 
-![VirtualBox Launch](assets/images/fundamentals/VM7.jpeg)
+![VirtualBox Launch](../../../assets/images/fundamentals/VM7.jpeg)
 
 > ✅ If you can see the VirtualBox Manager window, Part 1 is complete. VirtualBox is installed and ready.
 
@@ -212,7 +212,7 @@ This section creates and configures the virtual machine that will run Ubuntu. Pa
 
 In the VirtualBox Manager window, click the **New** button. A setup wizard will appear to walk you through the creation process.
 
-![Create New VM](assets/images/fundamentals/VM8.jpeg)
+![Create New VM](../../../assets/images/fundamentals/VM8.jpeg)
 
 ---
 
@@ -226,7 +226,7 @@ Fill in the following fields:
 
 > ⚠️ If you do not check **Skip Unattended Installation**, the setup process will run differently and may cause issues. Always check this box.
 
-![VM Name and ISO](assets/images/fundamentals/VM9.jpeg)
+![VM Name and ISO](../../../assets/images/fundamentals/VM9.jpeg)
 
 ---
 
@@ -244,7 +244,7 @@ Configure the memory and processor based on your computer's specifications:
 
 > ⚠️ Do not allocate more than half of your total RAM or CPU cores. Doing so can cause both your virtual machine and your main computer to slow down significantly.
 
-![RAM and CPU Settings](assets/images/fundamentals/VM10.jpeg)
+![RAM and CPU Settings](../../../assets/images/fundamentals/VM10.jpeg)
 
 ---
 
@@ -256,7 +256,7 @@ Click **Next** to continue.
 
 💡 This virtual disk is just a file on your computer. It will not immediately take up 50 GB — it grows gradually as you use it.
 
-![Virtual Hard Disk](assets/images/fundamentals/VM11.jpeg)
+![Virtual Hard Disk](../../../assets/images/fundamentals/VM11.jpeg)
 
 ---
 
@@ -264,7 +264,7 @@ Click **Next** to continue.
 
 A summary screen will show all your chosen settings. Take a moment to review them, then click **Finish** to create the virtual machine.
 
-![VM Summary](assets/images/fundamentals/VM12.jpeg)
+![VM Summary](../../../assets/images/fundamentals/VM12.jpeg)
 
 > ✅ Your virtual machine now appears in the VirtualBox Manager list on the left side. It has been created but not yet configured or started.
 
@@ -274,7 +274,7 @@ A summary screen will show all your chosen settings. Take a moment to review the
 
 Before starting the virtual machine, you need to adjust a few important settings. Click on your newly created VM to select it, then click the **Settings** icon (the gear icon).
 
-![Open Settings](assets/images/fundamentals/VM13.jpeg)
+![Open Settings](../../../assets/images/fundamentals/VM13.jpeg)
 
 ---
 
@@ -289,7 +289,7 @@ Make the following changes:
 
 > ⚠️ Leaving EFI enabled is one of the most common causes of installation failure. Always confirm it is turned OFF before proceeding.
 
-![Motherboard Settings](assets/images/fundamentals/VM14.jpeg)
+![Motherboard Settings](../../../assets/images/fundamentals/VM14.jpeg)
 
 ---
 
@@ -302,7 +302,7 @@ Make the following changes:
 - **Number of Processors:** Set to **2 or more** (stay within the green zone)
 - **Enable PAE/NX:** Make sure this is **checked** (turned ON)
 
-![Processor Settings](assets/images/fundamentals/VM15.jpeg)
+![Processor Settings](../../../assets/images/fundamentals/VM15.jpeg)
 
 ---
 
@@ -318,7 +318,7 @@ Make the following changes:
 
 > ⚠️ These display settings are critical. Using the wrong graphics controller or enabling 3D Acceleration are frequent causes of black screens and VM crashes.
 
-![Display Settings](assets/images/fundamentals/VM16.jpeg)
+![Display Settings](../../../assets/images/fundamentals/VM16.jpeg)
 
 ---
 
@@ -330,7 +330,7 @@ In the storage tree, click on the **Empty** item listed under Controller: IDE (t
 
 This tells the virtual machine to boot from the Ubuntu installer when it starts for the first time.
 
-![Storage Settings](assets/images/fundamentals/VM17.jpeg)
+![Storage Settings](../../../assets/images/fundamentals/VM17.jpeg)
 
 ---
 
@@ -347,7 +347,7 @@ Click **OK** to save all your settings.
 
 💡 NAT mode gives your virtual machine internet access through your computer's existing connection. No additional configuration is needed.
 
-![Network Settings](assets/images/fundamentals/VM18.jpeg)
+![Network Settings](../../../assets/images/fundamentals/VM18.jpeg)
 
 ---
 
@@ -359,14 +359,14 @@ Before starting the virtual machine, take a moment to confirm your settings agai
 - EFI is **disabled**
 - Boot order is correct (Optical first, Hard Disk second)
 
-![System Verification](assets/images/fundamentals/VM19-1.jpeg)
+![System Verification](../../../assets/images/fundamentals/VM19-1.jpeg)
 
 **VM19-2** shows the correct **Display** settings:
 - Video Memory is **128 MB**
 - Graphics Controller is **VMSVGA**
 - 3D Acceleration is **disabled**
 
-![Display Verification](assets/images/fundamentals/VM19-2.jpeg)
+![Display Verification](../../../assets/images/fundamentals/VM19-2.jpeg)
 
 > ✅ If your settings match both screenshots, your virtual machine is correctly configured and ready to start.
 
@@ -380,7 +380,7 @@ Before starting the virtual machine, take a moment to confirm your settings agai
 
 Click the **Start** button (the green arrow) in the VirtualBox Manager. A new window will open. This is your virtual machine booting for the first time. You will see a black screen with text — this is normal.
 
-![Start VM](assets/images/fundamentals/VM20.jpeg)
+![Start VM](../../../assets/images/fundamentals/VM20.jpeg)
 
 ---
 
@@ -390,7 +390,7 @@ The Ubuntu boot menu will appear with a list of options. Use the arrow keys to h
 
 Wait a moment for the Ubuntu installer to load. This can take up to a minute.
 
-![Boot Menu](assets/images/fundamentals/VM21.jpeg)
+![Boot Menu](../../../assets/images/fundamentals/VM21.jpeg)
 
 > ✅ If you see this screen, your virtual machine has successfully booted from the ISO file. Everything is working correctly.
 
@@ -400,7 +400,7 @@ Wait a moment for the Ubuntu installer to load. This can take up to a minute.
 
 The Ubuntu installer will open with a language selection screen. Select your preferred language — **English** is recommended for this course. Click **Next**.
 
-![Language Selection](assets/images/fundamentals/VM22.jpeg)
+![Language Selection](../../../assets/images/fundamentals/VM22.jpeg)
 
 ---
 
@@ -410,7 +410,7 @@ This screen presents optional accessibility settings such as screen magnificatio
 
 Click **Next** to continue.
 
-![Accessibility Options](assets/images/fundamentals/VM23.jpeg)
+![Accessibility Options](../../../assets/images/fundamentals/VM23.jpeg)
 
 ---
 
@@ -420,7 +420,7 @@ Choose the keyboard layout that matches your physical keyboard. If you are unsur
 
 Click **Next** to continue.
 
-![Keyboard Layout](assets/images/fundamentals/VM24.jpeg)
+![Keyboard Layout](../../../assets/images/fundamentals/VM24.jpeg)
 
 ---
 
@@ -430,7 +430,7 @@ If prompted to connect to the internet, select your network or choose **Use wire
 
 💡 If no connection appears, you can skip this step and connect later from within Ubuntu.
 
-![Internet Connection](assets/images/fundamentals/VM25.jpeg)
+![Internet Connection](../../../assets/images/fundamentals/VM25.jpeg)
 
 ---
 
@@ -440,7 +440,7 @@ Select **Install Ubuntu** (not "Try Ubuntu"). Choosing "Try Ubuntu" runs Ubuntu 
 
 Click **Next** to continue.
 
-![Installation Type](assets/images/fundamentals/VM26.jpeg)
+![Installation Type](../../../assets/images/fundamentals/VM26.jpeg)
 
 ---
 
@@ -450,7 +450,7 @@ Choose **Interactive installation**. This walks you through the setup manually a
 
 Click **Next** to continue.
 
-![Installation Options](assets/images/fundamentals/VM27.jpeg)
+![Installation Options](../../../assets/images/fundamentals/VM27.jpeg)
 
 ---
 
@@ -460,7 +460,7 @@ Select **Default selection**. This installs a standard set of applications and t
 
 Click **Next** to continue.
 
-![Default Selection](assets/images/fundamentals/VM28.jpeg)
+![Default Selection](../../../assets/images/fundamentals/VM28.jpeg)
 
 ---
 
@@ -470,7 +470,7 @@ Check both boxes on this screen to install third-party software and download upd
 
 Click **Next** to continue.
 
-![Third-Party Software](assets/images/fundamentals/VM29.jpeg)
+![Third-Party Software](../../../assets/images/fundamentals/VM29.jpeg)
 
 ---
 
@@ -482,7 +482,7 @@ Select **Erase disk and install Ubuntu**.
 
 Click **Next** to continue.
 
-![Disk Setup](assets/images/fundamentals/VM30.jpeg)
+![Disk Setup](../../../assets/images/fundamentals/VM30.jpeg)
 
 ---
 
@@ -499,7 +499,7 @@ Fill in the following fields carefully. You will use this information every time
 
 Click **Next** to continue.
 
-![Create User Account](assets/images/fundamentals/VM31.jpeg)
+![Create User Account](a../../../ssets/images/fundamentals/VM31.jpeg)
 
 ---
 
@@ -509,7 +509,7 @@ Select your timezone from the map or use the search field to find your location.
 
 Click **Next** to continue.
 
-![Timezone Selection](assets/images/fundamentals/VM32.jpeg)
+![Timezone Selection](../../../assets/images/fundamentals/VM32.jpeg)
 
 ---
 
@@ -519,7 +519,7 @@ A final summary screen will show all your chosen settings. Review each item. If 
 
 The installation will take approximately 10–20 minutes depending on your computer speed and internet connection. Do not close the window or shut down your computer during this process.
 
-![Review and Install](assets/images/fundamentals/VM33.jpeg)
+![Review and Install](../../../assets/images/fundamentals/VM33.jpeg)
 
 ---
 
@@ -532,7 +532,7 @@ When the screen prompts you to "remove the installation medium and press Enter,"
 1. In the VirtualBox menu bar, go to **Devices → Optical Drives → Remove Disk from Virtual Drive**
 2. Then click inside the VM window and press **Enter**
 
-![Restart](assets/images/fundamentals/VM34.jpeg)
+![Restart](../../../assets/images/fundamentals/VM34.jpeg)
 
 ---
 
@@ -542,7 +542,7 @@ Your virtual machine will restart and boot directly into Ubuntu 24.04. Log in wi
 
 Welcome to your new Ubuntu environment. 🎉
 
-![Ubuntu Ready](assets/images/fundamentals/VM35.jpeg)
+![Ubuntu Ready](../../../assets/images/fundamentals/VM35.jpeg)
 
 > ✅ If you have reached this screen and logged in successfully, the installation is complete. Your Ubuntu virtual machine is fully operational.
 
