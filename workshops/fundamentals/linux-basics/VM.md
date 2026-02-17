@@ -1,1717 +1,402 @@
-# Ubuntu 24.04 VirtualBox Installation Guide for ROS 2 Jazzy
-
-This guide provides step-by-step instructions for setting up Ubuntu 24.04 LTS on Oracle VirtualBox, preparing a stable environment for ROS 2 Jazzy development. Each phase is designed to prevent common installation issues and ensure a reliable system from the start. For Linux terminal skills and ROS 2 environment usage, refer to the [Linux Basics and ROS 2 Environment Setup](README.md).
+# Ubuntu 24.04 Installation on VirtualBox
 
 ---
 
-## Table of Contents
+## Recommended Device Specifications
 
-- [Phase 0 — Pre-Installation Checks](#phase-0--pre-installation-checks-mandatory)
-- [Phase 1 — Installing Oracle VirtualBox](#phase-1--installing-oracle-virtualbox-host-setup)
-- [Phase 2 — Creating the Virtual Machine](#phase-2--creating-the-virtual-machine-correct--safe-way)
-- [Phase 3 — Display and Graphics Configuration](#phase-3--display--graphics-configuration-critical)
-- [Phase 4 — Installing Ubuntu 24.04](#phase-4--installing-ubuntu-2404-manual-installation-screen-by-screen)
-- [Phase 5 — First Login, System Update and Freeze Handling](#phase-5--first-login-system-update--freeze-handling-critical)
-- [Phase 6 — Installing VirtualBox Guest Additions](#phase-6--installing-virtualbox-guest-additions)
-- [Phase 7 — Installing Essential Developer Tools](#phase-7--installing-essential-developer-tools)
-- [Phase 8 — Final System Validation and Baseline Snapshot](#phase-8--final-system-validation--baseline-snapshot)
-- [Summary Checklist](#summary-checklist)
-- [Common Issues and Solutions](#common-issues-and-solutions)
-- [Resources](#resources)
+| | |
+|---|---|
+| **Minimum RAM** | 8 GB |
+| **Recommended RAM** | 16 GB or more |
+| **Minimum CPU** | 2 physical cores |
+| **Disk Space** | At least 60 GB free on your computer |
 
 ---
 
-## Phase 0 — Pre-Installation Checks (MANDATORY)
-
-**⚠️ CRITICAL:** This phase MUST be completed before installing VirtualBox or Ubuntu. Skipping any step here is the main reason for crashes, freezes, or missing options later.
+## Part 1: Install VirtualBox
 
 ---
 
-### 0.1 Purpose of This Phase
+### Step 1 — Download Ubuntu 24.04
 
-This phase ensures that the host machine (Windows) is ready for virtualization.
-
-**By the end of Phase 0:**
-- VirtualBox will be able to run 64-bit Linux
-- Ubuntu will not freeze randomly
-- Disk and memory issues are prevented early
-- Common hidden Windows conflicts are eliminated
+Go to the official Ubuntu website and download the Ubuntu 24.04 ISO file.
+Visit: https://ubuntu.com/download/desktop
+The file will be named something like `ubuntu-24.04-desktop-amd64.iso`.
+![Step 1](VM1.jpeg)
 
 ---
 
-### 0.2 Minimum Hardware Requirements (Host Machine)
+### Step 2 — Open the VirtualBox Website
 
-Verify the following on your host machine:
+Go to the official VirtualBox website to download the installer.
+Visit: https://www.virtualbox.org/wiki/Downloads
+Choose the version that matches your operating system (Windows, macOS, or Linux).
 
-#### CPU
-- **64-bit processor**
-- **Supports virtualization:**
-  - Intel VT-x, or
-  - AMD-V
-
-> Almost all modern CPUs support this, but it may be disabled in BIOS.
-
-#### RAM
-- **Minimum:** 8 GB (works but not ideal)
-- **Recommended:** 16 GB
-
-> Below 8 GB → frequent freezes inside the VM.
-
-#### Disk Space
-- **Minimum free space:** 120 GB
-- **Recommended:** 150 GB or more
-
-**⚠️ Important:**
-- VirtualBox disks are dynamic, but they still consume real disk space
-- We previously encountered:
-```
-  VERR_DISK_FULL
-  BLKCACHE_IOERR
-```
-  because host disk space was insufficient
+![Step 2](VM2.jpeg)
 
 ---
 
-### 0.3 Enable Virtualization in BIOS (CRITICAL)
+### Step 3 — Download VirtualBox
 
-#### Why this matters
-If virtualization is disabled:
-- VirtualBox will not show "Ubuntu (64-bit)"
-- VM may not start
-- Performance will be extremely poor
+Click the download link for your operating system.
+The file will download to your computer. Wait for it to finish before continuing.
 
-#### How to check (Quick Test in Windows)
-1. Press `Ctrl + Shift + Esc` → open Task Manager
-2. Go to **Performance** tab
-3. Select **CPU**
-4. Look for:
-```
-   Virtualization: Enabled
-```
-
-> If it says **Disabled** → BIOS configuration is required.
-
-#### Enabling Virtualization in BIOS (General Steps)
-
-BIOS layout differs by manufacturer, but the logic is the same.
-
-1. Restart the computer
-2. Enter BIOS (commonly: `F2`, `DEL`, `F10`, or `ESC`)
-3. Navigate to:
-   - **Advanced**
-   - **Advanced BIOS Features**
-   - **Advanced CPU Configuration**
-4. Enable:
-   - **Intel Virtualization Technology**, or
-   - **SVM Mode** (AMD)
-5. **Save & Exit**
-
-**⚠️ This step is non-negotiable.**
+![Step 3](VM3.jpeg)
 
 ---
 
-### 0.4 Disable Windows Features That Conflict With VirtualBox
+### Step 4 — Run the VirtualBox Installer
 
-This is one of the most common hidden problems.
+Open the downloaded installer file.
+Follow the on-screen steps and keep all the default options selected.
+Click **Next** until the installation begins.
 
-#### 0.4.1 Disable Hyper-V
-
-VirtualBox cannot coexist properly with Hyper-V.
-
-**Steps:**
-1. Press `Win + R`
-2. Type:
-```
-   optionalfeatures
-```
-3. Press Enter
-4. Uncheck:
-   - Hyper-V
-   - Windows Hypervisor Platform
-   - Virtual Machine Platform
-5. Click **OK**
-6. **Restart Windows**
-
-#### 0.4.2 Disable Windows Subsystem for Linux (WSL)
-
-WSL uses the same hypervisor backend.
-
-**Steps:**
-- In the same Windows Features window:
-  - Uncheck **Windows Subsystem for Linux**
-- **Restart Windows**
-
-#### 0.4.3 Disable Core Isolation (Memory Integrity)
-
-This one silently breaks VirtualBox performance.
-
-**Steps:**
-1. Open **Windows Security**
-2. Go to **Device Security**
-3. Click **Core Isolation Details**
-4. Turn **Memory Integrity OFF**
-5. **Restart Windows**
+![Step 4](VM4.jpeg)
 
 ---
 
-### 0.5 Power & Performance Settings (Recommended)
+### Step 5 — Confirm the Installation Warning
 
-#### Set Power Mode to High Performance
+During installation, you may see a warning about your network connection being temporarily interrupted.
+This is normal. Click **Yes** to continue.
 
-1. Open **Control Panel**
-2. Go to **Power Options**
-3. Select:
-```
-   High performance
-```
-
-> This prevents CPU throttling inside the VM.
+![Step 5](VM5.jpeg)
 
 ---
 
-### 0.6 Antivirus & Firewall Notes
+### Step 6 — Complete the Installation
 
-- **Windows Defender** is fine
-- **Do NOT install:**
-  - Third-party aggressive antivirus
-  - "Performance booster" tools
+Click **Install** to start installing VirtualBox on your computer.
+Wait for the progress bar to finish. This may take a few minutes.
 
-They often block:
-- VirtualBox drivers
-- Disk access
-- Network interfaces
+![Step 6](VM6.jpeg)
 
 ---
 
-### 0.7 Final Phase 0 Checklist
+### Step 7 — Finish and Launch VirtualBox
 
-Before moving to Phase 1, confirm the following:
+Once installation is done, click **Finish**.
+VirtualBox will open automatically.
 
-- ✔ Virtualization enabled (Task Manager shows "Enabled")
-- ✔ Hyper-V disabled
-- ✔ WSL disabled
-- ✔ Memory Integrity disabled
-- ✔ At least 120 GB free disk space
-- ✔ At least 8 GB RAM available
+![Step 7](VM7.jpeg)
 
 ---
 
-## Phase 1 — Installing Oracle VirtualBox (Host Setup)
-
-**Goal of this phase:** Install VirtualBox correctly on Windows so that:
-- Ubuntu 24.04 works without crashes
-- 64-bit guests are available
-- No hidden conflicts exist
+## Part 2: Install Ubuntu
 
 ---
 
-### 1.1 Download Oracle VirtualBox (Correct Source Only)
+### Step 8 — Create a New Virtual Machine
 
-#### Steps
+In VirtualBox, click the **New** button to create a new virtual machine.
+A setup window will appear.
 
-1. Open a web browser
-2. Go to the official VirtualBox downloads page:
-```
-   https://www.virtualbox.org/wiki/Downloads
-```
-
-#### What to download
-
-Under **VirtualBox platform packages**, click:
-```
-Windows hosts
-```
-
-This downloads a file similar to:
-```
-VirtualBox-7.2.x-xxxx-Win.exe
-```
-
-#### ⚠️ Important rules
-
-- **Do NOT** download from third-party websites
-- **Do NOT** use older versions
-- All participants must use the same major version (7.x)
+![Step 8](VM8.jpeg)
 
 ---
 
-### 1.2 Start the VirtualBox Installer
+### Step 9 — Name Your Virtual Machine and Attach the ISO
 
-1. Double-click the downloaded `.exe` file
-2. If Windows asks for permission:
-   - Click **Yes**
+Give your virtual machine a name (for example: `Ubuntu-24.04`).
+Under **ISO Image**, click the dropdown and select your downloaded Ubuntu ISO file.
+Make sure to check the box **Skip Unattended Installation**.
 
-You should now see the **Oracle VM VirtualBox Setup Wizard**.
-
----
-
-### 1.3 Welcome Screen
-
-#### What you see
-A welcome screen with a **Next** button.
-
-#### What to do
-- Click **Next**
-
-📌 No configuration happens here.
+![Step 9](VM9.jpeg)
 
 ---
 
-### 1.4 Custom Setup Screen (VERY IMPORTANT)
+### Step 10 — Set the RAM and CPU
 
-This screen shows which components will be installed.
+Set the **Memory (RAM)** based on your computer:
+- If you have 8 GB RAM → set 4096 MB
+- If you have 16 GB RAM → set 6144 MB
 
-#### Leave ALL of the following enabled:
+Set the **CPU cores** to 2 or more.
+Stay within the green zone shown on the slider.
 
-- ✔ Oracle VM VirtualBox Application
-- ✔ USB Support
-- ✔ Networking
-- ✔ Python Support
-
-**Do NOT remove anything.**
-
-#### Why?
-- USB support is needed later (even if not now)
-- Networking creates a virtual adapter required for internet access
-- Python support avoids silent runtime issues
-
-**Click Next**
+![Step 10](VM10.jpeg)
 
 ---
 
-### 1.5 Network Interface Warning
+### Step 11 — Create a Virtual Hard Disk
 
-#### What you see
-A warning that:
-```
-Network connections will be reset temporarily
-```
+Select **Create a Virtual Hard Disk Now**.
+Set the disk size to **50 GB**. This gives enough space for Ubuntu and your files.
+Click **Next** to continue.
 
-#### What to do
-- Click **Yes**
-
-#### Why this is safe
-- VirtualBox creates a virtual network adapter
-- Internet may disconnect for a few seconds
-- This is expected and harmless
+![Step 11](VM11.jpeg)
 
 ---
 
-### 1.6 Ready to Install Screen
+### Step 12 — Review and Finish VM Creation
 
-#### What you see
-A summary of selected components.
+You will see a summary of your virtual machine settings.
+Check that everything looks correct, then click **Finish**.
 
-#### What to do
-- Click **Install**
-
-At this stage:
-- Windows may ask to install drivers
-- Click **Install** or **Allow** every time
-
-**❌ Never click "Cancel" here.**
+![Step 12](VM12.jpeg)
 
 ---
 
-### 1.7 Installation Process
+### Step 13 — Open VM Settings
 
-- Wait until installation finishes
-- This may take 1–2 minutes
+Your new virtual machine now appears in VirtualBox.
+Before starting it, click **Settings** (the gear icon) to adjust a few important options.
 
-**Do NOT open other programs during installation.**
-
----
-
-### 1.8 Finish Screen
-
-#### What to do
-- Ensure **Start Oracle VM VirtualBox after installation** is checked
-- Click **Finish**
-
-VirtualBox Manager should open automatically.
+![Step 13](VM13.jpeg)
 
 ---
 
-### 1.9 Install VirtualBox Extension Pack (MANDATORY)
+### Step 14 — System Settings: Motherboard Tab
 
-**This step is NOT optional.** Missing Extension Pack caused multiple issues in previous attempts.
+Go to **Settings → System → Motherboard**.
+Set the **Boot Order** so that **Optical** is first and **Hard Disk** is second.
+Make sure **Enable EFI** is **unchecked** (turned OFF).
 
-#### Step-by-step
+> ⚠️ Leaving EFI enabled is one of the most common causes of installation failure. Keep it OFF.
 
-1. Go back to the same download page:
-```
-   https://www.virtualbox.org/wiki/Downloads
-```
-
-2. Download:
-```
-   VirtualBox Extension Pack
-```
-   (MUST match the exact VirtualBox version)
-
-3. Double-click the downloaded `.vbox-extpack` file
-
-4. VirtualBox opens and asks to install:
-   - Click **Install**
-   - Accept the license agreement
-
-#### What this enables
-- USB 2.0 / 3.0 support
-- Better device handling
-- Improved VM stability
-
-#### Without it:
-- Random freezes
-- USB failures
-- Display bugs
+![Step 14](VM14.jpeg)
 
 ---
 
-### 1.10 Verify VirtualBox Installation
+### Step 15 — System Settings: Processor Tab
 
-Verify:
-- ✔ VirtualBox Manager opens without errors
-- ✔ No warning messages appear
-- ✔ Version number matches Extension Pack version
+Go to **Settings → System → Processor**.
+Set the number of processors to **2 or more** (stay in the green zone).
+Make sure **Enable PAE/NX** is checked.
 
----
-
-## Phase 2 — Creating the Virtual Machine (Correct & Safe Way)
-
-**Goal of this phase:** Create the virtual machine with the exact settings that avoid:
-- Missing 64-bit Ubuntu
-- Installer crashes
-- Disk full errors later
-- Display / graphics freezes
+![Step 15](VM15.jpeg)
 
 ---
 
-### 2.1 Download Ubuntu ISO (Verification Step)
+### Step 16 — Display Settings
 
-Before creating the VM, confirm the following:
+Go to **Settings → Display → Screen**.
+Set **Video Memory** to **128 MB** (drag the slider all the way to the right).
+Set **Graphics Controller** to **VMSVGA**.
+Make sure **Enable 3D Acceleration** is **unchecked** (turned OFF).
 
-- File name similar to:
-```
-  ubuntu-24.04.3-desktop-amd64.iso
-```
+> ⚠️ These display settings are critical. Wrong settings can cause crashes or a black screen.
 
-- File size ≈ 5–6 GB
-
-- File downloaded from:
-```
-  https://ubuntu.com/download/desktop
-```
-
-#### ❌ Do NOT use:
-- Ubuntu Server
-- Ubuntu 22.xx
-- Any non-official mirror
+![Step 16](VM16.jpeg)
 
 ---
 
-### 2.2 Open VirtualBox Manager
+### Step 17 — Storage Settings: Attach the ISO
 
-- Launch **Oracle VM VirtualBox**
-- You should see the main manager window
-- No VMs are running
+Go to **Settings → Storage**.
+Click on the **Empty** optical drive under Controller: IDE.
+On the right side, click the **CD icon** and choose your Ubuntu ISO file.
+This tells the VM to boot from the Ubuntu installer.
 
----
-
-### 2.3 Create a New Virtual Machine
-
-Click the **New** button.
-
-You will now see the **Create Virtual Machine** screen.
+![Step 17](VM17.jpeg)
 
 ---
 
-### 2.4 Name and Operating System (CRITICAL)
+### Step 18 — Network Settings
 
-#### Virtual Machine Name
+Go to **Settings → Network**.
+Make sure **Adapter 1** is enabled and set to **NAT**.
+This gives your virtual machine internet access. Click **OK** to save all settings.
 
-Enter:
-```
-Ubuntu-ROS2-Jazzy
-```
-
-**Why this matters:**
-- Avoids overwriting old VMs
-- Easy identification later
-- Prevents "Can't overwrite machine folder" errors
-
-#### Machine Folder
-
-Leave the default location:
-```
-C:\Users\<YourUsername>\VirtualBox VMs
-```
-
-**❌ Do NOT place the VM on:**
-- External drives
-- USB sticks
-- Nearly full partitions
-
-#### ISO Image
-
-Click **Browse** and select:
-```
-ubuntu-24.04.3-desktop-amd64.iso
-```
-
-After selecting the ISO:
-- VirtualBox should automatically detect:
-  - **Type:** Linux
-  - **Distribution:** Ubuntu
-  - **Version:** Ubuntu (64-bit)
-
-**If Ubuntu (64-bit) does NOT appear → STOP and return to Phase 0 (virtualization not active).**
+![Step 18](VM18.jpeg)
 
 ---
 
-### 2.5 Unattended Installation (MUST BE DISABLED)
+### Step 19 — Verify Your VM Settings (Important!)
 
-You will see an option similar to:
-```
-Proceed with Unattended Installation
-```
+Before starting the VM, take a moment to double-check your settings. These two screenshots show the **correct** configuration you should have.
 
-**Action:**
-```
-❌ Disable / Uncheck this option
-```
+**VM19-1** shows the correct **System** settings:
+- EFI is **disabled**
+- Boot order is correct (Optical first, then Hard Disk)
 
-#### Why we disable it:
-- It hides installer steps
-- Creates users automatically
-- Caused broken installs and confusion earlier
-- Makes debugging impossible
+![Step 19-1](VM19-1.jpeg)
 
-**We want a manual, visible install.**
+**VM19-2** shows the correct **Display** settings:
+- Video Memory is set to **128 MB**
+- Graphics Controller is set to **VMSVGA**
+- 3D Acceleration is **disabled**
 
-**Click Next**
+![Step 19-2](VM19-2.jpeg)
+
+> ✅ If your settings match these screenshots, you are ready to start the installation.
 
 ---
 
-### 2.6 Hardware Configuration (RAM & CPU)
+### Step 20 — Start the Virtual Machine
 
-#### Memory (RAM)
+Click the **Start** button (the green arrow) to power on your virtual machine.
+A new window will open showing the Ubuntu installer loading.
 
-Set:
-```
-8192 MB (8 GB)
-```
-
-**Rules:**
-- Do NOT go below 8 GB
-- Do NOT exceed 60% of host RAM
-
-**Why:**
-- 4 GB caused freezes during updates
-- 8 GB is stable for Ubuntu 24.04
-
-#### CPUs
-
-Set:
-```
-4 CPUs
-```
-
-**Rules:**
-- Stay inside the green zone
-- Never use all host cores
-
-**Why:**
-- 1–2 CPUs caused slow boot and hangs
-- 4 CPUs is stable and responsive
-
-**Click Next**
+![Step 20](VM20.jpeg)
 
 ---
 
-### 2.7 Boot Mode (EFI) — IMPORTANT DECISION
+### Step 21 — Select "Try or Install Ubuntu"
 
-You will see an option:
-```
-Use EFI (special OSes only)
-```
+You will see the Ubuntu boot menu.
+Select **Try or Install Ubuntu** and press **Enter**.
+Wait a moment for the installer to load.
 
-**Action:**
-```
-❌ DO NOT enable EFI
-```
-
-**Why:**
-- EFI caused boot loops and black screens
-- Ubuntu installs cleanly without EFI in VirtualBox
-- Legacy BIOS is more stable in this configuration
+![Step 21](VM21.jpeg)
 
 ---
 
-### 2.8 Virtual Hard Disk Configuration (THIS CAUSED CRASHES BEFORE)
+### Step 22 — Choose Your Language
 
-#### Disk Option
+The Ubuntu installer will open.
+Select your language (English is recommended) and click **Next**.
 
-Choose:
-```
-Create a new virtual hard disk
-```
-
-#### Disk Type
-
-Select:
-```
-VDI (VirtualBox Disk Image)
-```
-
-#### Allocation Method
-
-Select:
-```
-Dynamically allocated
-```
-
-**Why:**
-- Uses space only when needed
-- Avoids large upfront disk usage
-
-#### Disk Size (VERY IMPORTANT)
-
-Set:
-```
-100–120 GB
-```
-
-Minimum:
-```
-80 GB (NOT recommended)
-```
-
-**Why this matters:**
-- We previously encountered:
-```
-  VERR_DISK_FULL
-  BLKCACHE_IOERR
-```
-
-- Disk size below 80 GB caused system crashes during `apt upgrade`
-
-**Click Finish**
+![Step 22](VM22.jpeg)
 
 ---
 
-### 2.9 DO NOT START THE VM YET
+### Step 23 — Accessibility Options
 
-At this point:
-- ✔ The VM exists
-- ✔ Ubuntu is NOT installed yet
-- ✔ We must configure graphics settings first
+This screen shows accessibility options.
+You do not need to change anything here. Click **Next** to continue.
 
-**Starting the VM now caused:**
-- Display freezes
-- Installer crashes
+![Step 23](VM23.jpeg)
 
 ---
 
-## Phase 3 — Display & Graphics Configuration (CRITICAL)
+### Step 24 — Select Your Keyboard Layout
 
-**Goal of this phase:** Configure graphics before the first boot to avoid:
-- Black screen after install
-- Freezes during `apt upgrade`
-- Laggy UI
-- Random VM crashes
+Choose your keyboard layout from the list.
+If you are unsure, leave the default selection. Click **Next**.
 
----
-
-### 3.1 Why This Phase Is Critical
-
-In our earlier attempts, most failures were caused by:
-- Wrong Graphics Controller
-- Low Video Memory
-- Enabling 3D Acceleration too early
-
-**Ubuntu 24.04 + GNOME is graphics-sensitive, especially inside a VM.**
+![Step 24](VM24.jpeg)
 
 ---
 
-### 3.2 Open VM Settings (DO NOT START THE VM)
+### Step 25 — Connect to the Internet
 
-1. In **VirtualBox Manager**
-2. Select the VM:
-```
-   Ubuntu-ROS2-Jazzy
-```
-3. Click **Settings**
+If prompted to connect to the internet, select your network or choose **Use wired connection**.
+An internet connection allows Ubuntu to download updates during installation.
+
+![Step 25](VM25.jpeg)
 
 ---
 
-### 3.3 Display → Screen (Main Configuration)
+### Step 26 — Choose Installation Type
 
-Navigate to:
-```
-Settings → Display → Screen
-```
+Select **Install Ubuntu** (not "Try Ubuntu").
+Click **Next** to continue.
 
-You will now see multiple graphics-related options.
+![Step 26](VM26.jpeg)
 
 ---
 
-### 3.4 Graphics Controller (MOST IMPORTANT OPTION)
+### Step 27 — Select Installation Options
 
-Set:
-```
-Graphics Controller: VMSVGA
-```
+Choose **Interactive installation** to go through the setup manually.
+This gives you full control over the settings.
 
-#### DO NOT use:
-- **VBoxVGA** ❌ (deprecated, causes black screens)
-- **VBoxSVGA** ❌ (unstable with Ubuntu 24.04)
-
-#### Why VMSVGA?
-- Best compatibility with modern Linux kernels
-- Stable with GNOME
-- Fewer freezes during updates
-
-**This single option fixed multiple crashes we experienced earlier.**
+![Step 27](VM27.jpeg)
 
 ---
 
-### 3.5 Video Memory (MUST BE MAXED)
+### Step 28 — Choose What to Install
 
-Set:
-```
-Video Memory: 128 MB
-```
+Select **Default selection** (recommended for beginners).
+This installs a standard set of apps and tools.
+Click **Next**.
 
-#### Rules:
-- Always use the maximum value
-- Never leave it at default (16–32 MB)
-
-#### Why:
-Low video memory caused:
-- UI freezing
-- Installer lag
-- Black screens after login
+![Step 28](VM28.jpeg)
 
 ---
 
-### 3.6 Number of Monitors
+### Step 29 — Install Third-Party Software
 
-Set:
-```
-1 Monitor
-```
+Check the boxes to install third-party software and download updates.
+This improves hardware compatibility. Click **Next**.
 
-**Do NOT increase this.** Multiple monitors increase GPU load unnecessarily.
+![Step 29](VM29.jpeg)
 
 ---
 
-### 3.7 Scale Factor (Leave Default)
+### Step 30 — Disk Setup: Erase and Install
 
-Leave:
-```
-Scale Factor: 100%
-```
+Select **Erase disk and install Ubuntu**.
+Do not worry — this only affects the virtual disk, not your real computer.
+Click **Next**.
 
-We handle scaling inside the VM later, not here.
-
----
-
-### 3.8 3D Acceleration (IMPORTANT DECISION)
-
-Set:
-```
-❌ Disable 3D Acceleration
-```
-
-#### Why we disable it initially:
-- Caused VM crashes during:
-  - Ubuntu installation
-  - `apt upgrade`
-- VirtualBox 3D acceleration is unstable on many Windows GPUs
-
-#### ⚠️ Rule:
-We only enable 3D acceleration later if the system is stable.
+![Step 30](VM30.jpeg)
 
 ---
 
-### 3.9 Recording Tab (Optional Check)
-
-Navigate to:
-```
-Display → Recording
-```
-
-Ensure:
-```
-❌ Recording is disabled
-```
-
-Recording increases GPU usage and can cause lag.
-
----
-
-### 3.10 Apply Settings
-
-Click:
-```
-OK
-```
-
-**Do NOT start the VM yet if:**
-- Any setting above is incorrect
-
----
-
-## Phase 4 — Installing Ubuntu 24.04 (Manual Installation, Screen by Screen)
-
-**Goal of this phase:** Install Ubuntu 24.04 manually and visibly, so that you:
-- Understand every installer choice
-- Avoid broken installs
-- End with a clean, stable system
-
----
-
-### 4.1 Start the Virtual Machine (First Boot)
-
-1. Open **VirtualBox Manager**
-2. Select:
-```
-   Ubuntu-ROS2-Jazzy
-```
-3. Click **Start**
-
-#### What should happen:
-- VM boots from the Ubuntu ISO
-- Ubuntu splash screen appears
-
-#### If the VM does not boot:
-- **STOP**
-- Do NOT retry
-- Re-check Phase 2 & Phase 3
-
----
-
-### 4.2 Ubuntu Welcome Screen
-
-You will see two options:
-- Try Ubuntu
-- Install Ubuntu
-
-**Action:**
-```
-Select → Install Ubuntu
-```
-
-#### Why:
-- We are installing permanently to the virtual disk
-- "Try Ubuntu" runs a temporary live session only
-
-**Click Continue**
-
----
-
-### 4.3 Keyboard Layout
-
-Screen shows:
-- Keyboard layout selection
-
-**Choose:**
-- Language: **English**
-- Layout: **English (US)**
-
-**Click Continue**
-
-📌 **Reason:**
-- Consistent key bindings
-- Avoids issues with terminal commands later
-
----
-
-### 4.4 Updates & Other Software (VERY IMPORTANT)
-
-This screen caused confusion before, so we lock it clearly.
-
-#### Choose:
-```
-✔ Normal installation
-```
-
-This includes:
-- Web browser
-- System utilities
-- GNOME desktop tools
-
-#### Updates Section
-
-Enable:
-```
-✔ Download updates while installing Ubuntu
-```
-
-**Why:**
-- Reduces number of updates needed after installation
-- Saves time later
-
-#### Third-Party Software
-
-Enable:
-```
-✔ Install third-party software for graphics and Wi-Fi hardware
-```
-
-**Why:**
-- Improves display and media support
-- Safe inside a VM
-- Prevents missing codec issues
-
-**Click Continue**
-
----
-
-### 4.5 Installation Type — Disk Partitioning (CRITICAL)
-
-This screen may look alarming, but it is safe.
-
-You will see:
-```
-Erase disk and install Ubuntu
-```
-
-**Action:**
-```
-Select → Erase disk and install Ubuntu
-```
-
-#### ⚠️ VERY IMPORTANT CLARIFICATION:
-- This erases ONLY the virtual disk
-- It does NOT touch Windows
-- It does NOT affect the host computer
-
-#### Why we choose this:
-- Automatic partitioning is safer
-- Manual partitioning introduces errors
-- This avoids filesystem and boot issues
-
-**Click Install Now**
-
-#### Confirmation Dialog
-
-Ubuntu will warn that changes will be written to disk.
-
-**Action:**
-```
-Click → Continue
-```
-
----
-
-### 4.6 Time Zone Selection
-
-- Select your city or region
-- Map will auto-adjust
-
-**Click Continue**
-
----
-
-### 4.7 User Account Creation
+### Step 31 — Create Your User Account
 
 Fill in the following:
-- **Your name:** Your full name
-- **Computer name:** Leave default or simple name
-- **Username:** Lowercase, no spaces
-- **Password:** Must be remembered
+- **Your name**: Your full name
+- **Computer name**: Something simple like `ubuntu-vm`
+- **Username**: A short lowercase name (example: `student`)
+- **Password**: Choose a password you will remember
 
-#### Login Option:
-```
-✔ Require my password to log in
-```
+Write your password down somewhere safe. Click **Next**.
 
-**Why:**
-- Better security
-- Avoids auto-login bugs
-
-**Click Continue**
+![Step 31](VM31.jpeg)
 
 ---
 
-### 4.8 Installation Process
+### Step 32 — Choose Your Timezone
 
-Ubuntu now installs the system.
+Select your timezone from the map or dropdown.
+Click **Next** to continue.
 
-#### What happens:
-- Files are copied
-- Packages are installed
-- Updates are applied
-
-⏳ **This takes 10–20 minutes depending on hardware.**
-
-#### Do NOT:
-- Close the VM
-- Pause the VM
-- Resize aggressively
+![Step 32](VM32.jpeg)
 
 ---
 
-### 4.9 Installation Complete → Restart
+### Step 33 — Review and Begin Installation
 
-When prompted:
-```
-Installation complete
-Restart Now
-```
+You will see a summary of all your choices.
+If everything looks correct, click **Install** to begin.
+The installation will take around 10–20 minutes. Do not close the window.
 
-**Click Restart Now**
+![Step 33](VM33.jpeg)
 
 ---
 
-### 4.10 "Remove Installation Medium" Message
+### Step 34 — Installation Complete: Restart
 
-You may see:
-```
-Please remove the installation medium, then press ENTER
-```
+When the installation finishes, you will see a message saying it is complete.
+Click **Restart Now**.
+When prompted to "remove the installation medium", go to **Devices → Optical Drives → Remove Disk from Virtual Drive**, then press **Enter** in the VM window.
 
-#### Important:
-- VirtualBox automatically removes the ISO
-- Do NOT manually remove anything
-
-**Action:**
-```
-Press ENTER
-```
-
-The VM will reboot into Ubuntu.
+![Step 34](VM34.jpeg)
 
 ---
 
-## Phase 5 — First Login, System Update & Freeze Handling (CRITICAL)
+### Step 35 — Ubuntu is Ready!
 
-**Goal of this phase:** Make the system stable after first login, apply updates safely, and know exactly what to do if the system hangs — without panic or reinstallation.
+Your virtual machine will restart and boot into Ubuntu 24.04.
+Log in with the username and password you created.
+Welcome to your new Ubuntu environment! 🎉
+
+![Step 35](VM35.jpeg)
+
+---
+## Additional Resources
+
+### Official Documentation
+- **Ubuntu**: https://help.ubuntu.com
+- **VirtualBox**: https://www.virtualbox.org/manual/
+- **ROS 2 Jazzy**: https://docs.ros.org/en/jazzy/
+
+### Community Support
+- **ROS Discourse**: https://discourse.ros.org
+- **Ubuntu Forums**: https://ubuntuforums.org
+- **Stack Overflow**: Tag your questions with `ros2`, `ubuntu`, or `virtualbox`
+
+### Learning Resources
+- **ROS 2 Tutorials**: https://docs.ros.org/en/jazzy/Tutorials.html
+- **Linux Command Line Basics**: https://ubuntu.com/tutorials/command-line-for-beginners
+- **Git Tutorial**: https://git-scm.com/book/en/v2
 
 ---
 
-### 5.1 First Login (What to Expect)
-
-After reboot, you will see the Ubuntu login screen.
-
-#### What to do
-
-1. Select the created user
-2. Enter the password
-3. Log in
-
-#### What is normal at this stage
-
-- Slower response than expected
-- Fans spin up
-- Desktop takes extra seconds to load
-
-📌 **Reason:** Ubuntu 24.04 (GNOME) is initializing caches and services for the first time.
-
-**Do NOT restart unless completely frozen for more than 5 minutes.**
-
----
-
-### 5.2 Initial Desktop Check (Before Any Updates)
-
-Before opening Terminal, verify:
-
-- ✔ Desktop loads correctly
-- ✔ Mouse and keyboard respond
-- ✔ System Settings opens
-- ✔ No black screen
-
-#### If you see:
-- Minor lag → **normal**
-- Short freezes (1–2 seconds) → **normal**
-
-#### If the screen is completely black:
-- **STOP**
-- Re-check Phase 3 (graphics settings)
-
----
-
-### 5.3 Open Terminal
-
-Open Terminal using:
-- `Ctrl + Alt + T`, or
-- **Applications → Terminal**
-
-All system updates will be done only from Terminal.
-
----
-
-### 5.4 First System Update (Safe Order)
-
-#### Step 1 — Update Package Lists
-
-Run:
-```bash
-sudo apt update
-```
-
-**What this does:**
-- Refreshes package repositories
-- Does NOT install anything yet
-
-**Expected behavior:**
-- Takes 10–60 seconds
-- Shows list of repositories
-- Ends without errors
-
-**If errors appear:**
-- Check internet connection
-- Do NOT continue yet
-
-#### Step 2 — Upgrade Packages (This Is Where Issues Happened)
-
-Run:
-```bash
-sudo apt upgrade -y
-```
-
-**This step:**
-- Installs kernel updates
-- Updates GNOME components
-- Updates system libraries
-
-⏳ **This may take several minutes.**
-
----
-
-### 5.5 What Is NORMAL During `apt upgrade`
-
-It is important to define normal behavior clearly at this stage.
-
-#### Normal:
-- Terminal pauses for 10–30 seconds
-- CPU usage spikes
-- Disk activity increases
-- Fans spin up
-
-**Do NOT close the VM during this.**
-
----
-
-### 5.6 What To Do If the System Appears Frozen
-
-#### Case 1 — Terminal paused but VM still responsive
-
-✔ **Wait** - This is normal.
-
-#### Case 2 — VM UI lags but mouse still moves
-
-✔ **Wait at least 3–5 minutes**
-
-This happened in our earlier tests and resolved itself.
-
-#### Case 3 — VM completely unresponsive for >5 minutes
-
-This is when you must act correctly.
-
-**Correct action:**
-
-1. From VirtualBox menu:
-```
-   Machine → Restart
-```
-
-2. Do NOT use **Power Off** unless restart fails
-
-**Why:**
-- Restart is a clean reset
-- Power Off risks filesystem corruption
-
----
-
-### 5.7 After Restart — Fixing Interrupted Updates (VERY IMPORTANT)
-
-If the update was interrupted, Ubuntu may show warnings like:
-```
-dpkg was interrupted
-```
-
-#### Correct fix (DO NOT repeat `apt upgrade` yet):
-
-Run:
-```bash
-sudo dpkg --configure -a
-```
-
-**What this does:**
-- Completes unfinished package installations
-- Fixes broken states safely
-
-Wait until it finishes.
-
-Then run:
-```bash
-sudo apt update
-sudo apt upgrade -y
-```
-
-This second run usually completes cleanly.
-
----
-
-### 5.8 Why Crashes Occurred Previously
-
-Previously, crashes occurred because:
-- Disk size was too small
-- Video memory was low
-- Wrong graphics controller was used
-- The VM was force-closed during upgrades
-
-#### Now that we have:
-- ✔ ≥100 GB disk
-- ✔ VMSVGA graphics
-- ✔ 128 MB video memory
-
-**These issues no longer occur.**
-
----
-
-### 5.9 Reboot After Updates (MANDATORY)
-
-After `apt upgrade` finishes successfully:
-```bash
-sudo reboot
-```
-
-#### Why:
-- Kernel updates require reboot
-- Ensures system stability
-- Prevents hidden issues later
-
----
-
-## Phase 6 — Installing VirtualBox Guest Additions
-
----
-
-### 6.1 What Are Guest Additions?
-
-VirtualBox Guest Additions are drivers installed inside Ubuntu that allow:
-- Dynamic screen resizing
-- Proper graphics acceleration (safe mode)
-- Clipboard sharing
-- Mouse integration
-- Better overall performance
-
-#### Without Guest Additions:
-- Screen stays small
-- Scaling is blurry
-- Copy/paste does not work
-- VM feels "broken"
-
----
-
-### 6.2 Insert Guest Additions CD (From VirtualBox Menu)
-
-#### Action (VERY IMPORTANT ORDER)
-
-1. Make sure the VM is running
-2. From the VirtualBox menu bar (top of the VM window):
-```
-   Devices → Insert Guest Additions CD Image
-```
-
-#### What happens:
-- A virtual CD is mounted inside Ubuntu
-- Ubuntu may show a popup
-
-#### If Ubuntu asks:
-"Do you want to run the software?"
-
-**❌ Do NOT click Run yet**
-
-We install prerequisites first.
-
----
-
-### 6.3 Install Required Build Tools (MANDATORY)
-
-Open Terminal and run:
-```bash
-sudo apt install -y build-essential dkms linux-headers-$(uname -r)
-```
-
-#### Why this is required:
-- Guest Additions include kernel modules
-- These modules must be compiled for the running kernel
-- Missing headers = installation failure
-
-**Wait until this command finishes completely.**
-
----
-
-### 6.4 Run Guest Additions Installer
-
-#### Option A — Using the Popup (If Appears)
-
-If Ubuntu shows:
-"VBox_GAs_… contains software. Do you want to run it?"
-
-Then:
-1. Click **Run**
-2. Enter your password
-3. Wait for the installation to finish
-
-#### Option B — Manual Installation
-
-If no popup appears, do it manually:
-```bash
-sudo mount /dev/cdrom /mnt
-sudo /mnt/VBoxLinuxAdditions.run
-```
-
-During installation you will see:
-- Kernel module compilation
-- Messages scrolling in the terminal
-
-**This is normal.**
-
-Wait until you see no errors.
-
----
-
-### 6.5 Reboot the VM (MANDATORY)
-
-After installation finishes:
-```bash
-sudo reboot
-```
-
-**Do NOT skip this step.**
-
----
-
-### 6.6 Verify Guest Additions Are Working
-
-After reboot, verify the following:
-
-#### Auto Resize Display
-
-From VM menu:
-```
-View → Auto-resize Guest Display
-```
-
-Resize the VM window.
-
-- ✔ Screen should resize automatically
-- ✔ No black borders
-- ✔ No blur
-
-#### Full Screen Mode
-```
-View → Full Screen Mode
-Host + F
-```
-
-(Default Host key = Right Ctrl)
-
-- ✔ Screen fits perfectly
-- ✔ No distortion
-
----
-
-### 6.7 Display Scaling (Correct Way)
-
-Inside Ubuntu:
-1. Open **Settings**
-2. Go to **Displays**
-3. Set:
-```
-   Scale: 125% or 150%
-```
-   (Choose what feels comfortable)
-
-- **❌ Do NOT use VirtualBox scaling as primary method**
-- **✔ Always scale from Ubuntu settings**
-
----
-
-### 6.8 Enable Clipboard Sharing (CRITICAL)
-
-#### VM Settings (VM must be OFF for this)
-
-1. Power off the VM
-2. VirtualBox Manager → Select VM
-3. Click **Settings → General → Advanced**
-
-Set:
-```
-Shared Clipboard: Bidirectional
-Drag'n'Drop: Bidirectional
-```
-
-Click **OK**
-
-Start the VM again.
-
-#### Verify Clipboard
-
-Test:
-- Copy text from Windows
-- Paste into Ubuntu Terminal
-- Copy from Ubuntu → paste into Windows
-
-**✔ Should work both ways**
-
-#### If it does not:
-- Reboot once
-- Do NOT reinstall Guest Additions
-
----
-
-### 6.9 Shared Folder (Optional but Recommended)
-
-This allows file transfer without copy–paste.
-
-#### Setup
-
-1. Power off the VM
-2. **VM Settings → Shared Folders**
-3. Add new folder:
-   - **Folder Path:** any Windows folder
-   - **Folder Name:** `shared`
-   - ✔ **Auto-mount**
-   - ✔ **Make Permanent**
-
-Start the VM.
-
-#### Access in Ubuntu
-```bash
-ls /media/
-```
-
-You should see a folder like:
-```
-sf_shared
-```
-
-#### If permission is denied:
-```bash
-sudo usermod -aG vboxsf $USER
-sudo reboot
-```
-
----
-
-### 6.10 Common Problems and Fixes
-
-#### Screen Still Small
-- Guest Additions not installed correctly
-- Re-run installer
-- Reboot
-
-#### Copy/Paste Not Working
-- Clipboard not set to Bidirectional
-- VM not rebooted after settings change
-
-#### VM Feels Laggy After Guest Additions
-- This is normal for first boot
-- Improves after 1–2 minutes
-
----
-
-## Phase 7 — Installing Essential Developer Tools
-
----
-
-### 7.1 Why We Install These Tools Now
-
-At this point:
-- Ubuntu is stable
-- Display and input work correctly
-- Updates are complete
-
-Installing developer tools before ROS avoids:
-- Dependency conflicts
-- Broken builds
-- Missing compilers later
-
----
-
-### 7.2 Install Visual Studio Code (MANDATORY)
-
-#### Why VS Code?
-- Industry standard
-- Lightweight
-- Excellent Linux support
-- Required later for debugging and extensions
-
-#### Method A — Ubuntu Software (Recommended)
-
-1. Open **Ubuntu Software**
-2. Search for:
-```
-   Visual Studio Code
-```
-3. Select **Visual Studio Code (Microsoft)**
-4. Click **Install**
-5. Wait until installation finishes
-
-✔ This installs the official Microsoft build
-
-#### Method B — Terminal (Alternative)
-```bash
-sudo snap install code --classic
-```
-
-Either method is acceptable. Method A is the simpler option.
-
-#### Verify Installation
-
-Run:
-```bash
-code
-```
-
-VS Code should open without errors.
-
----
-
-### 7.3 Install Git (MANDATORY)
-
-#### Why Git?
-- Version control
-- Assignment submission
-- Collaboration
-- Required for almost all modern development workflows
-
-#### Install Git
-```bash
-sudo apt install -y git
-```
-
-#### Verify:
-```bash
-git --version
-```
-
-You should see a version number.
-
----
-
-### 7.4 Install Build Essentials (MANDATORY)
-
-#### Why this is required
-
-Many projects require:
-- `gcc`
-- `g++`
-- `make`
-- `cmake`
-
-Without these:
-- Code will not compile
-- ROS packages will fail later
-
-#### Install Build Tools
-```bash
-sudo apt install -y build-essential cmake
-```
-
-#### Verify:
-```bash
-gcc --version
-cmake --version
-```
-
----
-
-### 7.5 Install Common Utilities (Recommended)
-
-These tools simplify daily work:
-```bash
-sudo apt install -y curl wget unzip htop
-```
-
-#### What they are used for:
-- `curl` / `wget`: downloading files
-- `unzip`: extracting archives
-- `htop`: monitoring CPU & memory usage
-
----
-
-### 7.6 Terminal Basics Check (Quick Sanity Test)
-
-Verify that the following commands work:
-```bash
-pwd
-ls
-cd ~
-mkdir test_folder
-cd test_folder
-```
-
-If these commands work, the environment is healthy.
-
----
-
-### 7.7 VS Code First-Time Setup (Minimal)
-
-Inside VS Code:
-
-1. Open **VS Code**
-2. Go to **Extensions**
-3. Install:
-   - **Python**
-   - **C/C++**
-   - **GitHub Pull Requests** (optional)
-
-Additional extensions will be introduced in later sessions as needed.
-
----
-
-### 7.8 Reboot After Tool Installation (Recommended)
-```bash
-sudo reboot
-```
-
-#### Why:
-- Ensures paths are updated
-- Clears background package services
-- Prevents weird first-launch issues
-
----
-
-## Phase 8 — Final System Validation & Baseline Snapshot
-
----
-
-### 8.1 Final System Validation
-
-Open Terminal and verify each of the following items.
-
-#### OS & Kernel
-```bash
-lsb_release -a
-uname -r
-```
-
-- ✔ Ubuntu 24.04.x LTS
-- ✔ Kernel shows a recent 6.x version
-
-#### Network & Updates
-```bash
-ping -c 3 google.com
-sudo apt update
-```
-
-- ✔ Internet works
-- ✔ No repository errors
-
-#### Developer Tools
-```bash
-code --version
-git --version
-gcc --version
-cmake --version
-```
-
-- ✔ All commands return versions (no "command not found")
-
-#### Display & UX
-
-- Resize VM window → screen auto-resizes ✔
-- Full screen (Host+F) works ✔
-- Clipboard copy/paste both directions ✔
-
----
-
-### 8.2 Clean Up Before Snapshot (Important)
-
-We snapshot only after cleanup to avoid carrying junk forward.
-```bash
-sudo apt autoremove -y
-sudo apt clean
-```
-
-#### Optional (check disk usage):
-```bash
-df -h /
-```
-
-✔ Plenty of free space remains
-
----
-
-### 8.3 Create the Baseline Snapshot (MANDATORY)
-
-**This is your panic button for the entire course.**
-
-#### Steps
-
-1. Power off the VM (**Machine → Power Off**)
-2. In **VirtualBox Manager**, select the VM
-3. Go to **Snapshots**
-4. Click **Take**
-5. Name:
-```
-   BASELINE - Ubuntu 24.04 (Post-Setup)
-```
-
-6. Description (recommended):
-```
-   Clean install, updated system, Guest Additions, VS Code, Git, build tools.
-```
-
-✔ **Snapshot created successfully**
-
----
-
-**Installation Complete!**
-
-Your Ubuntu 24.04 VM is now fully configured and ready for ROS 2 Jazzy installation and development work. You can always restore to this snapshot if anything goes wrong in future phases.
-
----
-
-## Summary Checklist
-
-Before proceeding to ROS 2 installation, confirm:
-
-- ✔ Phase 0: Virtualization enabled, Windows conflicts disabled
-- ✔ Phase 1: VirtualBox and Extension Pack installed
-- ✔ Phase 2: VM created with correct settings
-- ✔ Phase 3: Graphics configured (VMSVGA, 128MB)
-- ✔ Phase 4: Ubuntu installed successfully
-- ✔ Phase 5: System updated and stable
-- ✔ Phase 6: Guest Additions working
-- ✔ Phase 7: Developer tools installed
-- ✔ Phase 8: Baseline snapshot created
-
-**You are now ready for Phase 9 - ROS 2 Jazzy Installation!**
-
----
-
-## Common Issues and Solutions
-
-The following table summarizes common problems encountered during setup and their solutions:
-
-| Issue | Cause | Solution |
-|-------|-------|----------|
-| Ubuntu (64-bit) does not appear in VirtualBox | Virtualization not enabled in BIOS | Enable Intel VT-x or AMD-V in BIOS settings (see Phase 0) |
-| `VERR_DISK_FULL` or `BLKCACHE_IOERR` error | Insufficient disk space on the host machine | Ensure at least 120 GB of free disk space before creating the VM |
-| Black screen after Ubuntu installation | Wrong graphics controller or low video memory | Set Graphics Controller to VMSVGA and Video Memory to 128 MB (see Phase 3) |
-| VM freezes during `apt upgrade` | Low video memory, small disk, or 3D acceleration enabled | Disable 3D Acceleration, set 128 MB video memory, use 100+ GB disk |
-| `dpkg was interrupted` after restart | Package installation was interrupted by a VM freeze | Run `sudo dpkg --configure -a` then retry `sudo apt update && sudo apt upgrade -y` |
-| Screen stays small after installation | Guest Additions not installed or not working | Install Guest Additions (see Phase 6), then reboot |
-| Copy/paste does not work between host and VM | Clipboard sharing not configured | Set Shared Clipboard to Bidirectional in VM Settings > General > Advanced |
-| VM feels laggy after Guest Additions | Normal first-boot behavior | Wait 1–2 minutes; performance improves after initial caching |
-| Permission denied accessing shared folder | User not in `vboxsf` group | Run `sudo usermod -aG vboxsf $USER` and reboot |
-
----
-
-## Resources
-
-- **ROS 2 Official Documentation:** [docs.ros.org/en/jazzy](https://docs.ros.org/en/jazzy/index.html)
-- **ROS 2 Installation (Ubuntu):** [Ubuntu Install Debs](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html)
-- **VS Code Linux Setup:** [code.visualstudio.com/docs/setup/linux](https://code.visualstudio.com/docs/setup/linux)
-- **Linux Cheat Sheet:** [Download PDF](https://drive.google.com/file/d/1vddIJlermV-xZ7TZ8eSUCvzHKv_Poj2A/view)
-- **ROS 2 Cheat Sheet:** [Download PDF](https://drive.google.com/file/d/1vlimFy3CSk26AfZjB73rtG6GKqPZVUT9/view)
-- **VirtualBox Official Downloads:** [virtualbox.org/wiki/Downloads](https://www.virtualbox.org/wiki/Downloads)
-- **Ubuntu Desktop Download:** [ubuntu.com/download/desktop](https://ubuntu.com/download/desktop)
+**Document Version**: 1.0  
+**Last Updated**: February 2026  
+**Target**: Ubuntu 24.04 LTS, ROS 2 Jazzy Jalisco, VirtualBox 7.0+  
+**Maintained By**: Cyber Robot Team
