@@ -119,6 +119,15 @@ ROS 2 systems are built by connecting **independent nodes** through **topics** t
 ![Diagram](https://github.com/cyber-ai-dep/ROS2-Basics/blob/main/assets/images/ros2-core/Topic-MultiplePublisherandMultipleSubscriber.gif)
 ```
 
+-One publisher can send to many subscribers
+
+-Many publishers can send to one topic
+
+-Message type must match
+
+-If types don’t match → communication fails.
+
+
 ### Demo
 Run them from terminal:
 
@@ -178,7 +187,11 @@ source install/setup.bash
 - `log/` - Build logs
 
 **Why source?**
-- Tells ROS 2 where to find your packages.
+-This tells ROS:
+-"Hey, include this workspace in your search path."
+
+-Without this:
+-ros2 run cannot find your package.
 
 ---
 
@@ -285,14 +298,16 @@ nano talker.py
 
 ### Talker Code
 ```python
-import rclpy
-from rclpy.node import Node
-from std_msgs.msg import String
+import rclpy    # Imports ROS 2 Python library.
+from rclpy.node import Node  # Import Node class: Every ROS node must inherit from this.
+from std_msgs.msg import String  #Import message type.
 
 class Talker(Node):
-    def __init__(self):
+ """Create class named Talker ,It inherits from Node.This makes it a ROS node"""
+
+    def __init__(self):  # Constructor.
         super().__init__('talker')
-        self.publisher_ = self.create_publisher(String, 'chatter', 10)
+        self.publisher_ = self.create_publisher(String, 'chatter', 10) 
         self.timer = self.create_timer(1.0, self.publish_message)
         self.get_logger().info('Talker node started')
 
@@ -320,11 +335,30 @@ super().__init__('talker')  # Node name
 self.create_publisher(String, 'chatter', 10)
 # Message type, Topic name, Queue size
 
+- This tells ROS:
+
+- “I want this node to publish data.”
+
+- When this line executes:
+
+- ROS registers this node as a publisher
+
+- ROS advertises the topic
+
+- Other nodes can now discover this topic
+
 self.create_timer(1.0, self.publish_message)
 # Publish every 1 second
 
-rclpy.spin(node)
-# Keep node running
+rclpy.init()  # Initialize ROS communication.
+
+node = Talker()  # Create node object.
+
+rclpy.spin(node) # Keep node running
+
+rclpy.shutdown() # Close ROS properly.
+
+
 ```
 
 ⚠️ **Important Note:**
@@ -731,6 +765,7 @@ This is exactly how autonomous robots work!
 - [ROS 2 Beginner Tutorials](https://docs.ros.org/en/jazzy/Tutorials/Beginner-CLI-Tools.html)
 - [ROS 2 Tutorials](https://docs.ros.org/en/jazzy/Tutorials.html)
 - [rclpy API Documentation](https://docs.ros2.org/latest/api/rclpy/)
+
 
 
 
