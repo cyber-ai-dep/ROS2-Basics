@@ -239,6 +239,13 @@ ros2 pkg create my_py_pkg \
 
 ### Explanation
 
+
+**`ros2 pkg create`**
+-→ command to create a new ROS 2 package
+
+**`my_package`**
+-→ the name of your package
+
 **`--build-type ament_python`**
 - Creates a Python package (not C++)
 
@@ -724,6 +731,7 @@ This is exactly how autonomous robots work!
 - [ROS 2 Beginner Tutorials](https://docs.ros.org/en/jazzy/Tutorials/Beginner-CLI-Tools.html)
 - [ROS 2 Tutorials](https://docs.ros.org/en/jazzy/Tutorials.html)
 - [rclpy API Documentation](https://docs.ros2.org/latest/api/rclpy/)
+
 
 
 
