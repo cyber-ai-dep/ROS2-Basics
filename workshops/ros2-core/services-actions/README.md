@@ -598,7 +598,7 @@ Actions are for **long-running tasks** that need:
 - **Feedback:** Progress updates during execution
 - **Result:** Final outcome
 
-![Action Communication](../../../assets/gifs/ros2-core/Service-SingleServiceClient.gif)
+![Action Communication](../../../assets/gifs/ros2-core/Action-SingleActionClient.gif)
 
 ---
 
