@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive TF Frame Visualizer</title>
+    <style>
+        :root {
+            --primary-bg: #0a0a0f;
+            --secondary-bg: #1a1a2e;
+            --accent-blue: #00d4ff;
+            --accent-cyan: #00ffff;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --glow-color: #00d4ff;
+            --success-green: #00ff88;
+            --warning-orange: #ff8800;
+            --tf-yellow: #ffd23f;
+            --frame-red: #ff4444;
+            --frame-blue: #4444ff;
+            --frame-green: #44ff44;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
+        }
+
+        .header {
+            background: rgba(26, 26, 46, 0.9);
+            padding: 1rem 2rem;
+            border-bottom: 2px solid var(--accent-blue);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px var(--glow-color);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px var(--glow-color)); }
+            to { filter: drop-shadow(0 0 20px var(--glow-color)); }
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 300px 1fr 300px;
+            gap: 1rem;
+            padding: 1rem;
+            min-height: calc(100vh - 80px);
+        }
+
+        .sidebar {
+            background: rgba(26, 26, 46, 0.8);
+            border: 1px solid var(--accent-blue);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .control-group {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-cyan);
+        }
+
+        .control-group h3 {
+            color: var(--success-green);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .input-group {
+            margin-bottom: 0.8rem;
+        }
+
+        .input-group label {
+            display: block;
+            color: var(--text-secondary);
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--accent-blue);
+            border-radius: 5px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-cyan));
+            border: none;
+            color: var(--primary-bg);
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #ff4444, #ff6666);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, var(--success-green), #44ff88);
+        }
+
+        .visualization-area {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--accent-blue);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .canvas-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .canvas {
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+        }
+
+        .canvas:active {
+            cursor: grabbing;
+        }
+
+        .frame-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .frame-item {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--accent-blue);
+            border-radius: 8px;
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .frame-item:hover {
+            background: rgba(0, 212, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .frame-item h4 {
+            color: var(--accent-cyan);
+            margin-bottom: 0.3rem;
+        }
+
+        .frame-item .frame-info {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .concept-panel h3 {
+            color: var(--tf-yellow);
+            margin-bottom: 0.8rem;
+        }
+
+        .concept-item {
+            background: rgba(255, 210, 63, 0.1);
+            border-left: 3px solid var(--tf-yellow);
+            padding: 0.8rem;
+            margin-bottom: 0.8rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .concept-item h4 {
+            color: var(--tf-yellow);
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+        }
+
+        .concept-item p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .axis-colors {
+            display: flex;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .axis-color {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.8rem;
+        }
+
+        .color-box {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+
+        .controls-bottom {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .view-controls {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .view-btn {
+            background: rgba(0, 212, 255, 0.2);
+            border: 1px solid var(--accent-blue);
+            color: var(--text-primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn:hover, .view-btn.active {
+            background: var(--accent-blue);
+            transform: scale(1.05);
+        }
+
+        .info-display {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(26, 26, 46, 0.9);
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid var(--accent-blue);
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+        }
+
+        .transform-matrix {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--tf-yellow);
+            border-radius: 8px;
+            padding: 0.8rem;
+            margin-top: 0.8rem;
+            font-family: monospace;
+            font-size: 0.75rem;
+        }
+
+        .matrix-title {
+            color: var(--tf-yellow);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .frame-label {
+            color: var(--accent-cyan);
+            font-size: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 2px 6px;
+            border-radius: 3px;
+            pointer-events: none;
+            border: 1px solid var(--accent-cyan);
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+            }
+            
+            .sidebar {
+                max-height: none;
+            }
+            
+            .visualization-area {
+                height: 60vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="header">
+        <h1>Interactive TF Frame Visualizer</h1>
+        <p style="color: var(--accent-cyan); margin-top: 0.5rem;">Explore ROS2 Transform Framework concepts with interactive 3D visualization</p>
+    </div>
+
+    <div class="container">
+        <!-- Left Sidebar: Frame Controls -->
+        <div class="sidebar">
+            <h2>Frame Controls</h2>
+            
+            <div class="control-group">
+                <h3>Add New Frame</h3>
+                <div class="input-group">
+                    <label>Frame Name</label>
+                    <input type="text" id="frameName" placeholder="e.g., camera_link">
+                </div>
+                
+                <div class="input-group">
+                    <label>Parent Frame</label>
+                    <select id="parentFrame">
+                        <option value="world">world</option>
+                    </select>
+                </div>
+
+                <h4 style="color: var(--success-green); margin: 1rem 0 0.5rem;">Translation (meters)</h4>
+                <div class="input-group">
+                    <label>X</label>
+                    <input type="number" id="transX" step="0.1" value="0">
+                </div>
+                <div class="input-group">
+                    <label>Y</label>
+                    <input type="number" id="transY" step="0.1" value="0">
+                </div>
+                <div class="input-group">
+                    <label>Z</label>
+                    <input type="number" id="transZ" step="0.1" value="0">
+                </div>
+
+                <h4 style="color: var(--warning-orange); margin: 1rem 0 0.5rem;">Rotation (degrees)</h4>
+                <div class="input-group">
+                    <label>Roll (X-axis)</label>
+                    <input type="number" id="rotX" step="5" value="0">
+                </div>
+                <div class="input-group">
+                    <label>Pitch (Y-axis)</label>
+                    <input type="number" id="rotY" step="5" value="0">
+                </div>
+                <div class="input-group">
+                    <label>Yaw (Z-axis)</label>
+                    <input type="number" id="rotZ" step="5" value="0">
+                </div>
+
+                <button class="btn btn-success" onclick="addFrame()">Add Frame</button>
+            </div>
+
+            <div class="control-group">
+                <h3>View Controls</h3>
+                <div class="view-controls">
+                    <button class="view-btn active" onclick="setView('perspective')">Perspective</button>
+                    <button class="view-btn" onclick="setView('top')">Top</button>
+                    <button class="view-btn" onclick="setView('side')">Side</button>
+                    <button class="view-btn" onclick="setView('front')">Front</button>
+                </div>
+                
+                <div class="input-group">
+                    <label>Frame Scale</label>
+                    <input type="range" id="frameScale" min="0.5" max="3" step="0.1" value="1" oninput="updateScale()">
+                </div>
+                
+                <div class="input-group">
+                    <label>Show Frame Names</label>
+                    <input type="checkbox" id="showFrameNames" checked onchange="toggleFrameNames()">
+                </div>
+                
+                <div class="input-group">
+                    <label>Show Connection Lines</label>
+                    <input type="checkbox" id="showConnectionLines" checked onchange="toggleConnectionLines()">
+                </div>
+                
+                <div class="axis-colors">
+                    <div class="axis-color">
+                        <div class="color-box" style="background: #ff0000;"></div>
+                        <span>X-axis</span>
+                    </div>
+                    <div class="axis-color">
+                        <div class="color-box" style="background: #00ff00;"></div>
+                        <span>Y-axis</span>
+                    </div>
+                    <div class="axis-color">
+                        <div class="color-box" style="background: #0000ff;"></div>
+                        <span>Z-axis</span>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="resetView()">Reset View</button>
+                <button class="btn btn-danger" onclick="clearAllFrames()">Clear All</button>
+            </div>
+
+            <div class="control-group">
+                <h3>Active Frames</h3>
+                <div class="frame-list" id="frameList">
+                    <div class="frame-item">
+                        <h4>world</h4>
+                        <div class="frame-info">Origin frame (0, 0, 0)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center: 3D Visualization -->
+        <div class="visualization-area">
+            <div class="info-display" id="infoDisplay">
+                Click and drag to rotate view<br>
+                Scroll to zoom<br>
+                Frames: <span id="frameCount">1</span>
+            </div>
+            <canvas id="canvas" class="canvas"></canvas>
+        </div>
+
+        <!-- Right Sidebar: TF Concepts -->
+        <div class="sidebar">
+            <div class="concept-panel">
+                <h2>TF Concepts</h2>
+                
+                <div class="concept-item">
+                    <h4>Coordinate Frames</h4>
+                    <p>Each frame represents a 3D coordinate system with origin point and orientation. Every robot component has its own frame.</p>
+                </div>
+
+                <div class="concept-item">
+                    <h4>Transform Tree</h4>
+                    <p>Frames are organized in a tree structure where each frame has exactly one parent, preventing loops.</p>
+                </div>
+
+                <div class="concept-item">
+                    <h4>Translation</h4>
+                    <p>Position offset between frames in X, Y, Z coordinates (typically in meters).</p>
+                </div>
+
+                <div class="concept-item">
+                    <h4>Rotation</h4>
+                    <p>Orientation difference expressed as Roll, Pitch, Yaw angles or quaternions.</p>
+                </div>
+
+                <div class="concept-item">
+                    <h4>Static vs Dynamic</h4>
+                    <p>Static transforms are fixed (sensor mounts). Dynamic transforms change over time (joint movements).</p>
+                </div>
+
+                <div class="concept-item">
+                    <h4>Frame Hierarchy</h4>
+                    <p>Common pattern: map → odom → base_link → sensor frames. Each level adds specific transform information.</p>
+                </div>
+
+                <div id="selectedFrameInfo" style="margin-top: 1rem;">
+                    <h3>Selected Frame</h3>
+                    <div id="frameDetails">Click on a frame to see details</div>
+                    <div class="transform-matrix" id="transformMatrix" style="display: none;">
+                        <div class="matrix-title">Transform Matrix (Frame to Parent)</div>
+                        <pre id="matrixContent"></pre>
+                    </div>
+                    <div id="editForm" style="display: none; margin-top: 1rem;">
+                        <h4 style="color: var(--success-green);">Edit Translation (meters)</h4>
+                        <div class="input-group">
+                            <label>X</label>
+                            <input type="number" id="editTransX" step="0.1">
+                        </div>
+                        <div class="input-group">
+                            <label>Y</label>
+                            <input type="number" id="editTransY" step="0.1">
+                        </div>
+                        <div class="input-group">
+                            <label>Z</label>
+                            <input type="number" id="editTransZ" step="0.1">
+                        </div>
+
+                        <h4 style="color: var(--warning-orange); margin: 1rem 0 0.5rem;">Edit Rotation (degrees)</h4>
+                        <div class="input-group">
+                            <label>Roll (X-axis)</label>
+                            <input type="number" id="editRotX" step="5">
+                        </div>
+                        <div class="input-group">
+                            <label>Pitch (Y-axis)</label>
+                            <input type="number" id="editRotY" step="5">
+                        </div>
+                        <div class="input-group">
+                            <label>Yaw (Z-axis)</label>
+                            <input type="number" id="editRotZ" step="5">
+                        </div>
+
+                        <button class="btn btn-success" onclick="updateFrame()">Update Frame</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Simple label management without CSS2D complexity
+        let labelContainer;
+        
+        function createLabelContainer() {
+            labelContainer = document.createElement('div');
+            labelContainer.style.position = 'absolute';
+            labelContainer.style.top = '0';
+            labelContainer.style.left = '0';
+            labelContainer.style.width = '100%';
+            labelContainer.style.height = '100%';
+            labelContainer.style.pointerEvents = 'none';
+            labelContainer.style.zIndex = '1000';
+            document.querySelector('.visualization-area').appendChild(labelContainer);
+        }
+
+        function updateLabels() {
+            if (!labelContainer || !showFrameNames) {
+                if (labelContainer) {
+                    labelContainer.style.display = 'none';
+                }
+                return;
+            }
+            
+            labelContainer.style.display = 'block';
+            labelContainer.innerHTML = ''; // Clear existing labels
+            
+            const canvas = document.getElementById('canvas');
+            const rect = canvas.getBoundingClientRect();
+            const vector = new THREE.Vector3();
+            
+            frameObjects.forEach((frameObj, frameName) => {
+                if (!frameObj || !frameObj.visible) return;
+                
+                // Get world position of frame
+                frameObj.updateMatrixWorld();
+                vector.setFromMatrixPosition(frameObj.matrixWorld);
+                
+                // Project to screen coordinates
+                vector.project(camera);
+                
+                // Convert to pixel coordinates
+                const x = (vector.x * 0.5 + 0.5) * rect.width;
+                const y = (vector.y * -0.5 + 0.5) * rect.height;
+                
+                // Only show labels that are in front of camera
+                if (vector.z < 1) {
+                    const labelDiv = document.createElement('div');
+                    labelDiv.className = 'frame-label';
+                    labelDiv.textContent = frameName;
+                    labelDiv.style.position = 'absolute';
+                    labelDiv.style.left = x + 'px';
+                    labelDiv.style.top = (y - 20) + 'px'; // Offset above the frame
+                    labelDiv.style.transform = 'translate(-50%, -50%)';
+                    labelDiv.style.fontSize = '12px';
+                    labelDiv.style.color = '#00ffff';
+                    labelDiv.style.background = 'rgba(0, 0, 0, 0.8)';
+                    labelDiv.style.padding = '2px 6px';
+                    labelDiv.style.borderRadius = '3px';
+                    labelDiv.style.border = '1px solid #00ffff';
+                    labelDiv.style.fontFamily = 'Arial, sans-serif';
+                    labelDiv.style.whiteSpace = 'nowrap';
+                    labelDiv.style.pointerEvents = 'none';
+                    labelDiv.style.zIndex = '1001';
+                    
+                    labelContainer.appendChild(labelDiv);
+                }
+            });
+        }
+
+        // Global variables
+        let scene, camera, renderer, rootGroup;
+        let frames = new Map();
+        let frameObjects = new Map();
+        let connectionLines = new Map();
+        let selectedFrame = null;
+        let currentView = 'perspective';
+        let frameScale = 1;
+        let radius = 10;
+        let showFrameNames = true;
+        let showConnectionLines = true;
+
+        // Initialize the 3D scene
+        function initScene() {
+            const canvas = document.getElementById('canvas');
+            const container = canvas.parentElement;
+            
+            // Scene setup
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0a0a0f);
+            
+            // Camera setup
+            camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(5, 7, 5);
+            camera.lookAt(0, 0, 0);
+            
+            // Renderer setup
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            
+            // Label renderer setup with proper DOM insertion
+            createLabelContainer();
+            
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(10, 10, 5);
+            directionalLight.castShadow = true;
+            scene.add(directionalLight);
+            
+            // Root group for frames with visualization rotation
+            rootGroup = new THREE.Group();
+            rootGroup.rotation.x = -Math.PI / 2; // Align logical Z-up with visual Y-up
+            scene.add(rootGroup);
+            
+            // Add grid plane (logical XZ, visual XY)
+            const gridSize = 20;
+            const divisions = 20;
+            const gridHelper = new THREE.GridHelper(gridSize, divisions, 0x888888, 0x444444);
+            scene.add(gridHelper);
+            
+            // Simple mouse controls
+            setupMouseControls();
+            
+            // Add world frame
+            addWorldFrame();
+            
+            // Handle window resize
+            window.addEventListener('resize', onWindowResize);
+            
+            // Start render loop
+            animate();
+        }
+
+        function setupMouseControls() {
+            let isMouseDown = false;
+            let dragged = false;
+            let mouseX = 0, mouseY = 0;
+            let targetRotationX = Math.PI / 4, targetRotationY = Math.PI / 4;
+            let currentRotationX = targetRotationX, currentRotationY = targetRotationY;
+
+            const canvas = document.getElementById('canvas');
+            const raycaster = new THREE.Raycaster();
+            const mouse = new THREE.Vector2();
+
+            canvas.addEventListener('mousedown', (event) => {
+                isMouseDown = true;
+                dragged = false;
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+            });
+
+            canvas.addEventListener('mousemove', (event) => {
+                if (!isMouseDown) return;
+
+                const deltaX = event.clientX - mouseX;
+                const deltaY = event.clientY - mouseY;
+
+                targetRotationY += deltaX * 0.01;
+                targetRotationX += deltaY * 0.01;
+
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+                dragged = true;
+            });
+
+            canvas.addEventListener('mouseup', (event) => {
+                isMouseDown = false;
+                if (!dragged) {
+                    const rect = canvas.getBoundingClientRect();
+                    mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                    mouse.y = - ((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+                    raycaster.setFromCamera(mouse, camera);
+                    const intersects = raycaster.intersectObjects(scene.children, true);
+                    if (intersects.length > 0) {
+                        let obj = intersects[0].object;
+                        while (obj && !obj.userData.frameName) {
+                            obj = obj.parent;
+                        }
+                        if (obj && obj.userData.frameName) {
+                            selectFrame(obj.userData.frameName);
+                        }
+                    }
+                }
+            });
+
+            canvas.addEventListener('wheel', (event) => {
+                radius += event.deltaY * 0.01;
+                radius = Math.max(2, Math.min(20, radius));
+                event.preventDefault();
+            });
+
+            window.updateCamera = function() {
+                currentRotationX += (targetRotationX - currentRotationX) * 0.1;
+                currentRotationY += (targetRotationY - currentRotationY) * 0.1;
+
+                camera.position.x = Math.cos(currentRotationY) * Math.cos(currentRotationX) * radius;
+                camera.position.y = Math.sin(currentRotationX) * radius;
+                camera.position.z = Math.sin(currentRotationY) * Math.cos(currentRotationX) * radius;
+                camera.lookAt(0, 0, 0);
+            };
+        }
+
+        function createFrameVisualization(name, position, rotation) {
+            const group = new THREE.Group();
+            group.userData.frameName = name;
+            
+            // Frame axes
+            const axisLength = frameScale;
+            const axisWidth = 0.02 * frameScale;
+            
+            // X axis (red)
+            const xGeometry = new THREE.CylinderGeometry(axisWidth, axisWidth, axisLength, 8);
+            const xMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+            const xAxis = new THREE.Mesh(xGeometry, xMaterial);
+            xAxis.rotation.z = -Math.PI / 2;
+            xAxis.position.x = axisLength / 2;
+            xAxis.userData.frameName = name;
+            group.add(xAxis);
+            
+            // X arrow
+            const xArrowGeometry = new THREE.ConeGeometry(axisWidth * 2, axisWidth * 4, 8);
+            const xArrow = new THREE.Mesh(xArrowGeometry, xMaterial);
+            xArrow.rotation.z = -Math.PI / 2;
+            xArrow.position.x = axisLength;
+            xArrow.userData.frameName = name;
+            group.add(xArrow);
+            
+            // Y axis (green)
+            const yGeometry = new THREE.CylinderGeometry(axisWidth, axisWidth, axisLength, 8);
+            const yMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+            const yAxis = new THREE.Mesh(yGeometry, yMaterial);
+            yAxis.position.y = axisLength / 2;
+            yAxis.userData.frameName = name;
+            group.add(yAxis);
+            
+            // Y arrow
+            const yArrowGeometry = new THREE.ConeGeometry(axisWidth * 2, axisWidth * 4, 8);
+            const yArrow = new THREE.Mesh(yArrowGeometry, yMaterial);
+            yArrow.position.y = axisLength;
+            yArrow.userData.frameName = name;
+            group.add(yArrow);
+            
+            // Z axis (blue)
+            const zGeometry = new THREE.CylinderGeometry(axisWidth, axisWidth, axisLength, 8);
+            const zMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+            const zAxis = new THREE.Mesh(zGeometry, zMaterial);
+            zAxis.rotation.x = Math.PI / 2;
+            zAxis.position.z = axisLength / 2;
+            zAxis.userData.frameName = name;
+            group.add(zAxis);
+            
+            // Z arrow
+            const zArrowGeometry = new THREE.ConeGeometry(axisWidth * 2, axisWidth * 4, 8);
+            const zArrow = new THREE.Mesh(zArrowGeometry, zMaterial);
+            zArrow.rotation.x = Math.PI / 2;
+            zArrow.position.z = axisLength;
+            zArrow.userData.frameName = name;
+            group.add(zArrow);
+            
+            // Frame center
+            const centerGeometry = new THREE.SphereGeometry(0.05 * frameScale, 16, 16);
+            const centerMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x00d4ff,
+                transparent: true,
+                opacity: 0.8 
+            });
+            const center = new THREE.Mesh(centerGeometry, centerMaterial);
+            center.userData.frameName = name;
+            group.add(center);
+            
+            // Set position and rotation
+            group.position.set(position.x, position.y, position.z);
+            group.rotation.set(
+                rotation.x * Math.PI / 180,
+                rotation.y * Math.PI / 180,
+                rotation.z * Math.PI / 180
+            );
+            
+            return group;
+        }
+
+        function createConnectionLine(childName, parentName) {
+            if (!childName || !parentName || childName === parentName) return null;
+            
+            const childFrame = frames.get(childName);
+            const parentFrame = frames.get(parentName);
+            
+            if (!childFrame || !parentFrame) return null;
+            
+            // Create line from parent origin to child origin
+            const points = [
+                new THREE.Vector3(0, 0, 0), // Parent origin
+                new THREE.Vector3(childFrame.position.x, childFrame.position.y, childFrame.position.z) // Child position relative to parent
+            ];
+            
+            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+            const material = new THREE.LineBasicMaterial({ 
+                color: 0x00d4ff, 
+                linewidth: 3,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const line = new THREE.Line(geometry, material);
+            line.visible = showConnectionLines;
+            line.userData.connectionLine = true;
+            line.userData.childFrame = childName;
+            line.userData.parentFrame = parentName;
+            
+            return line;
+        }
+
+        function updateConnectionLines() {
+            // Remove all existing connection lines from the scene
+            const linesToRemove = [];
+            scene.traverse((child) => {
+                if (child.userData && child.userData.connectionLine) {
+                    linesToRemove.push(child);
+                }
+            });
+            linesToRemove.forEach(line => {
+                if (line.parent) line.parent.remove(line);
+            });
+            
+            // Clear the connection lines map
+            connectionLines.clear();
+            
+            // Create new connection lines for each frame with a parent
+            frames.forEach((frame, name) => {
+                if (frame.parent && frameObjects.has(name) && frameObjects.has(frame.parent)) {
+                    const line = createConnectionLine(name, frame.parent);
+                    if (line) {
+                        // Add line to the parent frame object so it moves with it
+                        const parentObj = frameObjects.get(frame.parent);
+                        parentObj.add(line);
+                        connectionLines.set(name, line);
+                    }
+                }
+            });
+        }
+
+        function addWorldFrame() {
+            const worldFrame = {
+                name: 'world',
+                parent: null,
+                position: { x: 0, y: 0, z: 0 },
+                rotation: { x: 0, y: 0, z: 0 }
+            };
+            
+            frames.set('world', worldFrame);
+            
+            const frameObj = createFrameVisualization('world', worldFrame.position, worldFrame.rotation);
+            frameObjects.set('world', frameObj);
+            rootGroup.add(frameObj);
+            
+            updateFrameList();
+            updateFrameCount();
+        }
+
+        function addFrame() {
+            const name = document.getElementById('frameName').value.trim();
+            const parent = document.getElementById('parentFrame').value;
+
+            if (!name || frames.has(name)) {
+                alert('Please enter a unique frame name');
+                return;
+            }
+
+            const position = {
+                x: parseFloat(document.getElementById('transX').value) || 0,
+                y: parseFloat(document.getElementById('transY').value) || 0,
+                z: parseFloat(document.getElementById('transZ').value) || 0
+            };
+
+            const rotation = {
+                x: parseFloat(document.getElementById('rotX').value) || 0,
+                y: parseFloat(document.getElementById('rotY').value) || 0,
+                z: parseFloat(document.getElementById('rotZ').value) || 0
+            };
+
+            const frame = { name, parent, position, rotation };
+            frames.set(name, frame);
+
+            const parentObj = frameObjects.get(parent);
+            const frameObj = createFrameVisualization(name, position, rotation);
+            parentObj.add(frameObj);
+            frameObjects.set(name, frameObj);
+
+            const option = document.createElement('option');
+            option.value = name;
+            option.textContent = name;
+            document.getElementById('parentFrame').appendChild(option);
+
+            // Clear input fields
+            document.getElementById('frameName').value = '';
+            document.getElementById('transX').value = '0';
+            document.getElementById('transY').value = '0';
+            document.getElementById('transZ').value = '0';
+            document.getElementById('rotX').value = '0';
+            document.getElementById('rotY').value = '0';
+            document.getElementById('rotZ').value = '0';
+
+            updateFrameList();
+            updateFrameCount();
+            
+            // Add connection line after a brief delay to ensure frame is fully added
+            setTimeout(() => {
+                updateConnectionLines();
+            }, 10);
+        }
+
+        function updateFrameList() {
+            const frameList = document.getElementById('frameList');
+            frameList.innerHTML = '';
+            
+            frames.forEach((frame, name) => {
+                const frameItem = document.createElement('div');
+                frameItem.className = 'frame-item';
+                frameItem.innerHTML = `
+                    <h4>${name}</h4>
+                    <div class="frame-info">
+                        Parent: ${frame.parent || 'none'}<br>
+                        Pos: (${frame.position.x.toFixed(2)}, ${frame.position.y.toFixed(2)}, ${frame.position.z.toFixed(2)})<br>
+                        Rot: (${frame.rotation.x.toFixed(1)}°, ${frame.rotation.y.toFixed(1)}°, ${frame.rotation.z.toFixed(1)}°)
+                    </div>
+                `;
+                
+                frameItem.addEventListener('click', () => selectFrame(name));
+                
+                if (name !== 'world') {
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'btn btn-danger';
+                    deleteBtn.style.padding = '0.3rem 0.6rem';
+                    deleteBtn.style.fontSize = '0.8rem';
+                    deleteBtn.style.marginTop = '0.5rem';
+                    deleteBtn.textContent = 'Delete';
+                    deleteBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        deleteFrame(name);
+                    };
+                    frameItem.appendChild(deleteBtn);
+                }
+                
+                frameList.appendChild(frameItem);
+            });
+        }
+
+        function updateFrameCount() {
+            document.getElementById('frameCount').textContent = frames.size;
+        }
+
+        function deleteFrame(name) {
+            if (name === 'world') return;
+
+            // Check if frame has children
+            let hasChildren = false;
+            frames.forEach((frame) => {
+                if (frame.parent === name) hasChildren = true;
+            });
+
+            if (hasChildren) {
+                alert('Cannot delete frame with children. Delete child frames first.');
+                return;
+            }
+
+            // Remove frame
+            const frame = frames.get(name);
+            const parentObj = frameObjects.get(frame.parent);
+            const obj = frameObjects.get(name);
+            parentObj.remove(obj);
+
+            // Remove connection line
+            if (connectionLines.has(name)) {
+                scene.remove(connectionLines.get(name));
+                connectionLines.delete(name);
+            }
+
+            // Clean up data structures
+            frames.delete(name);
+            frameObjects.delete(name);
+            frameLabels.delete(name);
+
+            // Remove from parent dropdown
+            const select = document.getElementById('parentFrame');
+            for (let i = 0; i < select.options.length; i++) {
+                if (select.options[i].value === name) {
+                    select.remove(i);
+                    break;
+                }
+            }
+
+            updateFrameList();
+            updateFrameCount();
+
+            if (selectedFrame === name) {
+                selectedFrame = null;
+                updateSelectedInfo();
+            }
+        }
+
+        function selectFrame(name) {
+            // Reset previous selection
+            if (selectedFrame && frameObjects.has(selectedFrame)) {
+                frameObjects.get(selectedFrame).scale.set(1, 1, 1);
+            }
+
+            selectedFrame = name;
+            if (name && frameObjects.has(name)) {
+                frameObjects.get(name).scale.set(1.2, 1.2, 1.2);
+            }
+
+            updateSelectedInfo();
+        }
+
+        function updateSelectedInfo() {
+            const details = document.getElementById('frameDetails');
+            const matrixDiv = document.getElementById('transformMatrix');
+            const matrixContent = document.getElementById('matrixContent');
+            const editForm = document.getElementById('editForm');
+
+            if (!selectedFrame || !frames.has(selectedFrame)) {
+                details.textContent = 'Click on a frame to see details';
+                matrixDiv.style.display = 'none';
+                editForm.style.display = 'none';
+                return;
+            }
+
+            const frame = frames.get(selectedFrame);
+            details.innerHTML = `
+                <strong>Name:</strong> ${selectedFrame}<br>
+                <strong>Parent:</strong> ${frame.parent || 'none'}<br>
+                <strong>Translation:</strong> (${frame.position.x.toFixed(2)}, ${frame.position.y.toFixed(2)}, ${frame.position.z.toFixed(2)}) m<br>
+                <strong>Rotation:</strong> (${frame.rotation.x.toFixed(1)}°, ${frame.rotation.y.toFixed(1)}°, ${frame.rotation.z.toFixed(1)}°)
+            `;
+
+            // Compute and display the transformation matrix
+            if (frameObjects.has(selectedFrame)) {
+                const obj = frameObjects.get(selectedFrame);
+                obj.updateMatrixWorld();
+                const matrix = obj.matrix;
+
+                // Convert to row-major format for display
+                const m = matrix.elements;
+                const matrixStr = `[ ${m[0].toFixed(3)}  ${m[4].toFixed(3)}  ${m[8].toFixed(3)}  ${m[12].toFixed(3)} ]
+[ ${m[1].toFixed(3)}  ${m[5].toFixed(3)}  ${m[9].toFixed(3)}  ${m[13].toFixed(3)} ]
+[ ${m[2].toFixed(3)}  ${m[6].toFixed(3)}  ${m[10].toFixed(3)} ${m[14].toFixed(3)} ]
+[ ${m[3].toFixed(3)}  ${m[7].toFixed(3)}  ${m[11].toFixed(3)} ${m[15].toFixed(3)} ]`;
+
+                matrixContent.textContent = matrixStr;
+                matrixDiv.style.display = 'block';
+            }
+
+            // Show edit form for non-world frames
+            if (selectedFrame === 'world') {
+                editForm.style.display = 'none';
+            } else {
+                editForm.style.display = 'block';
+                document.getElementById('editTransX').value = frame.position.x;
+                document.getElementById('editTransY').value = frame.position.y;
+                document.getElementById('editTransZ').value = frame.position.z;
+                document.getElementById('editRotX').value = frame.rotation.x;
+                document.getElementById('editRotY').value = frame.rotation.y;
+                document.getElementById('editRotZ').value = frame.rotation.z;
+            }
+        }
+
+        function updateFrame() {
+            if (!selectedFrame || selectedFrame === 'world' || !frames.has(selectedFrame)) return;
+
+            const frame = frames.get(selectedFrame);
+            
+            // Update frame data
+            frame.position.x = parseFloat(document.getElementById('editTransX').value) || 0;
+            frame.position.y = parseFloat(document.getElementById('editTransY').value) || 0;
+            frame.position.z = parseFloat(document.getElementById('editTransZ').value) || 0;
+            frame.rotation.x = parseFloat(document.getElementById('editRotX').value) || 0;
+            frame.rotation.y = parseFloat(document.getElementById('editRotY').value) || 0;
+            frame.rotation.z = parseFloat(document.getElementById('editRotZ').value) || 0;
+
+            // Update frame object
+            const frameObj = frameObjects.get(selectedFrame);
+            frameObj.position.set(frame.position.x, frame.position.y, frame.position.z);
+            frameObj.rotation.set(
+                frame.rotation.x * Math.PI / 180,
+                frame.rotation.y * Math.PI / 180,
+                frame.rotation.z * Math.PI / 180
+            );
+
+            // Maintain selection highlight
+            frameObj.scale.set(1.2, 1.2, 1.2);
+
+            updateFrameList();
+            updateSelectedInfo();
+            updateConnectionLines();
+        }
+
+        function toggleFrameNames() {
+            showFrameNames = document.getElementById('showFrameNames').checked;
+            updateLabels();
+        }
+
+        function toggleConnectionLines() {
+            showConnectionLines = document.getElementById('showConnectionLines').checked;
+            connectionLines.forEach(line => {
+                line.visible = showConnectionLines;
+            });
+        }
+
+        function setView(view) {
+            currentView = view;
+            switch (view) {
+                case 'perspective':
+                    radius = 10;
+                    targetRotationX = Math.PI / 4;
+                    targetRotationY = Math.PI / 4;
+                    break;
+                case 'top':
+                    targetRotationX = Math.PI / 2 - 0.001;
+                    targetRotationY = 0;
+                    radius = 10;
+                    break;
+                case 'side':
+                    targetRotationX = 0;
+                    targetRotationY = 0;
+                    radius = 10;
+                    break;
+                case 'front':
+                    targetRotationX = 0;
+                    targetRotationY = Math.PI / 2;
+                    radius = 10;
+                    break;
+            }
+
+            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[onclick="setView('${view}')"]`).classList.add('active');
+        }
+
+        function resetView() {
+            setView('perspective');
+        }
+
+        function clearAllFrames() {
+            // Clear scene
+            rootGroup.clear();
+            connectionLines.forEach(line => scene.remove(line));
+            
+            // Clear data structures
+            frames.clear();
+            frameObjects.clear();
+            connectionLines.clear();
+            
+            // Reset UI
+            document.getElementById('parentFrame').innerHTML = '<option value="world">world</option>';
+            selectedFrame = null;
+            
+            // Clear labels
+            if (labelContainer) {
+                labelContainer.innerHTML = '';
+            }
+            
+            // Re-add world frame
+            addWorldFrame();
+            updateSelectedInfo();
+        }
+
+        function updateScale() {
+            frameScale = parseFloat(document.getElementById('frameScale').value);
+            recreateFrames();
+        }
+
+        function recreateFrames() {
+            // Store current selection
+            const wasSelected = selectedFrame;
+            
+            // Clear existing objects
+            rootGroup.clear();
+            frameObjects.clear();
+            connectionLines.forEach(line => scene.remove(line));
+            connectionLines.clear();
+
+            // Recreate frames in hierarchy order
+            function createFrameHierarchy(parentName, parentObj) {
+                frames.forEach((frame, name) => {
+                    if (frame.parent === parentName) {
+                        const frameObj = createFrameVisualization(name, frame.position, frame.rotation);
+                        if (parentObj) {
+                            parentObj.add(frameObj);
+                        } else {
+                            rootGroup.add(frameObj);
+                        }
+                        frameObjects.set(name, frameObj);
+                        
+                        // Recursively add children
+                        createFrameHierarchy(name, frameObj);
+                    }
+                });
+            }
+
+            // Start with world frame
+            if (frames.has('world')) {
+                const worldFrame = frames.get('world');
+                const worldObj = createFrameVisualization('world', worldFrame.position, worldFrame.rotation);
+                frameObjects.set('world', worldObj);
+                rootGroup.add(worldObj);
+                
+                createFrameHierarchy('world', worldObj);
+            }
+
+            // Restore selection
+            if (wasSelected && frameObjects.has(wasSelected)) {
+                selectFrame(wasSelected);
+            }
+            
+            // Update connection lines and labels
+            updateConnectionLines();
+            updateLabels();
+        }
+
+        function onWindowResize() {
+            const container = document.querySelector('.visualization-area');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            updateLabels(); // Update labels when window resizes
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            if (window.updateCamera) {
+                window.updateCamera();
+            }
+            renderer.render(scene, camera);
+            updateLabels(); // Update labels every frame
+        }
+
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = `${Math.random() * 3 + 1}px`;
+                particle.style.height = particle.style.width;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particle.style.animationDuration = `${Math.random() * 4 + 4}s`;
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Initialize everything
+        createParticles();
+        initScene();
+    </script>
+</body>
+</html>
