@@ -492,20 +492,9 @@ Click **Update** → **Plan & Execute**
 
 ## 10. Task
 
-### Task Description
 
-- MoveIt2 configuration package created with Setup Assistant ✅
-- Planning group `demo_arm` includes all joints
-- Motion planning demonstrated in RViz2
-- Execute at least 3 different motions
 
-### Success Criteria
-
-- [ ] Setup Assistant completed successfully
-- [ ] `demo_arm` includes `joint1`, `joint2`, `joint3`
-- [ ] `demo.launch.py` runs without errors
-- [ ] Successfully plan and execute 3 different poses
-- [ ] Robot moves smoothly without collisions
+[Moveit2 Package Task](tasks/task.md)
 
 
 ---
