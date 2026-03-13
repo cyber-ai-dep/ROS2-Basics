@@ -259,6 +259,7 @@ demo_arm:
   kinematics_solver: kdl_kinematics_plugin/KDLKinematicsPlugin
   kinematics_solver_search_resolution: 0.005
   kinematics_solver_timeout: 0.005
+  position_only_ik: true
 ```
 
 **`config/joint_limits.yaml`**
@@ -287,14 +288,23 @@ joint_limits:
 ```yaml
 controller_manager:
   ros__parameters:
-    update_rate: 100
+    update_rate: 100  
     demo_arm_controller:
       type: joint_trajectory_controller/JointTrajectoryController
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
 demo_arm_controller:
   ros__parameters:
-    joints: [joint1, joint2, joint3]
-    command_interfaces: [position, velocity]
-    state_interfaces: [position, velocity]
+    joints:
+      - joint1
+      - joint2
+      - joint3
+    command_interfaces:
+      - position
+      - velocity
+    state_interfaces:
+      - position
+      - velocity
     allow_nonzero_velocity_at_trajectory_end: true
 ```
 
@@ -308,7 +318,10 @@ moveit_simple_controller_manager:
     type: FollowJointTrajectory
     action_ns: follow_joint_trajectory
     default: true
-    joints: [joint1, joint2, joint3]
+    joints:
+      - joint1
+      - joint2
+      - joint3
 ```
 
 **`config/initial_positions.yaml`**
@@ -355,9 +368,9 @@ demo_arm
 
 ### Three Ways to Define a Group
 
-**1. Kinematic Chain** *(used here)* — Base link → Tip link, includes all joints in between.
+**1. Kinematic Chain**  — Base link → Tip link, includes all joints in between.
 
-**2. Joint List** — Explicitly list joints: `[joint1, joint2, joint3]`
+**2. Joint List** *(used here)* — Explicitly list joints: `[joint1, joint2, joint3]`
 
 **3. Link List** — Explicitly list links; joints connecting them are included automatically.
 
@@ -623,17 +636,6 @@ joint_limits:
 | Motion Planning Panel | RViz2 interface |
 | Interactive Marker | Goal pose specification |
 | Trajectory Execution | Execute planned paths |
-
-### Python API (Future Reference)
-
-```python
-from moveit_py import MoveGroupInterface
-
-move_group = MoveGroupInterface("demo_arm")
-move_group.set_pose_target([x, y, z, roll, pitch, yaw])
-success, plan = move_group.plan()
-move_group.execute(plan)
-```
 
 ---
 
