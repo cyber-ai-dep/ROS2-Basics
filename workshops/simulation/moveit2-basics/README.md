@@ -678,3 +678,13 @@ joint_limits:
 ---
 
 **Next:** MoveIt2 Programming — controlling the robot programmatically using the MoveIt2 Python API as this **[demo code](code/examples/src/demo_moveit/scripts)**.
+
+## Contact Information
+
+### Cyber Robot
+- [Cyber Robot LinkedIn](https://www.linkedin.com/company/cyber-robot/)
+
+### Instructors
+- [Mohammad Khalifah](https://www.linkedin.com/in/mohammad-khalifah-850279225/)
+- [Mahmoud Hamam](https://www.linkedin.com/in/mahmoud-a-hamam-126b772a9/)
+- [Nouha Nasser](https://www.linkedin.com/in/nouha-naser-65b57226a/)
