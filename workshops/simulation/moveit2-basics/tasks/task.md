@@ -14,7 +14,7 @@ Configure the Fairino robot **URDF** to work with **MoveIt2** for motion plannin
 
 1. Import the Fairino **URDF** into MoveIt2 Setup Assistant
 2. Generate the MoveIt2 configuration package `fairino5_v6_moveit2_config`
-3. Create planning group `fairino5_v6_group` including all robot joints
+3. Create planning group `fairino5_v6_group` including all robot joints and `fairino5_controller` controller 
 4. Configure kinematics, controllers, and planning pipelines
 5. Launch the robot using `demo.launch.py` in RViz2
 6. Plan and execute at least **3 different poses**
