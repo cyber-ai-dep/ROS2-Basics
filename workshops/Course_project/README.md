@@ -12,7 +12,7 @@ The robot detects object colors (**Red, Blue, Green**) using a camera and sorts 
 
 Download the base package from:
 
-[Fairino Robot PACKAGES](https://github.com/Cyberai-Department/fairino3v6_package.git)
+[Fairino Robot Packages](https://github.com/Cyberai-Department/fairino3v6_package.git)
 
 
 ---
