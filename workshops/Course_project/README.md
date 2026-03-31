@@ -247,6 +247,20 @@ from gripper import Gripper
 * It **opens at the placement position and delays for 0.5 second** (`rpos`, `bpos`, or `gpos`)
 
 ---
+# Submission
+
+Google Classroom
+
+Screenshots showing:
+
+1. **RViz2 Window:** MoveIt Motion Planning interface with the robot model  
+2. **Color Detection:** Camera window showing real-time color detection  
+3. **Terminal:** Running the MoveIt package and robot sequence from the terminal  
+4. **Video:** Recording the complete workflow execution  a
+5. **GitHub (Optional):** Full source code uploaded to GitHub  
+
+---
+
 
 # References
 
@@ -266,3 +280,4 @@ from gripper import Gripper
 [Gripper Control Code](https://github.com/cyber-ai-dep/ROS2-Basics/tree/dev/workshops/Course_project/References/gripper.py)
 
 ---
+
