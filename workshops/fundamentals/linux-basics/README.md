@@ -1068,7 +1068,7 @@ Delete text then `Ctrl + O` → `Enter`
 
 ---
 
-## cp, mv, rm (5m)
+## cp, mv, rm 
 
 ### Copying Files: `cp`
 

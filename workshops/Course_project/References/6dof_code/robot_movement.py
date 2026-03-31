@@ -14,11 +14,11 @@ import numpy as np
 #  Format: 'name': [j1, j2, j3, j4, j5, j6]  (degrees)
 # ─────────────────────────────────────────────
 POSITIONS = {
-    'home_pos':   [19.0, -105.0, -84.0, -27.0, 88.0, 0.0],
+    'home_pos':   [63.0, -62.0, 85.0, -114.0, -90.0, 20.0],
 
     # Add your positions below:
-    # 'position_1':     [0.0, -90.0, -90.0, 0.0, 90.0, 0.0],
-    # 'postposition_1': [0.0, -90.0, -120.0, 0.0, 90.0, 0.0],
+  #  'home_pos':      [108.0, -107.0, 97.0, -80.0, -90.0, -26.0],
+
 }
 
 
@@ -26,9 +26,9 @@ class RobotMover(Node):
     def __init__(self):
         super().__init__('robot_mover_node')
 
-        self.controller_name = 'fairino5_controller'
+        self.controller_name = 'fairino3_controller'
         self.joint_names = ['j1', 'j2', 'j3', 'j4', 'j5', 'j6']
-        self.group_name = 'fairino5_v6_group'  
+        self.group_name = 'fairino3_v6_group'  # Must match SRDF planning group name
 
         # Load positions from the dict above
         self.positions = {name: {'angles': angles} for name, angles in POSITIONS.items()}
@@ -99,8 +99,8 @@ class RobotMover(Node):
                 jc = JointConstraint()
                 jc.joint_name = joint_name
                 jc.position = angle
-                jc.tolerance_above = 0.02
-                jc.tolerance_below = 0.02
+                jc.tolerance_above = 0.002
+                jc.tolerance_below = 0.002
                 jc.weight = 1.0
                 goal_constraints.joint_constraints.append(jc)
             request.motion_plan_request.goal_constraints.append(goal_constraints)

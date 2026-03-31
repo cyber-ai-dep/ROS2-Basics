@@ -12,107 +12,34 @@ The robot detects object colors (**Red, Blue, Green**) using a camera and sorts 
 
 Download the base package from:
 
-[Fairino Robot URDF](https://drive.google.com/drive/folders/1LsxnjiY_AJlfwkIP07AFtC-z00xRFfjb?usp=sharing)
+[Fairino Robot PACKAGES](https://github.com/Cyberai-Department/fairino3v6_package.git)
 
 
 ---
+## Clone the Repository
 
-# Task 1 — MoveIt2 Configuration
+```bash
+cd ~/ros2_ws/src
 
-## Objective
+git clone https://github.com/Cyberai-Department/fairino3v6_package.git
 
-Configure the **Fairino robot URDF** to work with **MoveIt2** using the **MoveIt2 Setup Assistant**.
+cd ~/ros2_ws
 
-The goal is to generate a full **MoveIt2 configuration package** that allows motion planning and execution in **RViz2**.
+colcon build 
 
----
+source install/setup.bash
+```     
 
-## Requirements
-
-1. Import the **Fairino URDF** into **MoveIt2 Setup Assistant**
-2. Generate the MoveIt2 configuration package:
-
-```
-fairino5_v6_moveit2_config
-```
-
-3. Create the planning group:
-
-```
-fairino5_v6_group
-```
-
-Include:
-
-* All robot joints
-* `fairino5_controller`
-
-4. Configure:
-
-* Kinematics solver
-* Controllers
-* Planning pipelines
-
-5. Launch the robot using RViz2
-
-```
-demo.launch.py
-```
-
-6. Plan and execute **at least 3 different poses**
-
----
-
-## Success Criteria
-
-* MoveIt2 Setup Assistant completed successfully
-* `demo.launch.py` runs without errors
-* Robot visible in RViz2 MoveIt interface
-* Successfully plan and execute **3 different poses**
-* Robot moves smoothly without collisions
-* Planning group `fairino5_v6_group` configured correctly
-
----
-
-## Expected Behavior
-
-### RViz2
-
-The following should be visible:
-
-* Fairino **6-DOF robot**
-* **Motion Planning panel**
-* **Interactive marker** for pose goals
-* Robot moves when executing planned trajectories
-
-### MoveIt Motion Planning
-
-The system should allow:
-
-* Setting target poses
-* Generating motion plans
-* Executing trajectories
-* Collision checking
-
-### Terminal
-
-Expected behavior:
-
-* MoveIt2 nodes launch successfully
-* Planning pipeline initialized
-* No critical error messages
-
----
 
 ## Launch Command
 
 ```bash
-ros2 launch fairino5_v6_moveit2_config demo.launch.py
+ros2 launch fairino3_v6_moveit2_config demo.launch.py
 ```
 
 ---
 
-# Task 2 — Color-Based Pick and Place System
+# Task  — Color-Based Pick and Place System
 
 After successfully creating and validating the MoveIt2 configuration package, implement the following **robot logic**.
 
@@ -155,9 +82,9 @@ A color must be detected continuously for **3 seconds** before being accepted.
 Once the color is confirmed, the robot moves to the **shared pick positions**.
 
 ```python
-'prepickpos':  [20.0, -118.0, -62.0, -90.0, 90.0, 1.0]
-'pickpos':     [19.0, -120.0, -75.0, -74.0, 90.0, 1.0]
-'postpickpos': [20.0, -118.0, -62.0, -90.0, 90.0, 1.0]
+'prepickpos': [65.0, -71.0, 76.0, -98.0, -91.0, 24.0]
+'pickpos': [63.0, -63.0, 86.0, -114.0, -90.0, 20.0]
+'postpickpos': [65.0, -71.0, 76.0, -98.0, -91.0, 24.0]
 ```
 
 ---
@@ -171,9 +98,9 @@ After picking the object, the robot moves to the **color-specific placement loca
 ### Red Position
 
 ```python
-'rprepos':  [-22.0, -100.0, -85.0, -79.0, 94.0, -40.0]
-'rpos':     [-21.0, -105.0, -95.0, -65.0, 94.0, -39.0]
-'rpostpos': [-22.0, -100.0, -85.0, -79.0, 94.0, -40.0]
+'rprepos': [118.0, -73.0, 75.0, -92.0, -90.0, -16.0]
+'rpos': [120.0, -68.0, 93.0, -115.0, -90.0, -15.0]
+'rpostpos': [118.0, -73.0, 75.0, -92.0, -90.0, -16.0]
 ```
 
 ---
@@ -181,9 +108,9 @@ After picking the object, the robot moves to the **color-specific placement loca
 ### Blue Position
 
 ```python
-'bprepos':  [0.0, -90.0, -90.0, 0.0, 90.0, 0.0]
-'bpos':     [0.0, -90.0, -90.0, 0.0, 90.0, 0.0]
-'bpostpos': [0.0, -90.0, -90.0, 0.0, 90.0, 0.0]
+'bprepos': [110.0, -70.0, 75.0, -96.0, -90.0, -28.0]
+'bpos': [110.0, -65.0, 88.0, -113.0, -90.0, -28.0]
+'bpostpos': [110.0, -70.0, 75.0, -96.0, -90.0, -28.0]
 ```
 
 ---
@@ -191,9 +118,9 @@ After picking the object, the robot moves to the **color-specific placement loca
 ### Green Position
 
 ```python
-'gprepos':  [0.0, -90.0, -90.0, 0.0, 90.0, 0.0]
-'gpos':     [0.0, -90.0, -90.0, 0.0, 90.0, 0.0]
-'gpostpos': [0.0, -90.0, -90.0, 0.0, 90.0, 0.0]
+'gprepos': [130.0, -71.0, 76.0, -94.0, -92.0, -6.0]
+'gpos': [132.0, -66.0, 91.0, -114.0, -92.0, -6.0]
+'gpostpos': [130.0, -71.0, 76.0, -94.0, -92.0, -6.0]
 ```
 
 ---
@@ -203,32 +130,32 @@ After picking the object, the robot moves to the **color-specific placement loca
 ```python
 POSITIONS = {
 
-'home_pos': [19.0, -105.0, -84.0, -27.0, 88.0, 0.0],
+'home_pos': [108.0, -107.0, 97.0, -80.0, -90.0, -26.0],
 
 # Shared pick positions
-'prepickpos': [20.0, -118.0, -62.0, -90.0, 90.0, 1.0],
-'pickpos': [19.0, -120.0, -75.0, -74.0, 90.0, 1.0],
-'postpickpos': [20.0, -118.0, -62.0, -90.0, 90.0, 1.0],
+'prepickpos': [65.0, -71.0, 76.0, -98.0, -91.0, 24.0],
+'pickpos': [63.0, -63.0, 86.0, -114.0, -90.0, 20.0],
+'postpickpos': [65.0, -71.0, 76.0, -98.0, -91.0, 24.0],
 
 # Red positions
-'rprepos': [-22.0, -100.0, -85.0, -79.0, 94.0, -40.0],
-'rpos': [-21.0, -105.0, -95.0, -65.0, 94.0, -39.0],
-'rpostpos': [-22.0, -100.0, -85.0, -79.0, 94.0, -40.0],
+'rprepos': [118.0, -73.0, 75.0, -92.0, -90.0, -16.0],
+'rpos': [120.0, -68.0, 93.0, -115.0, -90.0, -15.0],
+'rpostpos': [118.0, -73.0, 75.0, -92.0, -90.0, -16.0],
 
 # Blue positions
-'bprepos': [0.0, -90.0, -90.0, 0.0, 90.0, 0.0],
-'bpos': [0.0, -90.0, -90.0, 0.0, 90.0, 0.0],
-'bpostpos': [0.0, -90.0, -90.0, 0.0, 90.0, 0.0],
+'bprepos': [110.0, -70.0, 75.0, -96.0, -90.0, -28.0],
+'bpos': [110.0, -65.0, 88.0, -113.0, -90.0, -28.0],
+'bpostpos': [110.0, -70.0, 75.0, -96.0, -90.0, -28.0],
 
 # Green positions
-'gprepos': [0.0, -90.0, -90.0, 0.0, 90.0, 0.0],
-'gpos': [0.0, -90.0, -90.0, 0.0, 90.0, 0.0],
-'gpostpos': [0.0, -90.0, -90.0, 0.0, 90.0, 0.0],
+'gprepos': [130.0, -71.0, 76.0, -94.0, -92.0, -6.0],
+'gpos': [132.0, -66.0, 91.0, -114.0, -92.0, -6.0],
+'gpostpos': [130.0, -71.0, 76.0, -94.0, -92.0, -6.0],
 
 }
 ```
+ 
 
----
 
 # Motion Sequences
 
@@ -315,9 +242,9 @@ from gripper import Gripper
 ### Behavior
 
 * The gripper **starts open**
-* It **closes at `pickpos`**
+* It **closes at `pickpos` and delays for 0.5 second** 
 * It **remains closed during transport**
-* It **opens at the placement position** (`rpos`, `bpos`, or `gpos`)
+* It **opens at the placement position and delays for 0.5 second** (`rpos`, `bpos`, or `gpos`)
 
 ---
 
