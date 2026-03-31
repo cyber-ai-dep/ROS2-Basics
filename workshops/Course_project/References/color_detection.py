@@ -20,7 +20,7 @@ import cv2
 import numpy as np
 
 # Initialize camera (0 = default webcam)
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(2)
 
 def detect_color(frame):
     """
@@ -37,8 +37,8 @@ def detect_color(frame):
 
     # Define HSV ranges for colors
     colors = {
-        "RED": ([0, 120, 70], [10, 255, 255]),    # Lower and upper HSV range for RED
-        "GREEN": ([40, 50, 50], [80, 255, 255]),  # Lower and upper HSV range for GREEN
+        "RED": ([0, 150, 120], [8, 255, 255]),    # Lower and upper HSV range for RED
+        "GREEN": ([45, 80, 80], [85, 255, 255]),  # Lower and upper HSV range for GREEN
         "BLUE": ([100, 150, 0], [140, 255, 255])  # Lower and upper HSV range for BLUE
     }
 
@@ -70,32 +70,33 @@ def detect_color(frame):
 
     return detected_color
 
-# Main loop
-while True:
-    # Capture a frame from the camera
-    ret, frame = cap.read()
-    if not ret:
-        print("Failed to capture frame from camera. Exiting.")
-        break
+if __name__ == '__main__':
+    # Main loop
+    while True:
+        # Capture a frame from the camera
+        ret, frame = cap.read()
+        if not ret:
+            print("Failed to capture frame from camera. Exiting.")
+            break
 
-    # Detect color in the frame
-    color = detect_color(frame)
+        # Detect color in the frame
+        color = detect_color(frame)
 
-    # Print detected color
-    print("Detected Color:", color)
+        # Print detected color
+        print("Detected Color:", color)
 
-    # Display detected color on the video frame
-    cv2.putText(frame, color, (50, 50), 
-                cv2.FONT_HERSHEY_SIMPLEX, 1, 
-                (0, 255, 0), 2)
+        # Display detected color on the video frame
+        cv2.putText(frame, color, (50, 50), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 1, 
+                    (0, 255, 0), 2)
 
-    # Show the camera feed
-    cv2.imshow("Color Detection", frame)
+        # Show the camera feed
+        cv2.imshow("Color Detection", frame)
 
-    # Exit on ESC key
-    if cv2.waitKey(1) & 0xFF == 27:  # 27 = ESC
-        break
+        # Exit on ESC key
+        if cv2.waitKey(1) & 0xFF == 27:  # 27 = ESC
+            break
 
-# Release camera and close windows
-cap.release()
-cv2.destroyAllWindows()
+    # Release camera and close windows
+    cap.release()
+    cv2.destroyAllWindows()
