@@ -88,6 +88,16 @@ Contributions welcome! See [Contributing Guidelines](CONTRIBUTING.md)
 - **Issues:** [Report a problem](../../issues)
 - **Discussions:** [Ask questions](../../discussions)
 
+## Contact Information
+
+### Cyber Robot
+- [Cyber Robot LinkedIn](https://www.linkedin.com/company/cyber-robot/)
+
+### Instructors
+- [Mohammad Khalifah](https://www.linkedin.com/in/mohammad-khalifah-850279225/)
+- [Mahmoud Hamam](https://www.linkedin.com/in/mahmoud-a-hamam-126b772a9/)
+- [Nouha Nasser](https://www.linkedin.com/in/nouha-naser-65b57226a/)
+
 ## License
 
 Apache License 2.0 - see [LICENSE](LICENSE)
